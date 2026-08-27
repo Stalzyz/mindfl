@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MINDFL School — Where Little Minds Begin to Shine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Caveat:wght@500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,500;6..12,600;6..12,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f6efe0;
+    --paper-deep:#efe4cd;
+    --forest:#33502f;
+    --forest-deep:#233b23;
+    --moss:#7c9463;
+    --clay:#b8552d;
+    --clay-deep:#963f1e;
+    --gold:#e0a83e;
+    --gold-soft:#f0c874;
+    --rose:#c77b63;
+    --ink:#2b2416;
+    --ink-soft:#5a4f3c;
+    --cream-line: rgba(43,36,22,0.15);
+    --shadow: 0 18px 40px -20px rgba(43,36,22,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Nunito Sans', sans-serif;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  ::selection{ background:var(--gold-soft); color:var(--ink); }
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    margin:0;
+    color:var(--forest-deep);
+    letter-spacing:-0.01em;
+  }
+
+  .eyebrow{
+    font-family:'Caveat', cursive;
+    font-size:1.5rem;
+    color:var(--clay);
+    display:inline-block;
+    transform:rotate(-2deg);
+    margin-bottom:0.2rem;
+  }
+
+  p{ line-height:1.7; color:var(--ink-soft); }
+
+  a{ color:inherit; }
+
+  /* ---------- paper grain overlay (static) ---------- */
+  #grain{
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:500;
+    opacity:0.05;
+    mix-blend-mode:multiply;
+  }
+
+  /* ---------- ambient garden layer (fixed, behind content) ---------- */
+  #garden-layer{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+    pointer-events:none;
+  }
+  .parallax-el{
+    position:absolute;
+    will-change:transform;
+    transition:transform 0.6s cubic-bezier(.2,.7,.3,1);
+  }
+
+  .cloud{
+    position:absolute;
+    filter:blur(1px);
+    opacity:0.55;
+  }
+  .cloud svg{ display:block; }
+
+  .drift-leaf{
+    position:absolute;
+    animation-name:driftAcross;
+    animation-timing-function:linear;
+    animation-iteration-count:infinite;
+    opacity:0.85;
+  }
+  @keyframes driftAcross{
+    0%{ transform:translate(-8vw,0) rotate(-10deg); }
+    50%{ transform:translate(50vw,-6vh) rotate(25deg); }
+    100%{ transform:translate(112vw,4vh) rotate(-15deg); }
+  }
+
+  .pollen{
+    position:absolute;
+    border-radius:50%;
+    background:var(--gold-soft);
+    opacity:0.5;
+    animation:pollenFloat linear infinite;
+  }
+  @keyframes pollenFloat{
+    0%{ transform:translate(0,0); opacity:0; }
+    10%{ opacity:0.55; }
+    90%{ opacity:0.4; }
+    100%{ transform:translate(var(--driftx,20px), -110vh); opacity:0; }
+  }
+
+  .butterfly{
+    position:absolute;
+    animation-name:flutterAcross;
+    animation-timing-function:ease-in-out;
+    animation-iteration-count:infinite;
+    opacity:0;
+  }
+  .butterfly svg{ animation:wingFlap 0.5s ease-in-out infinite alternate; transform-origin:center; }
+  @keyframes wingFlap{ from{ transform:scaleX(1); } to{ transform:scaleX(0.72); } }
+  @keyframes flutterAcross{
+    0%{ transform:translate(-6vw,20vh) rotate(0deg); opacity:0; }
+    8%{ opacity:0.9; }
+    30%{ transform:translate(28vw,4vh) rotate(8deg); }
+    55%{ transform:translate(55vw,26vh) rotate(-6deg); }
+    80%{ transform:translate(85vw,10vh) rotate(6deg); opacity:0.9;}
+    100%{ transform:translate(108vw,18vh) rotate(0deg); opacity:0; }
+  }
+
+  /* ---------- layout shell ---------- */
+  .wrap{ position:relative; z-index:2; }
+  section{ position:relative; padding:7rem 1.5rem; }
+  .inner{ max-width:1080px; margin:0 auto; }
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.1rem 2rem;
+    background:rgba(246,239,224,0.75);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--cream-line);
+  }
+  .brand{ font-family:'Fraunces', serif; font-weight:600; font-size:1.4rem; color:var(--forest-deep); display:flex; align-items:center; gap:0.5rem; }
+  .brand .dot{ width:10px; height:10px; border-radius:50%; background:var(--gold); display:inline-block; }
+  .nav-cta{
+    font-family:'Nunito Sans', sans-serif; font-weight:700; font-size:0.9rem;
+    background:var(--forest); color:var(--paper);
+    padding:0.6rem 1.3rem; border-radius:100px;
+    text-decoration:none;
+    box-shadow:var(--shadow);
+    transition:transform 0.25s ease, background 0.25s ease;
+  }
+  .nav-cta:hover{ transform:translateY(-2px); background:var(--forest-deep); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding-top:6rem;
+  }
+  .sun-wrap{
+    position:relative;
+    width:min(46vw, 340px);
+    height:min(46vw, 340px);
+    margin-bottom:1rem;
+  }
+  #sun-rays{ animation:sunBreathe 7s ease-in-out infinite; transform-origin:center; }
+  @keyframes sunBreathe{
+    0%,100%{ transform:scale(1) rotate(0deg); }
+    50%{ transform:scale(1.035) rotate(4deg); }
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 4.6rem);
+    line-height:1.03;
+    margin-bottom:1rem;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--clay);
+  }
+  .hero .sub{
+    max-width:560px;
+    font-size:1.15rem;
+    margin:0 auto 2.2rem;
+  }
+  .cta-row{ display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
+  .btn-primary, .btn-secondary{
+    font-family:'Nunito Sans', sans-serif;
+    font-weight:700;
+    font-size:0.98rem;
+    padding:0.85rem 1.8rem;
+    border-radius:100px;
+    text-decoration:none;
+    display:inline-block;
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .btn-primary{
+    background:var(--clay); color:var(--paper);
+    box-shadow:0 14px 28px -12px rgba(184,85,45,0.55);
+  }
+  .btn-primary:hover{ transform:translateY(-3px) rotate(-0.5deg); }
+  .btn-secondary{
+    background:transparent; color:var(--forest-deep);
+    border:1.5px solid var(--forest-deep);
+  }
+  .btn-secondary:hover{ background:var(--forest-deep); color:var(--paper); transform:translateY(-3px) rotate(0.5deg); }
+
+  .scroll-hint{
+    margin-top:3.2rem;
+    font-family:'Caveat', cursive;
+    font-size:1.2rem;
+    color:var(--ink-soft);
+    display:flex; flex-direction:column; align-items:center; gap:0.3rem;
+  }
+  .scroll-hint svg{ animation:bob 1.8s ease-in-out infinite; }
+  @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(8px);} }
+
+  /* ---------- vine divider ---------- */
+  .vine-divider{
+    width:100%;
+    max-width:1080px;
+    margin:0 auto;
+    height:60px;
+    display:block;
+  }
+  .vine-path{
+    fill:none;
+    stroke:var(--moss);
+    stroke-width:2.5;
+    stroke-linecap:round;
+    stroke-dasharray:1400;
+    stroke-dashoffset:1400;
+    transition:stroke-dashoffset 1.8s cubic-bezier(.2,.7,.2,1);
+  }
+  .vine-divider.in-view .vine-path{ stroke-dashoffset:0; }
+  .vine-leaf{ opacity:0; transform:scale(0.4); transform-origin:center; transition:opacity 0.6s ease 1.2s, transform 0.6s ease 1.2s; }
+  .vine-divider.in-view .vine-leaf{ opacity:1; transform:scale(1); }
+
+  /* ---------- intro ---------- */
+  .intro{ text-align:center; }
+  .intro h2{ font-size:clamp(2rem,4vw,2.8rem); max-width:720px; margin:0.4rem auto 1.3rem; }
+  .intro p{ max-width:640px; margin:0 auto; font-size:1.08rem; }
+
+  /* ---------- journey cards (Discover/Explore/Create/Grow) ---------- */
+  .journey-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1.5rem;
+    margin-top:3.5rem;
+  }
+  .journey-card{
+    background:var(--paper-deep);
+    border-radius:22px 22px 6px 22px;
+    padding:2rem 1.6rem;
+    text-align:left;
+    position:relative;
+    border:1px solid var(--cream-line);
+    opacity:0;
+    transform:translateY(26px);
+    transition:opacity 0.7s ease, transform 0.7s ease;
+  }
+  .journey-card.in-view{ opacity:1; transform:translateY(0); }
+  .journey-card:nth-child(1){ transition-delay:0.05s; }
+  .journey-card:nth-child(2){ transition-delay:0.18s; }
+  .journey-card:nth-child(3){ transition-delay:0.31s; }
+  .journey-card:nth-child(4){ transition-delay:0.44s; }
+  .journey-card .icon{ font-size:1.9rem; margin-bottom:0.9rem; display:inline-block; }
+  .journey-card h3{ font-size:1.35rem; margin-bottom:0.5rem; color:var(--clay-deep); }
+  .journey-card p{ font-size:0.96rem; margin:0; }
+  .journey-card .tag{
+    position:absolute; top:1.4rem; right:1.4rem;
+    font-family:'Caveat', cursive; font-size:1.05rem; color:var(--moss);
+    transform:rotate(4deg);
+  }
+
+  /* ---------- adventure flow ---------- */
+  .adventure{ text-align:center; background:var(--forest-deep); border-radius:34px; color:var(--paper); position:relative; overflow:hidden; }
+  .adventure::before{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse at 20% 20%, rgba(224,168,62,0.18), transparent 55%),
+               radial-gradient(ellipse at 80% 80%, rgba(199,123,99,0.15), transparent 55%);
+    pointer-events:none;
+  }
+  .adventure .eyebrow{ color:var(--gold-soft); }
+  .adventure h2{ color:var(--paper); font-size:clamp(1.9rem,3.6vw,2.6rem); max-width:680px; margin:0.4rem auto 2.5rem; }
+  .flow-row{
+    display:flex; align-items:center; justify-content:center; flex-wrap:wrap;
+    gap:0.6rem; position:relative; z-index:1;
+  }
+  .flow-step{
+    font-family:'Fraunces', serif; font-weight:500; font-style:italic;
+    font-size:clamp(1.15rem,2.4vw,1.6rem);
+    padding:0.7rem 1.4rem;
+    border:1.5px solid rgba(246,239,224,0.35);
+    border-radius:100px;
+  }
+  .flow-arrow{ color:var(--gold-soft); font-size:1.4rem; }
+  .adventure .closing{ margin-top:2.5rem; max-width:600px; margin-left:auto; margin-right:auto; color:rgba(246,239,224,0.8); position:relative; z-index:1; }
+
+  /* ---------- more than a classroom ---------- */
+  .pillars{ }
+  .pillars-head{ text-align:center; margin-bottom:3.5rem; }
+  .pillars-head h2{ font-size:clamp(2rem,4vw,2.8rem); margin-top:0.4rem; }
+  .pillar-list{ display:flex; flex-direction:column; gap:0; max-width:820px; margin:0 auto; }
+  .pillar-row{
+    display:grid; grid-template-columns:70px 200px 1fr;
+    align-items:center; gap:1.5rem;
+    padding:1.6rem 0.5rem;
+    border-bottom:1px solid var(--cream-line);
+    opacity:0; transform:translateX(-18px);
+    transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+  .pillar-row.in-view{ opacity:1; transform:translateX(0); }
+  .pillar-row:first-child{ border-top:1px solid var(--cream-line); }
+  .pillar-icon{ font-size:1.9rem; text-align:center; }
+  .pillar-row h3{ font-size:1.2rem; color:var(--forest-deep); }
+  .pillar-row p{ margin:0; font-size:0.96rem; }
+
+  /* ---------- growing minds statement ---------- */
+  .statement{
+    text-align:center;
+    background:var(--paper-deep);
+    border-radius:34px;
+    padding:6rem 2rem;
+  }
+  .statement h2{
+    font-size:clamp(1.7rem,3.8vw,2.5rem);
+    font-weight:500;
+    font-style:italic;
+    max-width:780px;
+    margin:0.6rem auto 0;
+    line-height:1.4;
+  }
+  .statement h2 .accent{ color:var(--clay); font-style:normal; font-weight:600; }
+
+  /* ---------- community ---------- */
+  .community{ text-align:center; }
+  .community h2{ font-size:clamp(2rem,4vw,2.8rem); max-width:700px; margin:0.4rem auto 1.2rem; }
+  .community p{ max-width:600px; margin:0 auto; }
+  .community-icons{ display:flex; justify-content:center; gap:2.5rem; margin-top:3rem; flex-wrap:wrap; }
+  .community-icons .person{ display:flex; flex-direction:column; align-items:center; gap:0.6rem; }
+  .community-icons span{ font-family:'Caveat', cursive; font-size:1.15rem; color:var(--ink-soft); }
+
+  /* ---------- final CTA ---------- */
+  .final-cta{
+    text-align:center;
+    padding-bottom:5rem;
+  }
+  .final-cta .eyebrow{ font-size:1.7rem; }
+  .final-cta h2{ font-size:clamp(2.2rem,5vw,3.4rem); margin:0.4rem 0 1rem; }
+  .final-cta p{ max-width:520px; margin:0 auto 2.2rem; font-size:1.08rem; }
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--forest-deep);
+    color:rgba(246,239,224,0.85);
+    padding:4rem 1.5rem 2rem;
+    text-align:center;
+    position:relative;
+    z-index:2;
+  }
+  footer h3{ color:var(--paper); font-size:1.6rem; margin-bottom:0.3rem; }
+  footer .tagline{ font-family:'Caveat', cursive; font-size:1.3rem; color:var(--gold-soft); margin-bottom:2rem; }
+  .contact-row{ display:flex; justify-content:center; gap:2.5rem; flex-wrap:wrap; margin-bottom:2.5rem; font-size:0.95rem; }
+  .contact-row div span{ display:block; color:rgba(246,239,224,0.55); font-size:0.8rem; margin-bottom:0.2rem; letter-spacing:0.04em; text-transform:uppercase; }
+  footer .fine{ font-size:0.82rem; color:rgba(246,239,224,0.45); border-top:1px solid rgba(246,239,224,0.15); padding-top:1.5rem; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:900px){
+    .journey-grid{ grid-template-columns:1fr 1fr; }
+    .pillar-row{ grid-template-columns:50px 1fr; }
+    .pillar-row .pillar-label{ display:none; }
+  }
+  @media (max-width:640px){
+    section{ padding:4.5rem 1.2rem; }
+    .journey-grid{ grid-template-columns:1fr; }
+    nav{ padding:0.9rem 1.2rem; }
+    .contact-row{ flex-direction:column; gap:1.2rem; }
+    .flow-row{ flex-direction:column; }
+    .flow-arrow{ transform:rotate(90deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.2s !important; }
+  }
+</style>
+</head>
+<body>
+
+<svg id="grain" width="0" height="0">
+  <filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/></filter>
+</svg>
+<div style="position:fixed;inset:0;z-index:500;pointer-events:none;filter:url(#noiseFilter);opacity:0.045;"></div>
+
+<div id="garden-layer"></div>
+
+<nav>
+  <div class="brand"><span class="dot"></span>MINDFL</div>
+  <a class="nav-cta" href="#contact">Get in Touch</a>
+</nav>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="sun-wrap" id="sun-container"></div>
+    <span class="eyebrow">a nurturing little garden of a school</span>
+    <h1>Where Little Minds<br>Begin to <em>Shine</em></h1>
+    <p class="sub">A nurturing space where curiosity becomes confidence, imagination becomes creativity, and every child is encouraged to discover their own potential.</p>
+    <div class="cta-row">
+      <a class="btn-primary" href="#discover">Discover MINDFL</a>
+      <a class="btn-secondary" href="#contact">Get in Touch</a>
+    </div>
+    <div class="scroll-hint">
+      <span>wander on down</span>
+      <svg width="16" height="24" viewBox="0 0 16 24" fill="none"><path d="M8 1V22M8 22L2 16M8 22L14 16" stroke="#5a4f3c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </section>
+
+  <svg class="vine-divider" viewBox="0 0 1080 60"><path class="vine-path" d="M0,30 C150,-10 250,70 400,30 C550,-10 650,70 800,30 C900,5 950,50 1080,25"/></svg>
+
+  <!-- INTRO -->
+  <section class="intro" id="discover">
+    <div class="inner">
+      <span class="eyebrow">a place to discover, explore &amp; grow</span>
+      <h2>Education is more than what happens inside a classroom.</h2>
+      <p>It is about asking questions, exploring new ideas, making meaningful connections, and discovering the joy of learning. We create an environment where children feel safe to wonder, confident to express, and inspired to grow.</p>
+
+      <div class="journey-grid">
+        <div class="journey-card"><span class="tag">1</span><span class="icon">🌱</span><h3>Discover</h3><p>We encourage children to be curious, ask questions, and discover the world around them.</p></div>
+        <div class="journey-card"><span class="tag">2</span><span class="icon">🧭</span><h3>Explore</h3><p>Learning becomes an experience through exploration, activities, collaboration, and play.</p></div>
+        <div class="journey-card"><span class="tag">3</span><span class="icon">🎨</span><h3>Create</h3><p>Children are given the freedom to imagine, experiment, express, and turn ideas into something of their own.</p></div>
+        <div class="journey-card"><span class="tag">4</span><span class="icon">🌻</span><h3>Grow</h3><p>With the right guidance and encouragement, children develop confidence, independence, and a lifelong love for learning.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <svg class="vine-divider" viewBox="0 0 1080 60"><path class="vine-path" d="M1080,30 C930,-10 830,70 680,30 C530,-10 430,70 280,30 C180,5 130,50 0,25"/></svg>
+
+  <!-- ADVENTURE -->
+  <section>
+    <div class="inner adventure">
+      <div style="padding:4.5rem 2rem;">
+        <span class="eyebrow">learning that feels like an adventure</span>
+        <h2>From everyday classroom moments to creative activities and exploration, we make learning engaging, meaningful, and memorable.</h2>
+        <div class="flow-row">
+          <span class="flow-step">Curiosity</span><span class="flow-arrow">→</span>
+          <span class="flow-step">Exploration</span><span class="flow-arrow">→</span>
+          <span class="flow-step">Creativity</span><span class="flow-arrow">→</span>
+          <span class="flow-step">Confidence</span>
+        </div>
+        <p class="closing">Because when children enjoy learning, they don't just remember lessons — they carry the experience with them.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MORE THAN A CLASSROOM -->
+  <section class="pillars">
+    <div class="inner">
+      <div class="pillars-head">
+        <span class="eyebrow">more than a classroom</span>
+        <h2>A child's development happens through many experiences.</h2>
+      </div>
+      <div class="pillar-list">
+        <div class="pillar-row"><div class="pillar-icon">📚</div><div class="pillar-label"><h3>Learning</h3></div><p>Building strong foundations through engaging educational experiences.</p></div>
+        <div class="pillar-row"><div class="pillar-icon">🎨</div><div class="pillar-label"><h3>Creativity</h3></div><p>Encouraging imagination through art, expression, and creative thinking.</p></div>
+        <div class="pillar-row"><div class="pillar-icon">🌿</div><div class="pillar-label"><h3>Exploration</h3></div><p>Giving children opportunities to discover, question, experiment, and understand.</p></div>
+        <div class="pillar-row"><div class="pillar-icon">🤝</div><div class="pillar-label"><h3>Connection</h3></div><p>Building communication, collaboration, kindness, and respect.</p></div>
+        <div class="pillar-row"><div class="pillar-icon">⭐</div><div class="pillar-label"><h3>Confidence</h3></div><p>Helping every child believe in their ideas, abilities, and potential.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <svg class="vine-divider" viewBox="0 0 1080 60"><path class="vine-path" d="M0,30 C150,-10 250,70 400,30 C550,-10 650,70 800,30 C900,5 950,50 1080,25"/></svg>
+
+  <!-- STATEMENT -->
+  <section>
+    <div class="inner statement">
+      <span class="eyebrow">growing minds, growing possibilities</span>
+      <h2>We want every child to leave MINDFL carrying <span class="accent">curiosity</span> in their questions, <span class="accent">creativity</span> in their ideas, <span class="accent">kindness</span> in their actions, and <span class="accent">confidence</span> in their journey.</h2>
+    </div>
+  </section>
+
+  <!-- COMMUNITY -->
+  <section class="community">
+    <div class="inner">
+      <span class="eyebrow">a community that grows together</span>
+      <h2>Parents, teachers, and children are part of the same journey.</h2>
+      <p>We believe meaningful education happens when school and family work together to create an environment where children can flourish. Together, we create the space for every child to shine.</p>
+      <div class="community-icons">
+        <div class="person"><span style="font-size:2.2rem;">👨‍👩‍👧</span><span>Parents</span></div>
+        <div class="person"><span style="font-size:2.2rem;">🧑‍🏫</span><span>Teachers</span></div>
+        <div class="person"><span style="font-size:2.2rem;">🧒</span><span>Children</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta" id="contact">
+    <div class="inner">
+      <span class="eyebrow">begin their journey with MINDFL</span>
+      <h2>Every great journey begins with a little curiosity.</h2>
+      <p>Give your child a place where they can discover, explore, create, and grow.</p>
+      <a class="btn-primary" href="#top">Connect With MINDFL</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <h3>MINDFL</h3>
+  <div class="tagline">Discover. Explore. Create. Grow.</div>
+  <div class="contact-row">
+    <div><span>Phone</span>[ School Phone Number ]</div>
+    <div><span>Email</span>[ School Email ]</div>
+    <div><span>Address</span>[ School Address ]</div>
+  </div>
+  <div class="fine">© MINDFL School. All Rights Reserved.</div>
+</footer>
+
+<script>
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isMobile = window.innerWidth < 640;
+
+  /* ---------------- SUN ---------------- */
+  var sunSVG = '<svg id="sun-rays" width="100%" height="100%" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">'+
+    '<g stroke="#e0a83e" stroke-width="4" stroke-linecap="round" opacity="0.85">';
+  var rays = 16;
+  for(var i=0;i<rays;i++){
+    var ang = (i/rays)*360;
+    sunSVG += '<line x1="150" y1="150" x2="150" y2="150" transform="rotate('+ang+' 150 150)" style="transform-box:fill-box;">'+
+      '</line>';
+  }
+  sunSVG += '</g>';
+  // draw rays properly as lines from radius 108 to 138 varying length
+  sunSVG = '<svg id="sun-rays" width="100%" height="100%" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
+  sunSVG += '<g stroke="#e0a83e" stroke-linecap="round">';
+  for(var i=0;i<rays;i++){
+    var ang = (i/rays)*Math.PI*2;
+    var len = (i%2===0) ? 34 : 22;
+    var x1 = 150 + Math.cos(ang)*100;
+    var y1 = 150 + Math.sin(ang)*100;
+    var x2 = 150 + Math.cos(ang)*(100+len);
+    var y2 = 150 + Math.sin(ang)*(100+len);
+    sunSVG += '<line x1="'+x1.toFixed(1)+'" y1="'+y1.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'" stroke-width="4.5" opacity="0.8"/>';
+  }
+  sunSVG += '</g>';
+  sunSVG += '<circle cx="150" cy="150" r="82" fill="#f0c874" stroke="#e0a83e" stroke-width="3"/>';
+  sunSVG += '<circle cx="150" cy="150" r="82" fill="none" stroke="#b8552d" stroke-width="1.5" opacity="0.3" stroke-dasharray="4 7"/>';
+  // simple hand-drawn face
+  sunSVG += '<circle cx="128" cy="145" r="4.5" fill="#2b2416" opacity="0.75"/>';
+  sunSVG += '<circle cx="172" cy="145" r="4.5" fill="#2b2416" opacity="0.75"/>';
+  sunSVG += '<path d="M124,168 Q150,188 176,168" stroke="#2b2416" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.75"/>';
+  sunSVG += '</svg>';
+  document.getElementById('sun-container').innerHTML = sunSVG;
+
+  /* ---------------- garden layer (clouds, leaves, pollen, butterflies) ---------------- */
+  var gardenLayer = document.getElementById('garden-layer');
+  var frag = document.createDocumentFragment();
+
+  function leafSVG(color){
+    return '<svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">'+
+      '<path d="M15 2 C24 8 26 20 15 28 C4 20 6 8 15 2Z" fill="'+color+'" opacity="0.85"/>'+
+      '<line x1="15" y1="4" x2="15" y2="26" stroke="rgba(0,0,0,0.15)" stroke-width="1"/></svg>';
+  }
+  function cloudSVG(){
+    return '<svg width="140" height="60" viewBox="0 0 140 60" xmlns="http://www.w3.org/2000/svg">'+
+      '<ellipse cx="40" cy="38" rx="34" ry="18" fill="#fbf6ea"/>'+
+      '<ellipse cx="75" cy="26" rx="30" ry="22" fill="#fbf6ea"/>'+
+      '<ellipse cx="105" cy="38" rx="28" ry="16" fill="#fbf6ea"/></svg>';
+  }
+  function butterflySVG(color){
+    return '<svg width="26" height="22" viewBox="0 0 26 22" xmlns="http://www.w3.org/2000/svg">'+
+      '<path d="M13 11 C6 -2 -3 4 3 12 C -3 20 6 24 13 11Z" fill="'+color+'" opacity="0.9"/>'+
+      '<path d="M13 11 C20 -2 29 4 23 12 C29 20 20 24 13 11Z" fill="'+color+'" opacity="0.75"/>'+
+      '<line x1="13" y1="4" x2="13" y2="18" stroke="#2b2416" stroke-width="1" opacity="0.5"/></svg>';
+  }
+
+  // clouds
+  var cloudPositions = [ [4,'6%','10%',60], [3,'62%','5%',95], [2,'20%','30%',40] ];
+  if(isMobile) cloudPositions = cloudPositions.slice(0,1);
+  cloudPositions.forEach(function(c, idx){
+    var el = document.createElement('div');
+    el.className = 'cloud parallax-el';
+    el.dataset.depth = (0.01 + idx*0.008);
+    el.style.left = c[1]; el.style.top = c[2]; el.style.transform = 'scale('+(c[3]/100)+')';
+    el.innerHTML = cloudSVG();
+    frag.appendChild(el);
+  });
+
+  // drifting leaves
+  var leafColors = ['#7c9463','#b8552d','#e0a83e','#33502f'];
+  var leafCount = isMobile ? 3 : 7;
+  for(var i=0;i<leafCount;i++){
+    var el = document.createElement('div');
+    el.className = 'drift-leaf parallax-el';
+    el.dataset.depth = (0.015 + Math.random()*0.02).toFixed(3);
+    var dur = 16 + Math.random()*18;
+    var delay = -Math.random()*dur;
+    var top = (Math.random()*80)+'vh';
+    var scale = 0.6 + Math.random()*0.9;
+    el.style.top = top;
+    el.style.left = '0';
+    el.style.animationDuration = dur+'s';
+    el.style.animationDelay = delay+'s';
+    el.style.transform = 'scale('+scale+')';
+    el.innerHTML = leafSVG(leafColors[i % leafColors.length]);
+    frag.appendChild(el);
+  }
+
+  // pollen particles
+  if(!reduceMotion){
+    var pollenCount = isMobile ? 6 : 16;
+    for(var p=0;p<pollenCount;p++){
+      var el = document.createElement('div');
+      el.className = 'pollen';
+      var size = 3 + Math.random()*4;
+      el.style.width = size+'px'; el.style.height = size+'px';
+      el.style.left = (Math.random()*100)+'vw';
+      el.style.top = (100 + Math.random()*20)+'vh';
+      var dur = 14 + Math.random()*14;
+      el.style.animationDuration = dur+'s';
+      el.style.animationDelay = (-Math.random()*dur)+'s';
+      el.style.setProperty('--driftx', (Math.random()*80-40)+'px');
+      frag.appendChild(el);
+    }
+  }
+
+  // butterflies
+  if(!isMobile){
+    var bColors = ['#c77b63','#e0a83e','#33502f'];
+    for(var b=0;b<2;b++){
+      var el = document.createElement('div');
+      el.className = 'butterfly';
+      var dur = 22 + Math.random()*10;
+      el.style.animationDuration = dur+'s';
+      el.style.animationDelay = (b*13 + Math.random()*10)+'s';
+      el.innerHTML = butterflySVG(bColors[b % bColors.length]);
+      frag.appendChild(el);
+    }
+  }
+
+  gardenLayer.appendChild(frag);
+
+  /* ---------------- mouse parallax ---------------- */
+  if(!reduceMotion && !isMobile){
+    var mx = 0, my = 0;
+    window.addEventListener('mousemove', function(e){
+      mx = (e.clientX / window.innerWidth) - 0.5;
+      my = (e.clientY / window.innerHeight) - 0.5;
+      requestAnimationFrame(function(){
+        document.querySelectorAll('.parallax-el').forEach(function(el){
+          var depth = parseFloat(el.dataset.depth || 0.01);
+          var moveX = mx * depth * 400;
+          var moveY = my * depth * 400;
+          var base = el.style.transform.replace(/translate\([^)]*\)\s*/,'');
+          el.style.transform = 'translate('+moveX+'px,'+moveY+'px) ' + base;
+        });
+        var sun = document.getElementById('sun-container');
+        if(sun) sun.style.transform = 'translate('+(mx*10)+'px,'+(my*10)+'px)';
+      });
+    });
+  }
+
+  /* ---------------- scroll reveals ---------------- */
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+      }
+    });
+  }, { threshold:0.25 });
+
+  document.querySelectorAll('.vine-divider, .journey-card, .pillar-row').forEach(function(el){
+    observer.observe(el);
+  });
+})();
+</script>
+
+</body>
+</html>
