@@ -934,35 +934,37 @@ Submitted at: ${data.timestamp}
     } catch (e) {}
   }
 
-  // Acoustic Grand Piano Synthesizer for Card Overlays (Pentatonic Scale: C4, D4, E4, G4, A4, C5, D5, E5)
+  // Acoustic Grand Piano Synthesizer (Pentatonic Scale: C4, D4, E4, G4, A4, C5, D5, E5)
   const pianoNotes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25];
+  let pianoNoteIdx = 0;
 
-  function playPianoKeySFX(noteIndex = 0) {
+  function playPianoKeySFX(noteIndex = null) {
     if (!isSoundEnabled) return;
     const ctx = getAudioContext();
     if (!ctx) return;
 
     try {
-      const freq = pianoNotes[Math.abs(noteIndex) % pianoNotes.length];
+      const idx = noteIndex !== null ? noteIndex : pianoNoteIdx++;
+      const freq = pianoNotes[Math.abs(idx) % pianoNotes.length];
       const now = ctx.currentTime;
 
-      // Master Note Envelope
+      // Master Piano Envelope
       const noteGain = ctx.createGain();
       noteGain.gain.setValueAtTime(0.001, now);
-      noteGain.gain.linearRampToValueAtTime(0.18, now + 0.008);
-      noteGain.gain.exponentialRampToValueAtTime(0.001, now + 1.4);
+      noteGain.gain.linearRampToValueAtTime(0.22, now + 0.008);
+      noteGain.gain.exponentialRampToValueAtTime(0.001, now + 1.5);
 
       // Acoustic Lowpass Filter
       const filter = ctx.createBiquadFilter();
       filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(1400, now);
-      filter.frequency.exponentialRampToValueAtTime(400, now + 1.2);
+      filter.frequency.setValueAtTime(1600, now);
+      filter.frequency.exponentialRampToValueAtTime(450, now + 1.2);
 
-      // Piano Harmonics
+      // Piano Harmonics (Fundamental + Overtones)
       const harmonics = [
-        { mult: 1, gain: 0.65 },
-        { mult: 2, gain: 0.25 },
-        { mult: 3, gain: 0.10 }
+        { mult: 1, gain: 0.70 },
+        { mult: 2, gain: 0.28 },
+        { mult: 3, gain: 0.12 }
       ];
 
       harmonics.forEach(h => {
@@ -977,7 +979,7 @@ Submitted at: ${data.timestamp}
         hGain.connect(filter);
 
         osc.start(now);
-        osc.stop(now + 1.4);
+        osc.stop(now + 1.5);
       });
 
       filter.connect(noteGain);
@@ -1007,7 +1009,7 @@ Submitted at: ${data.timestamp}
       filter.Q.setValueAtTime(1.5, ctx.currentTime);
 
       const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.04, ctx.currentTime);
+      gain.gain.setValueAtTime(0.05, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
 
       whiteNoise.connect(filter);
@@ -1019,6 +1021,8 @@ Submitted at: ${data.timestamp}
     } catch (e) {}
   }
 
+  let bgmTimer = null;
+
   function startAmbientNature() {
     const ctx = getAudioContext();
     if (!ctx) return;
@@ -1027,7 +1031,7 @@ Submitted at: ${data.timestamp}
 
     try {
       ambientGain = ctx.createGain();
-      ambientGain.gain.setValueAtTime(0.06, ctx.currentTime);
+      ambientGain.gain.setValueAtTime(0.12, ctx.currentTime);
 
       const bufferSize = ctx.sampleRate * 2;
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
@@ -1045,7 +1049,7 @@ Submitted at: ${data.timestamp}
 
       const filter = ctx.createBiquadFilter();
       filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(380, ctx.currentTime);
+      filter.frequency.setValueAtTime(420, ctx.currentTime);
 
       windSrc.connect(filter);
       filter.connect(ambientGain);
@@ -1053,10 +1057,22 @@ Submitted at: ${data.timestamp}
 
       windSrc.start(ctx.currentTime);
       ambientOscillators.push(windSrc);
+
+      // Gentle piano background music chord progression every 4.5 seconds
+      playPianoKeySFX(0);
+      bgmTimer = setInterval(() => {
+        if (isSoundEnabled) {
+          playPianoKeySFX(Math.floor(Math.random() * pianoNotes.length));
+        }
+      }, 4500);
     } catch(e) {}
   }
 
   function stopAmbientNature() {
+    if (bgmTimer) {
+      clearInterval(bgmTimer);
+      bgmTimer = null;
+    }
     ambientOscillators.forEach(osc => {
       try { osc.stop(); } catch(e) {}
     });
@@ -1064,7 +1080,9 @@ Submitted at: ${data.timestamp}
   }
 
   function initAudioEngine() {
-    isSoundEnabled = localStorage.getItem('mindfl_sound_enabled') === 'true';
+    // Default sound enabled if not explicitly turned off
+    const stored = localStorage.getItem('mindfl_sound_enabled');
+    isSoundEnabled = stored === null ? true : stored === 'true';
 
     if (!document.querySelector('.sound-widget-btn')) {
       const widget = document.createElement('button');
@@ -1099,26 +1117,33 @@ Submitted at: ${data.timestamp}
       document.body.appendChild(widget);
     }
 
-    if (isSoundEnabled) {
-      const unlockAudio = () => {
-        if (isSoundEnabled) startAmbientNature();
-        document.removeEventListener('click', unlockAudio);
-      };
-      document.addEventListener('click', unlockAudio);
-    }
-
-    document.addEventListener('click', (e) => {
-      if (e.target.closest('button, .btn-primary, .btn-secondary, nav a, .footer-links a, input[type="submit"]')) {
-        playTapSFX();
+    const unlockAudio = () => {
+      if (isSoundEnabled) {
+        startAmbientNature();
       }
+    };
+    document.addEventListener('click', unlockAudio, { once: true });
+    document.addEventListener('mouseover', unlockAudio, { once: true });
+
+    // Global Event Delegation for Piano SFX on Button & Card Hovers
+    let lastHoverTime = 0;
+    document.body.addEventListener('mouseover', (e) => {
+      const target = e.target.closest('.btn-primary, .btn-secondary, button, nav a, .footer-links a, .card, .pedagogy-card, .sense-card, .program-card, .founder-card, .offering-card, .thinker-row, .video-card');
+      if (!target) return;
+
+      const now = Date.now();
+      if (now - lastHoverTime < 100) return; // 100ms throttle
+      lastHoverTime = now;
+
+      playPianoKeySFX();
     });
 
-    // Piano key SFX for card hovers
-    const cardElements = document.querySelectorAll('.pedagogy-card, .sense-card, .program-card, .founder-card, .offering-card, .thinker-row, .video-card');
-    cardElements.forEach((card, idx) => {
-      card.addEventListener('mouseenter', () => {
-        playPianoKeySFX(idx);
-      });
+    // Button Click Piano Chord SFX
+    document.body.addEventListener('click', (e) => {
+      const target = e.target.closest('.btn-primary, .btn-secondary, button, nav a, .footer-links a, input[type="submit"]');
+      if (target && !target.classList.contains('sound-widget-btn')) {
+        playPianoKeySFX(2);
+      }
     });
   }
 
