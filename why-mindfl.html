@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore the GROW Framework at MINDFL. Learn how Montessori, Waldorf, Reggio Emilia, and Gesell philosophies unite to protect the heartbeat of childhood.">
+  <title>Pedagogy &amp; Curriculum — MINDFL School</title>
+  <link rel="stylesheet" href="index.css">
+  <style>
+    /* GROW Table styles */
+    .grow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .grow-card {
+      background: var(--paper-deep);
+      border: 1px solid var(--cream-line);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      transition: var(--transition);
+    }
+    .grow-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+      border-color: var(--moss);
+    }
+    .grow-letter {
+      font-size: 3.5rem;
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      color: var(--clay);
+      line-height: 1;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    .grow-phil {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--moss);
+      font-weight: 700;
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      background: var(--forest-deep);
+      color: var(--paper);
+      padding: 4.5rem 3rem;
+      border-radius: 36px;
+      margin: 4rem 0;
+      text-align: center;
+    }
+    .stat-card {
+      border-right: 1px solid rgba(246, 239, 224, 0.15);
+    }
+    .stat-card:last-child {
+      border-right: none;
+    }
+    .stat-number {
+      font-size: clamp(3rem, 6vw, 4.8rem);
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      color: var(--gold-soft);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--paper);
+    }
+    .stat-desc {
+      font-size: 0.88rem;
+      color: rgba(246, 239, 224, 0.7);
+      line-height: 1.5;
+      margin: 0;
+      padding: 0 1rem;
+    }
+
+    /* Unique Offerings */
+    .offering-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .offering-card {
+      background: var(--paper-deep);
+      border: 1px solid var(--cream-line);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .offering-icon {
+      font-size: 2.2rem;
+      line-height: 1;
+      padding: 0.6rem;
+      background: var(--paper);
+      border-radius: 16px;
+      border: 1px solid var(--cream-line);
+    }
+
+    /* Thinkers Styles */
+    .thinkers-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+    .thinker-row {
+      display: grid;
+      grid-template-columns: 100px 1.5fr 3.5fr;
+      align-items: start;
+      gap: 2.5rem;
+      padding: 2.5rem 1.5rem;
+      background: var(--paper-deep);
+      border-radius: 28px;
+      border: 1px solid var(--cream-line);
+    }
+    .thinker-badge {
+      width: 90px;
+      height: 90px;
+      background: var(--forest);
+      color: var(--paper);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      border: 4px solid var(--paper);
+      box-shadow: var(--shadow);
+    }
+    .thinker-quote {
+      margin-top: 1.2rem;
+      font-family: 'Caveat', cursive;
+      font-size: 1.45rem;
+      color: var(--clay);
+      line-height: 1.4;
+    }
+
+    /* Video Gallery */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .video-card {
+      background: var(--paper-deep);
+      border-radius: 24px;
+      border: 1px solid var(--cream-line);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+    .video-thumb {
+      height: 190px;
+      background: #463b28;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--paper);
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .video-thumb::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(43, 36, 22, 0.4);
+      transition: var(--transition);
+    }
+    .video-card:hover .video-thumb::before {
+      background: rgba(43, 36, 22, 0.2);
+    }
+    .play-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--clay);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 5;
+      font-size: 1.5rem;
+      transition: var(--transition);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    .video-thumb:hover .play-btn {
+      transform: scale(1.1);
+      background: var(--clay-deep);
+    }
+    .video-info {
+      padding: 1.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 3.5rem 1.5rem;
+      }
+      .stat-card {
+        border-right: none;
+        border-bottom: 1px solid rgba(246, 239, 224, 0.15);
+        padding-bottom: 2rem;
+      }
+      .stat-card:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .thinker-row {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        text-align: center;
+      }
+      .thinker-badge {
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Static Texture -->
+  <div style="position:fixed; inset:0; z-index:500; pointer-events:none; filter:url(#noiseFilter); opacity:0.045;"></div>
+
+  <!-- Ambient Background Layer -->
+  <div id="garden-layer"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html" class="brand"><span class="dot"></span>MINDFL</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="why-mindfl.html" class="active">Pedagogy</a></li>
+      <li><a href="programs.html">Programs</a></li>
+      <li><a href="team.html">Team &amp; Careers</a></li>
+      <li><a href="architecture.html">Architecture</a></li>
+      <li><a href="admissions.html">Admissions</a></li>
+    </ul>
+    <a href="admissions.html" class="nav-cta">Apply Now</a>
+    <button class="menu-btn" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <div class="wrap">
+    
+    <!-- Page Header -->
+    <section style="padding-top: 9rem; padding-bottom: 3.5rem; text-align: center;" class="reveal-on-scroll">
+      <div class="inner">
+        <span class="eyebrow">our pedagogical roots</span>
+        <h1 style="font-size: clamp(2.2rem, 5vw, 3.8rem); margin-bottom: 0.8rem;">The GROW Framework</h1>
+        <div style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: var(--clay); margin: 0.5rem auto 1.5rem;">
+          "Where Global Wisdom Meets Natural Potential"
+        </div>
+        <p style="max-width: 760px; margin: 0 auto; font-size: 1.1rem; line-height: 1.75;">
+          At MINDFL, we move beyond the traditional classroom. We believe children are naturally curious explorers, not passive recipients of information. Our role is to guide, observe, and support their journey through an intentional, child-centric environment.
+        </p>
+      </div>
+    </section>
+
+    <!-- Vine Divider -->
+    <svg class="vine-divider" viewBox="0 0 1080 60"><path class="vine-path" d="M0,30 C150,-10 250,70 400,30 C550,-10 650,70 800,30 C900,5 950,50 1080,25"/></svg>
+
+    <!-- Pedagogy Pillars (G, R, O, W) -->
+    <section class="reveal-on-scroll" style="padding-top: 3.5rem;">
+      <div class="inner">
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <span class="eyebrow">four pillars of pedagogy</span>
+          <h2 style="font-size: 2rem;">The Foundations of GROW</h2>
+        </div>
+
+        <div class="grow-grid">
+          
+          <div class="grow-card">
+            <span class="grow-letter">G</span>
+            <span class="grow-phil">Montessori</span>
+            <h3 style="font-size: 1.3rem; color: var(--clay-deep); margin-bottom: 0.6rem;">Guided (Purposeful Independence)</h3>
+            <p style="font-size: 0.96rem; margin: 0; line-height: 1.6;">
+              We replace worksheets with a "Prepared Environment." Using real tools and natural materials, children master concepts through hands-on discovery and self-led cycles.
+            </p>
+          </div>
+
+          <div class="grow-card">
+            <span class="grow-letter">R</span>
+            <span class="grow-phil">Waldorf</span>
+            <h3 style="font-size: 1.3rem; color: var(--clay-deep); margin-bottom: 0.6rem;">Rhythmic (The Joy of Slow)</h3>
+            <p style="font-size: 0.96rem; margin: 0; line-height: 1.6;">
+              A calm, media-free daily flow that protects the wonder of childhood. Through seasonal storytelling and nature connection, we create a predictable, unhurried routine.
+            </p>
+          </div>
+
+          <div class="grow-card">
+            <span class="grow-letter">O</span>
+            <span class="grow-phil">Reggio Emilia</span>
+            <h3 style="font-size: 1.3rem; color: var(--clay-deep); margin-bottom: 0.6rem;">Observational (The Hundred Languages)</h3>
+            <p style="font-size: 0.96rem; margin: 0; line-height: 1.6;">
+              We view children as researchers. By observing their unique interests, we turn a simple "Why?" into a deep exploration utilizing art, movement, and documentation.
+            </p>
+          </div>
+
+          <div class="grow-card">
+            <span class="grow-letter">W</span>
+            <span class="grow-phil">Gesell</span>
+            <h3 style="font-size: 1.3rem; color: var(--clay-deep); margin-bottom: 0.6rem;">Whole-Child (Developmental Readiness)</h3>
+            <p style="font-size: 0.96rem; margin: 0; line-height: 1.6;">
+              We align learning with biological maturity, not chronological age. By removing the pressure of acceleration, we build genuine confidence and emotional wellbeing.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Infographics (Stats) Section -->
+    <section class="reveal-on-scroll" style="padding-top: 4rem; padding-bottom: 4rem;">
+      <div class="inner">
+        
+        <div style="text-align: center; max-width: 680px; margin: 0 auto 3rem;">
+          <h2 style="font-size: 2.2rem; margin-bottom: 1rem;">Why the Early Years Matter</h2>
+          <p style="color: var(--ink-soft); line-height: 1.6; font-size: 1.05rem;">
+            The first six years are not preparation for learning. They are the most intense period of learning that will ever occur — the relationships, the environments, the freedom to explore — shapes the architecture of everything that follows.
+          </p>
+        </div>
+
+        <div class="stats-grid">
+          
+          <div class="stat-card">
+            <div class="stat-number" data-target="80" data-suffix="%">80%</div>
+            <div class="stat-label">of all neural connections</div>
+            <p class="stat-desc">form by age 3 (Harvard Center on the Developing Child)</p>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-number" data-target="700" data-suffix="">700</div>
+            <div class="stat-label">new connections/second</div>
+            <p class="stat-desc">created continuously in early childhood (Harvard Center)</p>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-number" data-target="90" data-suffix="%">90%</div>
+            <div class="stat-label">brain development complete</div>
+            <p class="stat-desc">by age 5 (Zero to Three, National Institutes of Health, USA)</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Unique Offerings Section -->
+    <section class="reveal-on-scroll">
+      <div class="inner">
+        <div style="text-align: center; margin-bottom: 3.5rem;">
+          <span class="eyebrow">carefully structured</span>
+          <h2 style="font-size: clamp(2rem, 4vw, 2.8rem);">Our Unique Offerings</h2>
+          <p style="max-width: 600px; margin: 0.8rem auto 0; color: var(--ink-soft);">
+            Thoughtfully designed experiences created to support confidence, curiosity, and emotional security.
+          </p>
+        </div>
+
+        <div class="offering-grid">
+          
+          <div class="offering-card">
+            <div class="offering-icon-wrap">
+              <svg class="flat-icon green" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size: 1.25rem; color: var(--forest-deep); margin-bottom: 0.5rem;">Versatile Pedagogical Support</h3>
+              <p style="font-size: 0.95rem; margin: 0; line-height: 1.6;">
+                Small group learning designed for deeper engagement, individual attention, and personalized developmental support.
+              </p>
+            </div>
+          </div>
+
+          <div class="offering-card">
+            <div class="offering-icon-wrap">
+              <svg class="flat-icon rose" viewBox="0 0 24 24"><path d="M4 18v3M8 18v3M16 18v3M20 18v3M4 11h16M4 4h4v7H4zM16 4h4v7h-4z"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size: 1.25rem; color: var(--forest-deep); margin-bottom: 0.5rem;">Talking Chairs</h3>
+              <p style="font-size: 0.95rem; margin: 0; line-height: 1.6;">
+                A dedicated conflict-resolution space where children learn empathy, active listening, and peaceful communication.
+              </p>
+            </div>
+          </div>
+
+          <div class="offering-card">
+            <div class="offering-icon-wrap">
+              <svg class="flat-icon forest" viewBox="0 0 24 24"><path d="M12 22V2M12 7c2-1 4.5-1 4.5 2S14 12 12 12M12 13c-2-1-4.5-1-4.5 2s2.5 3 4.5 3M12 10c-2-1-4.5-1-4.5 2s2.5 3 4.5 3M12 15c2-1 4.5-1 4.5 2S14 20 12 20"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size: 1.25rem; color: var(--forest-deep); margin-bottom: 0.5rem;">Outdoor Learning</h3>
+              <p style="font-size: 0.95rem; margin: 0; line-height: 1.6;">
+                An outdoor learning programme through the MINDFL Loop where movement, nature, and exploration become part of everyday learning.
+              </p>
+            </div>
+          </div>
+
+          <div class="offering-card">
+            <div class="offering-icon-wrap">
+              <svg class="flat-icon clay" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size: 1.25rem; color: var(--forest-deep); margin-bottom: 0.5rem;">Farm School</h3>
+              <p style="font-size: 0.95rem; margin: 0; line-height: 1.6;">
+                Nature as a teacher through hands-on gardening, harvesting, sensory play, and real-life environmental learning.
+              </p>
+            </div>
+          </div>
+
+          <div class="offering-card">
+            <div class="offering-icon-wrap">
+              <svg class="flat-icon gold" viewBox="0 0 24 24"><path d="M12 22C12 22 7 15 7 12C7 9 9.2 6.8 12 4C14.8 6.8 17 9 17 12C17 15 12 22 12 22Z"/><path d="M12 22C12 22 18 16 19 13C20 10 18.5 7.5 16 7.5"/><path d="M12 22C12 22 6 16 5 13C4 10 5.5 7.5 8 7.5"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size: 1.25rem; color: var(--forest-deep); margin-bottom: 0.5rem;">Unique Wellness Experiences</h3>
+              <p style="font-size: 0.95rem; margin: 0; line-height: 1.6;">
+                Mindful activities, movement, rhythm, and sensory experiences that support emotional, physical, and mental wellbeing.
+              </p>
+            </div>
+          </div>
+
+          <div class="offering-card">
+            <div class="offering-icon-wrap">
+              <svg class="flat-icon forest" viewBox="0 0 24 24"><path d="M3 3h18v18H3zM9 3v18M13 12h2"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size: 1.25rem; color: var(--forest-deep); margin-bottom: 0.5rem;">Goodbye Windows</h3>
+              <p style="font-size: 0.95rem; margin: 0; line-height: 1.6;">
+                A gentle transition ritual that helps children move from home to school with comfort, confidence, and emotional security.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Vine Divider -->
+    <svg class="vine-divider" viewBox="0 0 1080 60"><path class="vine-path" d="M1080,30 C930,-10 830,70 680,30 C530,-10 430,70 280,30 C180,5 130,50 0,25"/></svg>
+
+    <!-- The Thinkers -->
+    <section class="reveal-on-scroll">
+      <div class="inner">
+        <div style="text-align: center; max-width: 720px; margin: 0 auto 3rem;">
+          <span class="eyebrow">influential educators</span>
+          <h2 style="font-size: 2.2rem; margin-bottom: 1rem;">The Thinkers Behind MINDFL</h2>
+          <p style="color: var(--ink-soft); line-height: 1.6;">
+            MINDFL is not built on one philosophy. It is rooted in the collective wisdom of the greatest minds in childhood education. Here is what they believed — and exactly where you will see their ideas in your child's day.
+          </p>
+        </div>
+
+        <div class="thinkers-grid">
+          
+          <div class="thinker-row">
+            <div class="thinker-badge">FF</div>
+            <div>
+              <h3 style="font-size: 1.4rem; color: var(--forest-deep); margin-bottom: 0.3rem;">Friedrich Fröbel</h3>
+              <span style="font-size: 0.85rem; font-weight: 700; color: var(--moss); text-transform: uppercase;">1782–1852 • FOUNDER OF KINDERGARTEN</span>
+              <div class="thinker-quote">
+                "At MINDFL — our nature-based environment builds in children the care for living things."
+              </div>
+            </div>
+            <p style="font-size: 0.96rem; line-height: 1.7; margin: 0; color: var(--ink-soft);">
+              Fröbel gave the world "Kindergarten" — a garden for children. He believed teachers were gardeners, children were plants to be nurtured, and nature was an essential teacher. Play, he said, was a child's highest form of work. His ideas were considered radical in 1837. They are now considered foundational — and they are the beating heart of everything MINDFL does.
+            </p>
+          </div>
+
+          <div class="thinker-row">
+            <div class="thinker-badge">MM</div>
+            <div>
+              <h3 style="font-size: 1.4rem; color: var(--forest-deep); margin-bottom: 0.3rem;">Maria Montessori</h3>
+              <span style="font-size: 0.85rem; font-weight: 700; color: var(--moss); text-transform: uppercase;">1870–1952 • PREPARED ENVIRONMENT</span>
+              <div class="thinker-quote">
+                "At MINDFL — in our G pillar, our natural materials, and in every moment a child chooses what to explore next."
+              </div>
+            </div>
+            <p style="font-size: 0.96rem; line-height: 1.7; margin: 0; color: var(--ink-soft);">
+              Montessori believed the environment itself was a teacher. Children chose their own work, moved freely, and mastered real skills with real tools. Children learn best when they are trusted to lead, developing a natural discipline and internal locus of control.
+            </p>
+          </div>
+
+          <div class="thinker-row">
+            <div class="thinker-badge">RS</div>
+            <div>
+              <h3 style="font-size: 1.4rem; color: var(--forest-deep); margin-bottom: 0.3rem;">Rudolf Steiner</h3>
+              <span style="font-size: 0.85rem; font-weight: 700; color: var(--moss); text-transform: uppercase;">1861–1925 • WALDORF EDUCATION</span>
+              <div class="thinker-quote">
+                "At MINDFL — in our R pillar, our screen-free environment, and in the morning circle that starts every child's day."
+              </div>
+            </div>
+            <p style="font-size: 0.96rem; line-height: 1.7; margin: 0; color: var(--ink-soft);">
+              Steiner understood that childhood has its own rhythm — rushing it does lasting damage. He built unhurried routines around storytelling, seasonal rhythms, and creative play. Wonder is something to be guarded, not consumed, allowing children to build a secure mental base.
+            </p>
+          </div>
+
+          <div class="thinker-row">
+            <div class="thinker-badge">LM</div>
+            <div>
+              <h3 style="font-size: 1.4rem; color: var(--forest-deep); margin-bottom: 0.3rem;">Loris Malaguzzi</h3>
+              <span style="font-size: 0.85rem; font-weight: 700; color: var(--moss); text-transform: uppercase;">1920–1994 • REGGIO EMILIA</span>
+              <div class="thinker-quote">
+                "At MINDFL — in our O pillar, our atelier, and in the way our Nature Crafters document each child's day."
+              </div>
+            </div>
+            <p style="font-size: 0.96rem; line-height: 1.7; margin: 0; color: var(--ink-soft);">
+              Malaguzzi believed children speak in a hundred languages — movement, art, clay, silence — and that schools systematically silence most of them. He placed collaborative exploration, observation, and transparent documentation at the heart of the teaching craft.
+            </p>
+          </div>
+
+          <div class="thinker-row">
+            <div class="thinker-badge">AG</div>
+            <div>
+              <h3 style="font-size: 1.4rem; color: var(--forest-deep); margin-bottom: 0.3rem;">Arnold Gesell</h3>
+              <span style="font-size: 0.85rem; font-weight: 700; color: var(--moss); text-transform: uppercase;">1880–1961 • GESELL DEVELOPMENTAL SCIENCE</span>
+              <div class="thinker-quote">
+                "At MINDFL — in our W pillar, in how we never rush a child, and in our founder's training at the Gesell Program."
+              </div>
+            </div>
+            <p style="font-size: 0.96rem; line-height: 1.7; margin: 0; color: var(--ink-soft);">
+              Gesell mapped childhood development as a biological process with its own internal clock. Readiness, not age, should determine learning. Pushing a child before they are ready doesn't accelerate development — it creates developmental anxiety.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Vine Divider -->
+    <svg class="vine-divider" viewBox="0 0 1080 60"><path class="vine-path" d="M0,30 C150,-10 250,70 400,30 C550,-10 650,70 800,30 C900,5 950,50 1080,25"/></svg>
+
+    <!-- Watch & Learn Gallery Section -->
+    <section class="reveal-on-scroll" style="margin-bottom: 5rem;">
+      <div class="inner">
+        <div style="text-align: center; max-width: 600px; margin: 0 auto 3rem;">
+          <span class="eyebrow">hear it from the experts</span>
+          <h2 style="font-size: 2.2rem;">Watch &amp; Learn</h2>
+          <p style="color: var(--ink-soft); margin-top: 0.5rem;">
+            Six short films that bring the thinking behind MINDFL to life.
+          </p>
+        </div>
+
+        <div class="video-grid">
+          
+          <div class="video-card">
+            <div class="video-thumb" onclick="window.open('https://www.youtube.com/watch?v=lieFOzjLHM8', '_blank')">
+              <div class="play-btn">▶</div>
+            </div>
+            <div class="video-info">
+              <span style="font-size: 0.8rem; font-weight: 700; color: var(--moss); text-transform: uppercase;">Fröbel</span>
+              <h3 style="font-size: 1.15rem; margin-top: 0.4rem; color: var(--forest-deep);">Froebel's Kindergarten: The Origins of Early Childhood</h3>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="video-thumb" onclick="window.open('https://www.youtube.com/watch?v=UzmvtVAuuyI', '_blank')">
+              <div class="play-btn">▶</div>
+            </div>
+            <div class="video-info">
+              <span style="font-size: 0.8rem; font-weight: 700; color: var(--moss); text-transform: uppercase;">Montessori</span>
+              <h3 style="font-size: 1.15rem; margin-top: 0.4rem; color: var(--forest-deep);">Montessori School Education &amp; Autonomy</h3>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="video-thumb" onclick="window.open('https://www.youtube.com/watch?v=BkrgkslnD9g', '_blank')">
+              <div class="play-btn">▶</div>
+            </div>
+            <div class="video-info">
+              <span style="font-size: 0.8rem; font-weight: 700; color: var(--moss); text-transform: uppercase;">Waldorf</span>
+              <h3 style="font-size: 1.15rem; margin-top: 0.4rem; color: var(--forest-deep);">Waldorf School Education: Rhythms &amp; Waldorf Joy</h3>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="video-thumb" onclick="window.open('https://www.youtube.com/watch?v=7n2hCebmT4c', '_blank')">
+              <div class="play-btn">▶</div>
+            </div>
+            <div class="video-info">
+              <span style="font-size: 0.8rem; font-weight: 700; color: var(--moss); text-transform: uppercase;">Reggio Emilia</span>
+              <h3 style="font-size: 1.15rem; margin-top: 0.4rem; color: var(--forest-deep);">Reggio Emilia Education: Observation &amp; Exploration</h3>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="video-thumb" onclick="window.open('https://www.youtube.com/watch?v=zjH9nFdQLVg', '_blank')">
+              <div class="play-btn">▶</div>
+            </div>
+            <div class="video-info">
+              <span style="font-size: 0.8rem; font-weight: 700; color: var(--moss); text-transform: uppercase;">Gesell</span>
+              <h3 style="font-size: 1.15rem; margin-top: 0.4rem; color: var(--forest-deep);">Gesell: Who We Are &amp; Developmental Readiness</h3>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="video-thumb" onclick="window.open('https://www.youtube.com/watch?v=m_5u8-QSh6A', '_blank')">
+              <div class="play-btn">▶</div>
+            </div>
+            <div class="video-info">
+              <span style="font-size: 0.8rem; font-weight: 700; color: var(--moss); text-transform: uppercase;">Early Years</span>
+              <h3 style="font-size: 1.15rem; margin-top: 0.4rem; color: var(--forest-deep);">Serve &amp; Return Interaction Shapes Brain Circuitry</h3>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <h3>MINDFL</h3>
+    <div class="tagline">Discover. Explore. Create. Grow.</div>
+    <div class="footer-socials">
+      <a href="#" aria-label="Facebook">
+        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01"/></svg>
+      </a>
+      <a href="#" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.95 1.96C5.12 19.5 12 19.5 12 19.5s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+      </a>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="why-mindfl.html">Pedagogy</a>
+      <a href="programs.html">Programs</a>
+      <a href="team.html">Team &amp; Careers</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="admissions.html">Admissions</a>
+    </div>
+    <div class="contact-row">
+      <div>
+        <span>Address</span>
+        Sivaram Nagar, Coimbatore, Tamil Nadu
+      </div>
+      <div>
+        <span>Email</span>
+        hello@mindfl.edu.in
+      </div>
+      <div>
+        <span>Phone</span>
+        +91 98765 43210
+      </div>
+    </div>
+    <div class="fine">© 2026 MINDFL School. All Rights Reserved.</div>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+</html>

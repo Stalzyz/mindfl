@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn about our 4-stage admission process at MINDFL. Submit your digital Expression of Interest inquiry form.">
+  <title>Admissions — MINDFL School</title>
+  <link rel="stylesheet" href="index.css">
+  <style>
+    /* Timeline Layout */
+    .timeline-layout {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 3.5rem;
+      align-items: start;
+      margin-bottom: 5rem;
+    }
+
+    /* Vertical Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 2.5rem;
+      margin-top: 1.5rem;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      bottom: 20px;
+      width: 3px;
+      background: var(--moss-light);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3.5rem;
+    }
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+    .timeline-marker {
+      position: absolute;
+      top: 5px;
+      left: -2.5rem;
+      width: 23px;
+      height: 23px;
+      background: var(--paper);
+      border: 3.5px solid var(--moss);
+      border-radius: 50%;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    .timeline-item:hover .timeline-marker {
+      background: var(--clay);
+      border-color: var(--clay);
+    }
+    .timeline-num {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--moss);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Inquiry Card Form */
+    .inquiry-card {
+      background: var(--paper-deep);
+      border-radius: 32px;
+      padding: 3rem 2.2rem;
+      border: 1px solid var(--cream-line);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 100px;
+    }
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--forest-deep);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--paper);
+      border: 1px solid var(--cream-line);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      font-family: inherit;
+      font-size: 0.98rem;
+      color: var(--ink);
+      transition: var(--transition);
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--moss);
+      box-shadow: 0 0 0 3px var(--moss-light);
+    }
+
+    @media (max-width: 900px) {
+      .timeline-layout {
+        grid-template-columns: 1fr;
+        gap: 3.5rem;
+      }
+      .inquiry-card {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Static Texture -->
+  <div style="position:fixed; inset:0; z-index:500; pointer-events:none; filter:url(#noiseFilter); opacity:0.045;"></div>
+
+  <!-- Ambient Background Layer -->
+  <div id="garden-layer"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html" class="brand"><span class="dot"></span>MINDFL</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="why-mindfl.html">Pedagogy</a></li>
+      <li><a href="programs.html">Programs</a></li>
+      <li><a href="team.html">Team &amp; Careers</a></li>
+      <li><a href="architecture.html">Architecture</a></li>
+      <li><a href="admissions.html" class="active">Admissions</a></li>
+    </ul>
+    <a href="admissions.html" class="nav-cta">Apply Now</a>
+    <button class="menu-btn" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <div class="wrap">
+    
+    <!-- Page Header -->
+    <section style="padding-top: 9rem; padding-bottom: 3.5rem; text-align: center;" class="reveal-on-scroll">
+      <div class="inner">
+        <span class="eyebrow">join our community</span>
+        <h1 style="font-size: clamp(2.2rem, 5vw, 3.8rem); margin-bottom: 0.8rem;">Admissions</h1>
+        <p style="max-width: 760px; margin: 0 auto; font-size: 1.1rem; line-height: 1.75;">
+          At MINDFL, our admission process is not a series of tests, but a gentle unfolding. We take the time to understand your child’s unique rhythm and help you experience our Learning Landscape firsthand.
+        </p>
+      </div>
+    </section>
+
+    <!-- Vine Divider -->
+    <svg class="vine-divider" viewBox="0 0 1080 60"><path class="vine-path" d="M0,30 C150,-10 250,70 400,30 C550,-10 650,70 800,30 C900,5 950,50 1080,25"/></svg>
+
+    <!-- Timeline & Form Layout -->
+    <section class="reveal-on-scroll" style="padding-top: 3.5rem;">
+      <div class="inner">
+        
+        <div class="timeline-layout">
+          
+          <!-- Left: Timeline of 4 connection stages -->
+          <div>
+            <h2 style="font-size: 1.8rem; color: var(--forest-deep); margin-bottom: 1.8rem;">The Four Stages of Connection</h2>
+            
+            <div class="timeline">
+              
+              <div class="timeline-item reveal-on-scroll">
+                <div class="timeline-marker"></div>
+                <span class="timeline-num">Stage 1</span>
+                <h3 style="font-size: 1.3rem; color: var(--clay-deep); margin-bottom: 0.6rem;">The Digital Inquiry</h3>
+                <p style="font-size: 0.98rem; line-height: 1.65; color: var(--ink-soft); margin: 0;">
+                  Your journey begins with a moment of curiosity. Share your details through our Expression of Interest form. This simple first step allows us to understand your family's needs, background, and aspirations.
+                </p>
+              </div>
+
+              <div class="timeline-item reveal-on-scroll">
+                <div class="timeline-marker"></div>
+                <span class="timeline-num">Stage 2</span>
+                <h3 style="font-size: 1.3rem; color: var(--clay-deep); margin-bottom: 0.6rem;">The Landscape Dialogue &amp; Tour</h3>
+                <p style="font-size: 0.98rem; line-height: 1.65; color: var(--ink-soft); margin: 0;">
+                  We invite both parents to step into our campus for an immersive walkthrough. Rather than a formal interview, this is a Landscape Dialogue. We will explore our studios together, discuss the GROW Framework, and visualize how your child will navigate our fluid architecture.
+                </p>
+              </div>
+
+              <div class="timeline-item reveal-on-scroll">
+                <div class="timeline-marker"></div>
+                <span class="timeline-num">Stage 3</span>
+                <h3 style="font-size: 1.3rem; color: var(--clay-deep); margin-bottom: 0.6rem;">The Child Observation &amp; Play Session</h3>
+                <p style="font-size: 0.98rem; line-height: 1.65; color: var(--ink-soft); margin: 0;">
+                  At MINDFL, we don't "screen" children; we observe them. We host a gentle play session where your child can explore our Authentic Materials while our educators observe their natural curiosities and social cues. This ensures our environment is the perfect "third teacher" for their current developmental stage.
+                </p>
+              </div>
+
+              <div class="timeline-item reveal-on-scroll">
+                <div class="timeline-marker"></div>
+                <span class="timeline-num">Stage 4</span>
+                <h3 style="font-size: 1.3rem; color: var(--clay-deep); margin-bottom: 0.6rem;">Parents as Partners</h3>
+                <p style="font-size: 0.98rem; line-height: 1.65; color: var(--ink-soft); margin: 0;">
+                  At MINDFL, enrollment is the beginning of a lifelong partnership. We work hand-in-hand with you to ensure a Rhythmic Transition from home to school. Through regular developmental dialogues and collaborative goal-setting, we ensure that your child’s growth is supported consistently across both worlds.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Right: Digital Inquiry Form -->
+          <div>
+            <div class="inquiry-card">
+              <h2 style="font-size: 1.5rem; color: var(--forest-deep); margin-bottom: 0.6rem; font-family: inherit; font-weight: 700;">Expression of Interest</h2>
+              <p style="font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 1.8rem; line-height: 1.5;">
+                Please fill in the form below to begin Stage 1. A school representative will respond shortly to arrange your visit.
+              </p>
+
+              <form id="inquiry-form">
+                <div class="form-group">
+                  <label for="p-name">Parent / Guardian Name</label>
+                  <input type="text" id="p-name" required placeholder="Your full name">
+                </div>
+                <div class="form-group">
+                  <label for="p-email">Email Address</label>
+                  <input type="email" id="p-email" required placeholder="your.email@example.com">
+                </div>
+                <div class="form-group">
+                  <label for="p-phone">Phone Number</label>
+                  <input type="tel" id="p-phone" required placeholder="Your contact number">
+                </div>
+                <div class="form-group">
+                  <label for="c-name">Child's Name</label>
+                  <input type="text" id="c-name" required placeholder="Your child's name">
+                </div>
+                <div class="form-group">
+                  <label for="c-dob">Child's Date of Birth</label>
+                  <input type="date" id="c-dob" required>
+                </div>
+                <div class="form-group">
+                  <label for="program-select">Program of Interest</label>
+                  <select id="program-select" required>
+                    <option value="" disabled selected>Select a program...</option>
+                    <option value="toddler">Parent-Toddler (6-24 Months)</option>
+                    <option value="sprouts">Sprouts (2-3 Years)</option>
+                    <option value="seedlings">Seedlings (3-4 Years)</option>
+                    <option value="buds">Buds (4-5 Years)</option>
+                    <option value="blossoms">Blossoms (5-6 Years)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="p-notes">Aspirations &amp; Special Notes</label>
+                  <textarea id="p-notes" rows="4" placeholder="Tell us what you hope your child will discover at MINDFL..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; text-align: center;">Submit Inquiry</button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <h3>MINDFL</h3>
+    <div class="tagline">Discover. Explore. Create. Grow.</div>
+    <div class="footer-socials">
+      <a href="#" aria-label="Facebook">
+        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01"/></svg>
+      </a>
+      <a href="#" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.95 1.96C5.12 19.5 12 19.5 12 19.5s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+      </a>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="why-mindfl.html">Pedagogy</a>
+      <a href="programs.html">Programs</a>
+      <a href="team.html">Team &amp; Careers</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="admissions.html">Admissions</a>
+    </div>
+    <div class="contact-row">
+      <div>
+        <span>Address</span>
+        Sivaram Nagar, Coimbatore, Tamil Nadu
+      </div>
+      <div>
+        <span>Email</span>
+        hello@mindfl.edu.in
+      </div>
+      <div>
+        <span>Phone</span>
+        +91 98765 43210
+      </div>
+    </div>
+    <div class="fine">© 2026 MINDFL School. All Rights Reserved.</div>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Discover MINDFL's sustainable, nature-integrated architecture. Explore the Living Canopy, the Elliptical Loop, and our design for the senses.">
+  <title>Architecture — MINDFL School</title>
+  <link rel="stylesheet" href="index.css">
+  <style>
+    /* Architecture layouts */
+    .arch-card {
+      background: var(--paper-deep);
+      border: 1px solid var(--cream-line);
+      border-radius: 32px;
+      padding: 3.5rem 3rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 3.5rem;
+    }
+    .arch-grid-two {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .arch-grid-reverse {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .graphic-box {
+      background: var(--paper);
+      border: 1px solid var(--cream-line);
+      border-radius: 24px;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Senses Grid */
+    .senses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .sense-card {
+      background: var(--paper-deep);
+      border: 1px solid var(--cream-line);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .sense-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+    .sense-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--paper);
+      border-radius: 50%;
+      border: 1px solid var(--cream-line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      margin: 0 auto 1.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .arch-grid-two, .arch-grid-reverse {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .arch-card {
+        padding: 2.5rem 1.8rem;
+      }
+      .graphic-box {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Static Texture -->
+  <div style="position:fixed; inset:0; z-index:500; pointer-events:none; filter:url(#noiseFilter); opacity:0.045;"></div>
+
+  <!-- Ambient Background Layer -->
+  <div id="garden-layer"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html" class="brand"><span class="dot"></span>MINDFL</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="why-mindfl.html">Pedagogy</a></li>
+      <li><a href="programs.html">Programs</a></li>
+      <li><a href="team.html">Team &amp; Careers</a></li>
+      <li><a href="architecture.html" class="active">Architecture</a></li>
+      <li><a href="admissions.html">Admissions</a></li>
+    </ul>
+    <a href="admissions.html" class="nav-cta">Apply Now</a>
+    <button class="menu-btn" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <div class="wrap">
+    
+    <!-- Page Header -->
+    <section style="padding-top: 9rem; padding-bottom: 3.5rem; text-align: center;" class="reveal-on-scroll">
+      <div class="inner">
+        <span class="eyebrow">spaces designed for learning</span>
+        <h1 style="font-size: clamp(2.2rem, 5vw, 3.8rem); margin-bottom: 0.8rem;">Our Architecture</h1>
+        <div style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: var(--clay); margin: 0.5rem auto 1.5rem;">
+          "Study nature, love nature, stay close to nature. It will never fail you."
+        </div>
+        <span style="font-size: 0.95rem; font-weight: 700; color: var(--ink-soft); display: block; margin-top: -0.5rem;">— Frank Lloyd Wright</span>
+      </div>
+    </section>
+
+    <!-- Vine Divider -->
+    <svg class="vine-divider" viewBox="0 0 1080 60"><path class="vine-path" d="M0,30 C150,-10 250,70 400,30 C550,-10 650,70 800,30 C900,5 950,50 1080,25"/></svg>
+
+    <!-- Content Sections -->
+    <section style="padding-top: 3.5rem; padding-bottom: 4rem;">
+      <div class="inner">
+        
+        <!-- Section 1: Living Canopy -->
+        <div class="arch-card arch-grid-two reveal-on-scroll">
+          <div>
+            <span class="eyebrow">ecology of spatial excellence</span>
+            <h2 style="font-size: 1.8rem; color: var(--forest-deep); margin-bottom: 1rem;">An Experience Under a Living Canopy</h2>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); margin-bottom: 1.2rem;">
+              We are designing more than a school; we are creating an ecology of spatial excellence. At the heart of our campus is the Roof—a signature, multi-faceted canopy that acts as a protective wing for our "Learning Village".
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); margin: 0;">
+              This design creates a low, human-scale environment that feels like a home rather than an institution. We believe that what children grow around, becomes what they carry within. By using honest, natural materials, we ensure children feel a deep sense of belonging and cultural relevance from the moment they arrive.
+            </p>
+          </div>
+          <div class="graphic-box">
+            <!-- Canopy SVG Graphic -->
+            <svg width="220" height="180" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+              <!-- Canopy Wing -->
+              <path d="M20 120 C60 60 140 60 180 120" stroke="var(--clay)" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M40 105 C70 55 130 55 160 105" stroke="var(--moss)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M60 90 C80 60 120 60 140 90" stroke="var(--gold-soft)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- Pillars -->
+              <line x1="60" y1="124" x2="60" y2="150" stroke="var(--forest-deep)" stroke-width="3" stroke-linecap="round"/>
+              <line x1="140" y1="124" x2="140" y2="150" stroke="var(--forest-deep)" stroke-width="3" stroke-linecap="round"/>
+              <line x1="100" y1="110" x2="100" y2="150" stroke="var(--forest-deep)" stroke-width="3" stroke-linecap="round"/>
+              <!-- Ground line -->
+              <line x1="10" y1="150" x2="190" y2="150" stroke="var(--forest)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Section 2: Safety at Every Step -->
+        <div class="arch-card arch-grid-reverse reveal-on-scroll">
+          <div class="graphic-box">
+            <!-- Safety SVG Graphic -->
+            <svg width="220" height="180" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+              <!-- Classroom Sanctuary Hexagon/Shield -->
+              <polygon points="100,20 170,50 170,110 100,140 30,110 30,50" stroke="var(--forest)" stroke-width="3" fill="var(--moss-light)" stroke-linejoin="round"/>
+              <circle cx="100" cy="80" r="28" fill="var(--paper)" stroke="var(--gold)" stroke-width="2"/>
+              <path d="M92 82 L98 87 L108 75" stroke="var(--clay)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+          <div>
+            <span class="eyebrow">psychological sanctuary</span>
+            <h2 style="font-size: 1.8rem; color: var(--forest-deep); margin-bottom: 1rem;">Safety at Every Step…</h2>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); margin-bottom: 1.2rem;">
+              Physical and psychological security is built into the very geometry of our classrooms. Every space is designed to be a protective sanctuary that settles the mind, allowing little learners to feel a deep sense of calm and focus.
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); margin: 0;">
+              By removing rigid corridors and fixed "teacher positions," we ensure there is no single point of control. This creates a transparent, fluid flow where children feel safe to explore independently while guides move naturally among them. From the ergonomic furniture to the approachable textures, every surface is engineered to the highest safety standards, allowing children to focus entirely on their natural curiosity.
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 3: The Loop -->
+        <div class="arch-card arch-grid-two reveal-on-scroll">
+          <div>
+            <span class="eyebrow">elliptical play pathway</span>
+            <h2 style="font-size: 1.8rem; color: var(--forest-deep); margin-bottom: 1rem;">…All Around the Loop</h2>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); margin-bottom: 1.2rem;">
+              India currently faces a significant health challenge as the second-largest nation in terms of child obesity. Recognizing that modern childhood is facing a silent crisis of sedentary living, we were intentional in designing a landscape that demands movement.
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); margin: 0;">
+              Our <strong>MINDFL Loop</strong> is a continuous, elliptical pathway that wraps around the campus, providing a naturally protected perimeter where children can run, climb, and balance freely. This pathway integrates over 36 fundamental types of play into the daily rhythm, ensuring that physical activity is never a "break" but a constant, healthy part of learning. Because when the body moves, the mind opens.
+            </p>
+          </div>
+          <div class="graphic-box">
+            <!-- Loop Ellipse SVG Graphic -->
+            <svg width="220" height="180" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" style="animation: spinPulse 8s ease-in-out infinite; transform-origin: center;">
+              <!-- Outer Ellipse Loop -->
+              <ellipse cx="100" cy="80" rx="80" ry="54" stroke="var(--moss)" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-dasharray="12 8"/>
+              <ellipse cx="100" cy="80" rx="66" ry="42" stroke="var(--gold-soft)" stroke-width="1.5" fill="none" stroke-dasharray="4 6"/>
+              <!-- Little runner indicator -->
+              <circle cx="150" cy="50" r="7" fill="var(--clay)"/>
+              <circle cx="50" cy="110" r="5" fill="var(--forest)"/>
+              <!-- Central Seal -->
+              <text x="100" y="85" text-anchor="middle" font-family="'Fraunces', serif" font-weight="700" font-size="12" fill="var(--forest-deep)">36 PLAY TYPES</text>
+            </svg>
+            <style>
+              @keyframes spinPulse {
+                0%, 100% { transform: scale(1) rotate(0deg); }
+                50% { transform: scale(1.03) rotate(3deg); }
+              }
+            </style>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Vine Divider -->
+    <svg class="vine-divider" viewBox="0 0 1080 60"><path class="vine-path" d="M1080,30 C930,-10 830,70 680,30 C530,-10 430,70 280,30 C180,5 130,50 0,25"/></svg>
+
+    <!-- Design for Senses -->
+    <section class="reveal-on-scroll" style="margin-bottom: 5rem;">
+      <div class="inner">
+        <div style="text-align: center; max-width: 600px; margin: 0 auto 3rem;">
+          <span class="eyebrow">sensory enhancement</span>
+          <h2 style="font-size: 2.2rem;">Design for the Senses</h2>
+          <p style="color: var(--ink-soft); margin-top: 0.5rem;">
+            We align clinical care and architectural sensitivity to create a school day that respects biological clocks.
+          </p>
+        </div>
+
+        <!-- Human Centric Lighting Intro -->
+        <div style="background: var(--paper-deep); border-radius: 24px; padding: 2.5rem; border: 1px solid var(--cream-line); text-align: center; margin-bottom: 2rem; max-width: 820px; margin-left: auto; margin-right: auto;">
+          <h3 style="font-size: 1.4rem; color: var(--forest-deep); margin-bottom: 0.8rem;">Human-Centric Lighting</h3>
+          <p style="font-size: 1.02rem; line-height: 1.7; color: var(--ink-soft); margin: 0;">
+            In clinical care, carefully designed lighting improves recovery; we bring that same sensitivity into early learning. Our Human-Centric Lighting aligns the school day with a child’s natural biological clock to regulate mood and focus.
+          </p>
+        </div>
+
+        <div class="senses-grid">
+          
+          <div class="sense-card">
+            <div class="sense-icon-wrap">
+              <svg class="flat-icon clay" viewBox="0 0 24 24"><path d="M20 20L4 4v16h16zm-5-3l-7-7v7h7z"/></svg>
+            </div>
+            <h3 style="font-size: 1.25rem; color: var(--forest-deep); margin-bottom: 0.6rem;">Spatial Awareness</h3>
+            <p style="font-size: 0.95rem; line-height: 1.6; color: var(--ink-soft); margin: 0;">
+              Varying ceiling heights act as a tool for children to instinctively understand the volume and rhythm of their world.
+            </p>
+          </div>
+
+          <div class="sense-card">
+            <div class="sense-icon-wrap">
+              <svg class="flat-icon green" viewBox="0 0 24 24"><path d="M12 22v-5M17 17H7a5 5 0 0 1-2-9.58 6 6 0 1 1 14 0A5 5 0 0 1 17 17z"/></svg>
+            </div>
+            <h3 style="font-size: 1.25rem; color: var(--forest-deep); margin-bottom: 0.6rem;">The Power of Greenery</h3>
+            <p style="font-size: 0.95rem; line-height: 1.6; color: var(--ink-soft); margin: 0;">
+              We have replaced concrete with a lush landscape that increases attention spans, filters air, and naturally settles the mind.
+            </p>
+          </div>
+
+          <div class="sense-card">
+            <div class="sense-icon-wrap">
+              <svg class="flat-icon rose" viewBox="0 0 24 24"><path d="M2 12c3-3 5-3 8 0s5 3 8 0 3-2 4-2M2 16c3-3 5-3 8 0s5 3 8 0 3-2 4-2"/></svg>
+            </div>
+            <h3 style="font-size: 1.25rem; color: var(--forest-deep); margin-bottom: 0.6rem;">A Living Ecosystem</h3>
+            <p style="font-size: 0.95rem; line-height: 1.6; color: var(--ink-soft); margin: 0;">
+              The sound of running water and the visits of birds teach children to co-exist with a vibrant, breathing world.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <h3>MINDFL</h3>
+    <div class="tagline">Discover. Explore. Create. Grow.</div>
+    <div class="footer-socials">
+      <a href="#" aria-label="Facebook">
+        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01"/></svg>
+      </a>
+      <a href="#" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.95 1.96C5.12 19.5 12 19.5 12 19.5s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+      </a>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="why-mindfl.html">Pedagogy</a>
+      <a href="programs.html">Programs</a>
+      <a href="team.html">Team &amp; Careers</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="admissions.html">Admissions</a>
+    </div>
+    <div class="contact-row">
+      <div>
+        <span>Address</span>
+        Sivaram Nagar, Coimbatore, Tamil Nadu
+      </div>
+      <div>
+        <span>Email</span>
+        hello@mindfl.edu.in
+      </div>
+      <div>
+        <span>Phone</span>
+        +91 98765 43210
+      </div>
+    </div>
+    <div class="fine">© 2026 MINDFL School. All Rights Reserved.</div>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+</html>
