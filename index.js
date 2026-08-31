@@ -1012,51 +1012,16 @@ Submitted at: ${data.timestamp}
     } catch (e) {}
   }
 
-  let birdTimer = null;
-
-  function playBirdChirpSFX() {
-    if (!isSoundEnabled) return;
-    const ctx = getAudioContext();
-    if (!ctx) return;
-
-    try {
-      const now = ctx.currentTime;
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(2400 + Math.random() * 800, now);
-      osc.frequency.exponentialRampToValueAtTime(3200 + Math.random() * 600, now + 0.08);
-      osc.frequency.exponentialRampToValueAtTime(2200 + Math.random() * 400, now + 0.16);
-
-      gain.gain.setValueAtTime(0.001, now);
-      gain.gain.linearRampToValueAtTime(0.08, now + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start(now);
-      osc.stop(now + 0.18);
-    } catch(e) {}
-  }
+  let bgmVolume = parseFloat(localStorage.getItem('mindfl_bgm_volume') || '0.30');
 
   function startAmbientNature() {
     if (!bgmAudio) {
-      bgmAudio = new Audio('https://cdn.pixabay.com/download/audio/2021/09/06/audio_40b2b8c5e6.mp3');
+      bgmAudio = new Audio('https://cdn.pixabay.com/download/audio/2022/02/23/audio_ea70ad08e3.mp3');
       bgmAudio.loop = true;
-      bgmAudio.volume = 0.35;
+      bgmAudio.volume = bgmVolume;
     }
     if (isSoundEnabled) {
       bgmAudio.play().catch(() => {});
-    }
-
-    if (!birdTimer) {
-      birdTimer = setInterval(() => {
-        if (isSoundEnabled && Math.random() > 0.4) {
-          playBirdChirpSFX();
-        }
-      }, 4000);
     }
   }
 
@@ -1064,9 +1029,13 @@ Submitted at: ${data.timestamp}
     if (bgmAudio) {
       bgmAudio.pause();
     }
-    if (birdTimer) {
-      clearInterval(birdTimer);
-      birdTimer = null;
+  }
+
+  function setBgmVolume(val) {
+    bgmVolume = val;
+    localStorage.setItem('mindfl_bgm_volume', val);
+    if (bgmAudio) {
+      bgmAudio.volume = val;
     }
   }
 
@@ -1075,17 +1044,53 @@ Submitted at: ${data.timestamp}
     isSoundEnabled = stored === null ? true : stored === 'true';
 
     if (!document.querySelector('.sound-widget-btn')) {
+      // Create container
+      const container = document.createElement('div');
+      container.className = 'sound-widget-container';
+      container.style.cssText = 'position:fixed;bottom:1.2rem;left:1.2rem;z-index:9999;display:flex;flex-direction:column;align-items:flex-start;gap:0.4rem;';
+
+      // Volume slider row
+      const volWrap = document.createElement('div');
+      volWrap.className = 'sound-volume-wrap';
+      volWrap.style.cssText = 'opacity:0;pointer-events:none;transition:opacity 0.3s ease;background:rgba(30,30,20,0.7);padding:0.35rem 0.6rem;border-radius:20px;backdrop-filter:blur(8px);';
+      const volIcon = document.createElement('span');
+      volIcon.textContent = '🔉';
+      volIcon.style.fontSize = '0.8rem';
+      const volSlider = document.createElement('input');
+      volSlider.type = 'range';
+      volSlider.min = '0';
+      volSlider.max = '100';
+      volSlider.value = String(Math.round(bgmVolume * 100));
+      volSlider.className = 'sound-volume-slider';
+      volSlider.addEventListener('input', (e) => {
+        e.stopPropagation();
+        setBgmVolume(parseInt(e.target.value) / 100);
+      });
+      volWrap.appendChild(volIcon);
+      volWrap.appendChild(volSlider);
+
+      // Toggle button
       const widget = document.createElement('button');
       widget.className = `sound-widget-btn ${isSoundEnabled ? 'playing' : ''}`;
-      widget.setAttribute('aria-label', 'Toggle Ambient Nature Audio');
+      widget.setAttribute('aria-label', 'Toggle Spring Music');
       widget.innerHTML = `
         <div class="sound-bars">
           <div class="sound-bar"></div>
           <div class="sound-bar"></div>
           <div class="sound-bar"></div>
         </div>
-        <span class="sound-label">${isSoundEnabled ? 'Nature Audio: ON' : 'Nature Audio: OFF'}</span>
+        <span class="sound-label">${isSoundEnabled ? 'Spring Music: ON' : 'Spring Music: OFF'}</span>
       `;
+
+      // Show volume on hover
+      container.addEventListener('mouseenter', () => {
+        volWrap.style.opacity = '1';
+        volWrap.style.pointerEvents = 'auto';
+      });
+      container.addEventListener('mouseleave', () => {
+        volWrap.style.opacity = '0';
+        volWrap.style.pointerEvents = 'none';
+      });
 
       widget.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -1096,16 +1101,18 @@ Submitted at: ${data.timestamp}
         const label = widget.querySelector('.sound-label');
         if (isSoundEnabled) {
           widget.classList.add('playing');
-          if (label) label.textContent = 'Nature Audio: ON';
+          if (label) label.textContent = 'Spring Music: ON';
           startAmbientNature();
         } else {
           widget.classList.remove('playing');
-          if (label) label.textContent = 'Nature Audio: OFF';
+          if (label) label.textContent = 'Spring Music: OFF';
           stopAmbientNature();
         }
       });
 
-      document.body.appendChild(widget);
+      container.appendChild(volWrap);
+      container.appendChild(widget);
+      document.body.appendChild(container);
     }
 
     // Unlocking Audio on First Touch/Click/Pointer
