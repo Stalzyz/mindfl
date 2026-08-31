@@ -893,9 +893,8 @@ Submitted at: ${data.timestamp}
 
   /* ---------------- WEB AUDIO & SOUND WIDGET ENGINE ---------------- */
   let audioCtx = null;
-  let isSoundEnabled = false;
-  let ambientOscillators = [];
-  let ambientGain = null;
+  let isSoundEnabled = true;
+  let bgmAudio = null;
 
   function getAudioContext() {
     if (!audioCtx) {
@@ -904,38 +903,21 @@ Submitted at: ${data.timestamp}
         audioCtx = new AudioContextClass();
       }
     }
-    if (audioCtx && audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
     return audioCtx;
   }
 
-  function playTapSFX() {
-    if (!isSoundEnabled) return;
+  function unlockWebAudio() {
     const ctx = getAudioContext();
-    if (!ctx) return;
-
-    try {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(320, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(140, ctx.currentTime + 0.08);
-
-      gain.gain.setValueAtTime(0.15, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.08);
-    } catch (e) {}
+    if (ctx && ctx.state === 'suspended') {
+      ctx.resume().catch(() => {});
+    }
+    if (isSoundEnabled) {
+      startAmbientNature();
+    }
   }
 
-  // Acoustic Grand Piano Synthesizer (Pentatonic Scale: C4, D4, E4, G4, A4, C5, D5, E5)
-  const pianoNotes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25];
+  // Piano Notes Scale (C4, D4, E4, G4, A4, C5, D5, E5, G5)
+  const pianoNotes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99];
   let pianoNoteIdx = 0;
 
   function playPianoKeySFX(noteIndex = null) {
@@ -943,28 +925,33 @@ Submitted at: ${data.timestamp}
     const ctx = getAudioContext();
     if (!ctx) return;
 
+    if (ctx.state === 'suspended') {
+      ctx.resume().catch(() => {});
+    }
+
     try {
       const idx = noteIndex !== null ? noteIndex : pianoNoteIdx++;
       const freq = pianoNotes[Math.abs(idx) % pianoNotes.length];
       const now = ctx.currentTime;
 
-      // Master Piano Envelope
+      // Master Piano Note Envelope
       const noteGain = ctx.createGain();
-      noteGain.gain.setValueAtTime(0.001, now);
-      noteGain.gain.linearRampToValueAtTime(0.22, now + 0.008);
-      noteGain.gain.exponentialRampToValueAtTime(0.001, now + 1.5);
+      noteGain.gain.setValueAtTime(0.0001, now);
+      noteGain.gain.linearRampToValueAtTime(0.28, now + 0.008);
+      noteGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.6);
 
       // Acoustic Lowpass Filter
       const filter = ctx.createBiquadFilter();
       filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(1600, now);
-      filter.frequency.exponentialRampToValueAtTime(450, now + 1.2);
+      filter.frequency.setValueAtTime(1800, now);
+      filter.frequency.exponentialRampToValueAtTime(380, now + 1.3);
 
-      // Piano Harmonics (Fundamental + Overtones)
+      // Piano Harmonics
       const harmonics = [
         { mult: 1, gain: 0.70 },
-        { mult: 2, gain: 0.28 },
-        { mult: 3, gain: 0.12 }
+        { mult: 2, gain: 0.30 },
+        { mult: 3, gain: 0.15 },
+        { mult: 4, gain: 0.05 }
       ];
 
       harmonics.forEach(h => {
@@ -979,7 +966,7 @@ Submitted at: ${data.timestamp}
         hGain.connect(filter);
 
         osc.start(now);
-        osc.stop(now + 1.5);
+        osc.stop(now + 1.6);
       });
 
       filter.connect(noteGain);
@@ -991,6 +978,10 @@ Submitted at: ${data.timestamp}
     if (!isSoundEnabled) return;
     const ctx = getAudioContext();
     if (!ctx) return;
+
+    if (ctx.state === 'suspended') {
+      ctx.resume().catch(() => {});
+    }
 
     try {
       const bufferSize = ctx.sampleRate * 0.15;
@@ -1021,66 +1012,24 @@ Submitted at: ${data.timestamp}
     } catch (e) {}
   }
 
-  let bgmTimer = null;
-
   function startAmbientNature() {
-    const ctx = getAudioContext();
-    if (!ctx) return;
-
-    stopAmbientNature();
-
-    try {
-      ambientGain = ctx.createGain();
-      ambientGain.gain.setValueAtTime(0.12, ctx.currentTime);
-
-      const bufferSize = ctx.sampleRate * 2;
-      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-      let lastOut = 0.0;
-      for (let i = 0; i < bufferSize; i++) {
-        const white = Math.random() * 2 - 1;
-        data[i] = (lastOut + (0.02 * white)) / 1.02;
-        lastOut = data[i];
-      }
-
-      const windSrc = ctx.createBufferSource();
-      windSrc.buffer = buffer;
-      windSrc.loop = true;
-
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(420, ctx.currentTime);
-
-      windSrc.connect(filter);
-      filter.connect(ambientGain);
-      ambientGain.connect(ctx.destination);
-
-      windSrc.start(ctx.currentTime);
-      ambientOscillators.push(windSrc);
-
-      // Gentle piano background music chord progression every 4.5 seconds
-      playPianoKeySFX(0);
-      bgmTimer = setInterval(() => {
-        if (isSoundEnabled) {
-          playPianoKeySFX(Math.floor(Math.random() * pianoNotes.length));
-        }
-      }, 4500);
-    } catch(e) {}
+    if (!bgmAudio) {
+      bgmAudio = new Audio('https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3');
+      bgmAudio.loop = true;
+      bgmAudio.volume = 0.20;
+    }
+    if (isSoundEnabled) {
+      bgmAudio.play().catch(() => {});
+    }
   }
 
   function stopAmbientNature() {
-    if (bgmTimer) {
-      clearInterval(bgmTimer);
-      bgmTimer = null;
+    if (bgmAudio) {
+      bgmAudio.pause();
     }
-    ambientOscillators.forEach(osc => {
-      try { osc.stop(); } catch(e) {}
-    });
-    ambientOscillators = [];
   }
 
   function initAudioEngine() {
-    // Default sound enabled if not explicitly turned off
     const stored = localStorage.getItem('mindfl_sound_enabled');
     isSoundEnabled = stored === null ? true : stored === 'true';
 
@@ -1097,7 +1046,9 @@ Submitted at: ${data.timestamp}
         <span class="sound-label">${isSoundEnabled ? 'Nature Audio: ON' : 'Nature Audio: OFF'}</span>
       `;
 
-      widget.addEventListener('click', () => {
+      widget.addEventListener('click', (e) => {
+        e.stopPropagation();
+        unlockWebAudio();
         isSoundEnabled = !isSoundEnabled;
         localStorage.setItem('mindfl_sound_enabled', isSoundEnabled);
 
@@ -1106,7 +1057,6 @@ Submitted at: ${data.timestamp}
           widget.classList.add('playing');
           if (label) label.textContent = 'Nature Audio: ON';
           startAmbientNature();
-          playPianoKeySFX(0);
         } else {
           widget.classList.remove('playing');
           if (label) label.textContent = 'Nature Audio: OFF';
@@ -1117,22 +1067,19 @@ Submitted at: ${data.timestamp}
       document.body.appendChild(widget);
     }
 
-    const unlockAudio = () => {
-      if (isSoundEnabled) {
-        startAmbientNature();
-      }
-    };
-    document.addEventListener('click', unlockAudio, { once: true });
-    document.addEventListener('mouseover', unlockAudio, { once: true });
+    // Unlocking Audio on First Touch/Click/Pointer
+    window.addEventListener('click', unlockWebAudio, { once: true });
+    window.addEventListener('pointerdown', unlockWebAudio, { once: true });
+    window.addEventListener('keydown', unlockWebAudio, { once: true });
 
-    // Global Event Delegation for Piano SFX on Button & Card Hovers
+    // Global Event Delegation for Piano Key SFX on Hover
     let lastHoverTime = 0;
     document.body.addEventListener('mouseover', (e) => {
       const target = e.target.closest('.btn-primary, .btn-secondary, button, nav a, .footer-links a, .card, .pedagogy-card, .sense-card, .program-card, .founder-card, .offering-card, .thinker-row, .video-card');
       if (!target) return;
 
       const now = Date.now();
-      if (now - lastHoverTime < 100) return; // 100ms throttle
+      if (now - lastHoverTime < 90) return; // 90ms throttle
       lastHoverTime = now;
 
       playPianoKeySFX();
@@ -1142,7 +1089,7 @@ Submitted at: ${data.timestamp}
     document.body.addEventListener('click', (e) => {
       const target = e.target.closest('.btn-primary, .btn-secondary, button, nav a, .footer-links a, input[type="submit"]');
       if (target && !target.classList.contains('sound-widget-btn')) {
-        playPianoKeySFX(2);
+        playPianoKeySFX(4);
       }
     });
   }
