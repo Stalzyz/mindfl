@@ -251,12 +251,12 @@ nav {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 5000;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.9rem 1.2rem;
-  background: rgba(246, 239, 224, 0.8);
+  background: rgba(246, 239, 224, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--cream-line);
 }
@@ -284,14 +284,14 @@ nav {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--paper-deep);
+  background: var(--paper-deep, #f0e8d8);
   display: flex;
   flex-direction: column;
   padding: 2.5rem 1.5rem;
   gap: 1.5rem;
   transform: translateX(100%);
   transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.3, 1);
-  z-index: 999;
+  z-index: 5001;
   border-top: 1px solid var(--cream-line);
   overflow-y: auto;
   list-style: none;
@@ -327,7 +327,7 @@ nav {
   border: none;
   cursor: pointer;
   padding: 0.4rem;
-  z-index: 1000;
+  z-index: 5002;
 }
 
 .menu-btn span {
@@ -1288,10 +1288,6 @@ footer .fine {
 
 /* ---------------- FLOATING AUDIO CONTROLLER & SFX STYLES ---------------- */
 .sound-widget-btn {
-  position: fixed;
-  bottom: 24px;
-  left: 24px;
-  z-index: 998;
   display: flex;
   align-items: center;
   gap: 0.6rem;
@@ -1426,6 +1422,202 @@ footer .fine {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------------- FAB STACK (RIGHT SIDE) ---------------- */
+.fab-stack {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.2rem;
+  z-index: 4000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.fab-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.fab-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+}
+.fab-btn:active {
+  transform: scale(0.95);
+}
+
+.fab-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Apply Now FAB */
+.fab-apply {
+  background: var(--forest, #2c4a2a);
+  color: var(--paper, #faf5eb);
+}
+.fab-apply svg { fill: currentColor; stroke: none; }
+
+/* WhatsApp FAB */
+.fab-whatsapp {
+  background: #25D366;
+  color: #fff;
+}
+.fab-whatsapp svg { fill: currentColor; stroke: none; }
+
+/* Go to Top FAB */
+.fab-top {
+  width: 42px;
+  height: 42px;
+  background: var(--clay, #c17a3a);
+  color: var(--paper, #faf5eb);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.25s ease;
+}
+.fab-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.fab-top svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------------- SOUND FAB (LEFT SIDE) ---------------- */
+.sound-fab-stack {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.2rem;
+  z-index: 4000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sound-volume-vertical {
+  width: 36px;
+  padding: 0.5rem 0;
+  background: rgba(26, 32, 24, 0.8);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.sound-fab-stack:hover .sound-volume-vertical,
+.sound-fab-stack.vol-open .sound-volume-vertical {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.sound-volume-vertical input[type="range"] {
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 4px;
+  height: 80px;
+  accent-color: var(--moss, #7c9463);
+  cursor: pointer;
+  appearance: slider-vertical;
+  -webkit-appearance: slider-vertical;
+}
+
+/* ---------------- MINI ENQUIRY FORM POPUP ---------------- */
+.mini-form-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
+  z-index: 6000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.mini-form-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mini-form-card {
+  background: var(--paper, #faf5eb);
+  border-radius: 24px 24px 0 0;
+  padding: 2rem 1.5rem 1.5rem;
+  width: 100%;
+  max-width: 420px;
+  max-height: 85vh;
+  overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.3, 1);
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.15);
+}
+.mini-form-overlay.active .mini-form-card {
+  transform: translateY(0);
+}
+
+.mini-form-card h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem;
+  color: var(--forest-deep, #1a201a);
+  margin-bottom: 0.3rem;
+}
+
+.mini-form-card .mini-form-sub {
+  font-size: 0.85rem;
+  color: var(--ink-soft, #5a5a50);
+  margin-bottom: 1.4rem;
+  line-height: 1.5;
+}
+
+.mini-form-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: var(--ink-soft, #5a5a50);
+  line-height: 1;
+  padding: 0.3rem;
+}
+.mini-form-close:hover {
+  color: var(--forest-deep, #1a201a);
+}
+
+@media (min-width: 768px) {
+  .mini-form-card {
+    border-radius: 24px;
+    margin-bottom: 2rem;
+    max-width: 480px;
+  }
+  .mini-form-overlay {
+    align-items: center;
+  }
+}
+
 
 
 

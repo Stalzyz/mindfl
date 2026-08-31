@@ -17,7 +17,7 @@
     initMagneticButtons();
     initOrganicBlobBackdrops();
     initBotanicalCursorTrail();
-    initAudioEngine();
+    initAllFeatures();
     initPageTransitions();
   });
 
@@ -683,6 +683,7 @@
         initCardTilt();
         initMagneticButtons();
         initOrganicBlobBackdrops();
+        initAllFeatures();
       });
     } catch (err) {
       if (!isPopState) {
@@ -724,32 +725,6 @@
         document.getElementsByTagName('head')[0].appendChild(link);
       }
       link.href = savedFavicon;
-    }
-
-    // 4. WhatsApp FAB Button
-    const waEnabled = localStorage.getItem('mindfl_whatsapp_enabled') === 'true';
-    const existingFab = document.querySelector('.whatsapp-fab');
-    if (waEnabled) {
-      if (!existingFab) {
-        const phone = localStorage.getItem('mindfl_whatsapp_phone') || '919876543210';
-        const msg = localStorage.getItem('mindfl_whatsapp_msg') || 'Hello! I would like to inquire about MINDFL School.';
-        const encodedMsg = encodeURIComponent(msg);
-        
-        const fab = document.createElement('a');
-        fab.className = 'whatsapp-fab';
-        fab.href = `https://wa.me/${phone}?text=${encodedMsg}`;
-        fab.target = '_blank';
-        fab.setAttribute('aria-label', 'Chat on WhatsApp');
-        fab.innerHTML = `
-          <svg viewBox="0 0 24 24">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.5-5.739-1.453L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.623-1.023-5.09-2.885-6.948C16.279 2.016 13.822 1 12.005 1 6.57 1 2.147 5.37 2.142 10.8c-.001 1.674.452 3.3 1.311 4.747l-.994 3.633 3.766-.976.242.139z"/>
-            <path d="M15.772 12.886c-.27-.135-1.597-.788-1.846-.879-.247-.09-.429-.135-.609.135-.18.27-.697.879-.855 1.059-.158.18-.315.202-.585.067-.27-.135-1.139-.42-2.169-1.34-.801-.715-1.343-1.6-1.5-1.871-.158-.272-.017-.42.119-.555.122-.121.27-.315.405-.471.135-.158.18-.27.27-.45.09-.18.045-.338-.022-.472-.068-.135-.609-1.463-.834-2.003-.22-.53-.44-.458-.609-.467-.158-.008-.338-.008-.517-.008-.18 0-.472.067-.719.338-.247.27-.945.922-.945 2.25s.967 2.61 1.102 2.79c.135.18 1.902 2.904 4.609 4.07.644.278 1.147.444 1.54.568.647.206 1.237.177 1.703.107.519-.078 1.597-.653 1.822-1.282.225-.63.225-1.17.158-1.282-.068-.113-.248-.18-.518-.315z"/>
-          </svg>
-        `;
-        document.body.appendChild(fab);
-      }
-    } else {
-      if (existingFab) existingFab.remove();
     }
 
     // 5. Custom contact details in footer
@@ -1043,33 +1018,26 @@ Submitted at: ${data.timestamp}
     const stored = localStorage.getItem('mindfl_sound_enabled');
     isSoundEnabled = stored === null ? true : stored === 'true';
 
-    if (!document.querySelector('.sound-widget-btn')) {
-      // Create container
-      const container = document.createElement('div');
-      container.className = 'sound-widget-container';
-      container.style.cssText = 'position:fixed;bottom:1.2rem;left:1.2rem;z-index:9999;display:flex;flex-direction:column;align-items:flex-start;gap:0.4rem;';
+    if (!document.querySelector('.sound-fab-stack')) {
+      // Sound FAB container (left side)
+      const stack = document.createElement('div');
+      stack.className = 'sound-fab-stack';
 
-      // Volume slider row
-      const volWrap = document.createElement('div');
-      volWrap.className = 'sound-volume-wrap';
-      volWrap.style.cssText = 'opacity:0;pointer-events:none;transition:opacity 0.3s ease;background:rgba(30,30,20,0.7);padding:0.35rem 0.6rem;border-radius:20px;backdrop-filter:blur(8px);';
-      const volIcon = document.createElement('span');
-      volIcon.textContent = '🔉';
-      volIcon.style.fontSize = '0.8rem';
+      // Vertical volume slider
+      const volBox = document.createElement('div');
+      volBox.className = 'sound-volume-vertical';
       const volSlider = document.createElement('input');
       volSlider.type = 'range';
       volSlider.min = '0';
       volSlider.max = '100';
       volSlider.value = String(Math.round(bgmVolume * 100));
-      volSlider.className = 'sound-volume-slider';
       volSlider.addEventListener('input', (e) => {
         e.stopPropagation();
         setBgmVolume(parseInt(e.target.value) / 100);
       });
-      volWrap.appendChild(volIcon);
-      volWrap.appendChild(volSlider);
+      volBox.appendChild(volSlider);
 
-      // Toggle button
+      // Sound toggle button
       const widget = document.createElement('button');
       widget.className = `sound-widget-btn ${isSoundEnabled ? 'playing' : ''}`;
       widget.setAttribute('aria-label', 'Toggle Spring Music');
@@ -1079,18 +1047,8 @@ Submitted at: ${data.timestamp}
           <div class="sound-bar"></div>
           <div class="sound-bar"></div>
         </div>
-        <span class="sound-label">${isSoundEnabled ? 'Spring Music: ON' : 'Spring Music: OFF'}</span>
+        <span class="sound-label">${isSoundEnabled ? 'ON' : 'OFF'}</span>
       `;
-
-      // Show volume on hover
-      container.addEventListener('mouseenter', () => {
-        volWrap.style.opacity = '1';
-        volWrap.style.pointerEvents = 'auto';
-      });
-      container.addEventListener('mouseleave', () => {
-        volWrap.style.opacity = '0';
-        volWrap.style.pointerEvents = 'none';
-      });
 
       widget.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -1101,18 +1059,18 @@ Submitted at: ${data.timestamp}
         const label = widget.querySelector('.sound-label');
         if (isSoundEnabled) {
           widget.classList.add('playing');
-          if (label) label.textContent = 'Spring Music: ON';
+          if (label) label.textContent = 'ON';
           startAmbientNature();
         } else {
           widget.classList.remove('playing');
-          if (label) label.textContent = 'Spring Music: OFF';
+          if (label) label.textContent = 'OFF';
           stopAmbientNature();
         }
       });
 
-      container.appendChild(volWrap);
-      container.appendChild(widget);
-      document.body.appendChild(container);
+      stack.appendChild(volBox);
+      stack.appendChild(widget);
+      document.body.appendChild(stack);
     }
 
     // Unlocking Audio on First Touch/Click/Pointer
@@ -1127,7 +1085,7 @@ Submitted at: ${data.timestamp}
       if (!target) return;
 
       const now = Date.now();
-      if (now - lastHoverTime < 90) return; // 90ms throttle
+      if (now - lastHoverTime < 90) return;
       lastHoverTime = now;
 
       playPianoKeySFX();
@@ -1136,10 +1094,142 @@ Submitted at: ${data.timestamp}
     // Button Click Piano Chord SFX
     document.body.addEventListener('click', (e) => {
       const target = e.target.closest('.btn-primary, .btn-secondary, button, nav a, .footer-links a, input[type="submit"]');
-      if (target && !target.classList.contains('sound-widget-btn')) {
+      if (target && !target.classList.contains('sound-widget-btn') && !target.classList.contains('fab-btn') && !target.classList.contains('mini-form-close')) {
         playPianoKeySFX(4);
       }
     });
   }
 
+  /* ---------------- FAB BUTTONS (RIGHT SIDE) ---------------- */
+  function initFabButtons() {
+    if (document.querySelector('.fab-stack')) return;
+
+    const stack = document.createElement('div');
+    stack.className = 'fab-stack';
+
+    // Go to top button
+    const topBtn = document.createElement('button');
+    topBtn.className = 'fab-btn fab-top';
+    topBtn.setAttribute('aria-label', 'Go to top');
+    topBtn.innerHTML = '<svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>';
+    topBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Show/hide go-to-top on scroll
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    }, { passive: true });
+
+    // WhatsApp button
+    const waBtn = document.createElement('button');
+    waBtn.className = 'fab-btn fab-whatsapp';
+    waBtn.setAttribute('aria-label', 'Chat on WhatsApp');
+    waBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
+    waBtn.addEventListener('click', () => {
+      window.open('https://wa.me/918754540090?text=Hi%20MINDFL%2C%20I%20am%20interested%20to%20know%20more%20about%20admissions.', '_blank');
+    });
+
+    // Apply Now button
+    const applyBtn = document.createElement('button');
+    applyBtn.className = 'fab-btn fab-apply';
+    applyBtn.setAttribute('aria-label', 'Apply Now');
+    applyBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="18" x2="12" y2="12" stroke="currentColor" stroke-width="1.5"/><line x1="9" y1="15" x2="15" y2="15" stroke="currentColor" stroke-width="1.5"/></svg>';
+    applyBtn.addEventListener('click', () => {
+      openMiniForm();
+    });
+
+    stack.appendChild(topBtn);
+    stack.appendChild(waBtn);
+    stack.appendChild(applyBtn);
+    document.body.appendChild(stack);
+  }
+
+  /* ---------------- MINI ENQUIRY FORM POPUP ---------------- */
+  function openMiniForm() {
+    let overlay = document.querySelector('.mini-form-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.className = 'mini-form-overlay';
+      overlay.innerHTML = `
+        <div class="mini-form-card" style="position:relative;">
+          <button class="mini-form-close" aria-label="Close">&times;</button>
+          <h3>Quick Enquiry</h3>
+          <p class="mini-form-sub">Fill in your details and we'll get back to you shortly.</p>
+          <form id="mini-inquiry-form">
+            <div class="form-group">
+              <label for="mf-name">Parent / Guardian Name</label>
+              <input type="text" id="mf-name" required placeholder="Your full name">
+            </div>
+            <div class="form-group">
+              <label for="mf-phone">Phone Number</label>
+              <input type="tel" id="mf-phone" required placeholder="Your contact number">
+            </div>
+            <div class="form-group">
+              <label for="mf-email">Email Address</label>
+              <input type="email" id="mf-email" required placeholder="your.email@example.com">
+            </div>
+            <div class="form-group">
+              <label for="mf-child">Child's Name</label>
+              <input type="text" id="mf-child" required placeholder="Your child's name">
+            </div>
+            <div class="form-group">
+              <label for="mf-program">Program of Interest</label>
+              <select id="mf-program" required>
+                <option value="" disabled selected>Select a program...</option>
+                <option value="toddler">Parent-Toddler (6-24 Months)</option>
+                <option value="sprouts">Sprouts (2-3 Years)</option>
+                <option value="seedlings">Seedlings (3-4 Years)</option>
+                <option value="buds">Buds (4-5 Years)</option>
+                <option value="blossoms">Blossoms (5-6 Years)</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary" style="width:100%;text-align:center;">Submit Enquiry</button>
+          </form>
+        </div>
+      `;
+
+      // Close on backdrop click
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeMiniForm();
+      });
+
+      // Close button
+      overlay.querySelector('.mini-form-close').addEventListener('click', closeMiniForm);
+
+      // Form submit handler
+      overlay.querySelector('#mini-inquiry-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you! We will contact you shortly.');
+        closeMiniForm();
+        e.target.reset();
+      });
+
+      document.body.appendChild(overlay);
+    }
+
+    // Trigger animation
+    requestAnimationFrame(() => {
+      overlay.classList.add('active');
+    });
+  }
+
+  function closeMiniForm() {
+    const overlay = document.querySelector('.mini-form-overlay');
+    if (overlay) {
+      overlay.classList.remove('active');
+    }
+  }
+
+  /* ---------------- INIT ALL FEATURES ON PAGE LOAD / NAV ---------------- */
+  function initAllFeatures() {
+    initAudioEngine();
+    initFabButtons();
+  }
+
 })();
+
