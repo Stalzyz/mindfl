@@ -15,6 +15,8 @@
     initVineDrawing();
     initCardTilt();
     initMagneticButtons();
+    initOrganicBlobBackdrops();
+    initBotanicalCursorTrail();
     initPageTransitions();
   });
 
@@ -179,6 +181,38 @@
         el.style.animationDuration = `${duration}s`;
         el.style.animationDelay = `${delay}s`;
         el.style.setProperty('--drift-x', `${Math.random() * 70 - 35}px`);
+        frag.appendChild(el);
+      }
+    }
+
+    function dandelionSVG(color) {
+      return `<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <line x1="12" y1="13" x2="12" y2="22" stroke="${color}" stroke-width="1.2" opacity="0.6"/>
+        <circle cx="12" cy="13" r="1.5" fill="${color}"/>
+        <line x1="12" y1="13" x2="6" y2="5" stroke="${color}" stroke-width="0.9" opacity="0.75"/>
+        <line x1="12" y1="13" x2="18" y2="5" stroke="${color}" stroke-width="0.9" opacity="0.75"/>
+        <line x1="12" y1="13" x2="12" y2="3" stroke="${color}" stroke-width="0.9" opacity="0.75"/>
+        <line x1="12" y1="13" x2="8" y2="7" stroke="${color}" stroke-width="0.9" opacity="0.75"/>
+        <line x1="12" y1="13" x2="16" y2="7" stroke="${color}" stroke-width="0.9" opacity="0.75"/>
+      </svg>`;
+    }
+
+    // Dandelion Floating Seeds (Feature 3)
+    if (!reduceMotion) {
+      const dandelionColors = ['#e0a83e', '#b8552d', '#7c9463', '#c77b63'];
+      const dandelionCount = isMobile ? 3 : 7;
+      for (let d = 0; d < dandelionCount; d++) {
+        const el = document.createElement('div');
+        el.className = 'dandelion-seed';
+        
+        const duration = 22 + Math.random() * 14;
+        const delay = -Math.random() * duration;
+        
+        el.style.top = `${10 + Math.random() * 75}vh`;
+        el.style.left = '0';
+        el.style.animationDuration = `${duration}s`;
+        el.style.animationDelay = `${delay}s`;
+        el.innerHTML = dandelionSVG(dandelionColors[d % dandelionColors.length]);
         frag.appendChild(el);
       }
     }
@@ -647,6 +681,7 @@
         initVineDrawing();
         initCardTilt();
         initMagneticButtons();
+        initOrganicBlobBackdrops();
       });
     } catch (err) {
       if (!isPopState) {
@@ -801,6 +836,58 @@ Submitted at: ${data.timestamp}
         localStorage.setItem('mindfl_newsletter', JSON.stringify(subscribers));
       }
     }
+  }
+
+  /* ---------------- MORPHING ORGANIC BLOB BACKDROPS (Feature 4) ---------------- */
+  function initOrganicBlobBackdrops() {
+    const cards = document.querySelectorAll('.pedagogy-card, .sense-card, .program-card, .founder-card');
+    cards.forEach(card => {
+      if (!card.querySelector('.boho-organic-blob')) {
+        const blob = document.createElement('div');
+        blob.className = 'boho-organic-blob';
+        card.style.position = card.style.position || 'relative';
+        card.prepend(blob);
+      }
+    });
+  }
+
+  /* ---------------- BOTANICAL CURSOR TRAIL (Feature 7) ---------------- */
+  function initBotanicalCursorTrail() {
+    if (reduceMotion || isMobile) return;
+
+    let lastX = 0, lastY = 0;
+    const minDistance = 28;
+    const trailColors = ['#e0a83e', '#7c9463', '#b8552d', '#c77b63'];
+
+    window.addEventListener('mousemove', (e) => {
+      const dist = Math.hypot(e.clientX - lastX, e.clientY - lastY);
+      if (dist < minDistance) return;
+
+      lastX = e.clientX;
+      lastY = e.clientY;
+
+      const particle = document.createElement('div');
+      particle.className = 'cursor-trail-leaf';
+      particle.style.left = `${e.clientX}px`;
+      particle.style.top = `${e.clientY}px`;
+      
+      const driftX = (Math.random() * 50 - 25) + 'px';
+      const rot = (Math.random() * 160 - 80) + 'deg';
+      particle.style.setProperty('--drift-x', driftX);
+      particle.style.setProperty('--rot', rot);
+
+      const color = trailColors[Math.floor(Math.random() * trailColors.length)];
+      particle.innerHTML = `<svg width="14" height="14" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 1 C13 4 14 11 8 15 C2 11 3 4 8 1Z" fill="${color}" opacity="0.85"/>
+        <line x1="8" y1="2" x2="8" y2="14" stroke="rgba(0,0,0,0.2)" stroke-width="0.8"/>
+      </svg>`;
+
+      document.body.appendChild(particle);
+
+      particle.addEventListener('animationend', () => {
+        particle.remove();
+      });
+    });
   }
 
 })();
