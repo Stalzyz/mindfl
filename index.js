@@ -934,28 +934,55 @@ Submitted at: ${data.timestamp}
     } catch (e) {}
   }
 
-  function playDropletSFX() {
+  // Acoustic Grand Piano Synthesizer for Card Overlays (Pentatonic Scale: C4, D4, E4, G4, A4, C5, D5, E5)
+  const pianoNotes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25];
+
+  function playPianoKeySFX(noteIndex = 0) {
     if (!isSoundEnabled) return;
     const ctx = getAudioContext();
     if (!ctx) return;
 
     try {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
+      const freq = pianoNotes[Math.abs(noteIndex) % pianoNotes.length];
+      const now = ctx.currentTime;
 
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(600, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.06);
+      // Master Note Envelope
+      const noteGain = ctx.createGain();
+      noteGain.gain.setValueAtTime(0.001, now);
+      noteGain.gain.linearRampToValueAtTime(0.18, now + 0.008);
+      noteGain.gain.exponentialRampToValueAtTime(0.001, now + 1.4);
 
-      gain.gain.setValueAtTime(0.08, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+      // Acoustic Lowpass Filter
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(1400, now);
+      filter.frequency.exponentialRampToValueAtTime(400, now + 1.2);
 
-      osc.connect(gain);
-      gain.connect(ctx.destination);
+      // Piano Harmonics
+      const harmonics = [
+        { mult: 1, gain: 0.65 },
+        { mult: 2, gain: 0.25 },
+        { mult: 3, gain: 0.10 }
+      ];
 
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.06);
-    } catch (e) {}
+      harmonics.forEach(h => {
+        const osc = ctx.createOscillator();
+        const hGain = ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq * h.mult, now);
+        hGain.gain.setValueAtTime(h.gain, now);
+
+        osc.connect(hGain);
+        hGain.connect(filter);
+
+        osc.start(now);
+        osc.stop(now + 1.4);
+      });
+
+      filter.connect(noteGain);
+      noteGain.connect(ctx.destination);
+    } catch(e) {}
   }
 
   function playRustleSFX() {
@@ -992,60 +1019,6 @@ Submitted at: ${data.timestamp}
     } catch (e) {}
   }
 
-  function playChimeSFX() {
-    if (!isSoundEnabled) return;
-    const ctx = getAudioContext();
-    if (!ctx) return;
-
-    try {
-      const notes = [523.25, 659.25, 783.99, 1046.50];
-      notes.forEach((freq, idx) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.08);
-
-        gain.gain.setValueAtTime(0.12, ctx.currentTime + idx * 0.08);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.08 + 0.8);
-
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-
-        osc.start(ctx.currentTime + idx * 0.08);
-        osc.stop(ctx.currentTime + idx * 0.08 + 0.8);
-      });
-    } catch (e) {}
-  }
-
-  let natureTimer = null;
-
-  function playNatureMelody() {
-    if (!isSoundEnabled) return;
-    const ctx = getAudioContext();
-    if (!ctx) return;
-
-    try {
-      const pentatonic = [369.99, 440.00, 493.88, 554.37, 659.25, 739.99]; // F#4, A4, B4, C#5, E5, F#5
-      const note = pentatonic[Math.floor(Math.random() * pentatonic.length)];
-      
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(note, ctx.currentTime);
-
-      gain.gain.setValueAtTime(0.12, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.4);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 1.4);
-    } catch(e) {}
-  }
-
   function startAmbientNature() {
     const ctx = getAudioContext();
     if (!ctx) return;
@@ -1054,7 +1027,7 @@ Submitted at: ${data.timestamp}
 
     try {
       ambientGain = ctx.createGain();
-      ambientGain.gain.setValueAtTime(0.08, ctx.currentTime);
+      ambientGain.gain.setValueAtTime(0.06, ctx.currentTime);
 
       const bufferSize = ctx.sampleRate * 2;
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
@@ -1072,7 +1045,7 @@ Submitted at: ${data.timestamp}
 
       const filter = ctx.createBiquadFilter();
       filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(400, ctx.currentTime);
+      filter.frequency.setValueAtTime(380, ctx.currentTime);
 
       windSrc.connect(filter);
       filter.connect(ambientGain);
@@ -1080,23 +1053,10 @@ Submitted at: ${data.timestamp}
 
       windSrc.start(ctx.currentTime);
       ambientOscillators.push(windSrc);
-
-      // Play continuous kalimba nature melody every 3.2s
-      playNatureMelody();
-      natureTimer = setInterval(() => {
-        if (isSoundEnabled) {
-          playNatureMelody();
-        }
-      }, 3200);
-
     } catch(e) {}
   }
 
   function stopAmbientNature() {
-    if (natureTimer) {
-      clearInterval(natureTimer);
-      natureTimer = null;
-    }
     ambientOscillators.forEach(osc => {
       try { osc.stop(); } catch(e) {}
     });
@@ -1128,7 +1088,7 @@ Submitted at: ${data.timestamp}
           widget.classList.add('playing');
           if (label) label.textContent = 'Nature Audio: ON';
           startAmbientNature();
-          playChimeSFX();
+          playPianoKeySFX(0);
         } else {
           widget.classList.remove('playing');
           if (label) label.textContent = 'Nature Audio: OFF';
@@ -1153,10 +1113,12 @@ Submitted at: ${data.timestamp}
       }
     });
 
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.closest('.pedagogy-card, .sense-card, .program-card, .founder-card')) {
-        playDropletSFX();
-      }
+    // Piano key SFX for card hovers
+    const cardElements = document.querySelectorAll('.pedagogy-card, .sense-card, .program-card, .founder-card, .offering-card, .thinker-row, .video-card');
+    cardElements.forEach((card, idx) => {
+      card.addEventListener('mouseenter', () => {
+        playPianoKeySFX(idx);
+      });
     });
   }
 
