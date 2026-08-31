@@ -17,6 +17,7 @@
     initMagneticButtons();
     initOrganicBlobBackdrops();
     initBotanicalCursorTrail();
+    initAudioEngine();
     initPageTransitions();
   });
 
@@ -887,6 +888,234 @@ Submitted at: ${data.timestamp}
       particle.addEventListener('animationend', () => {
         particle.remove();
       });
+    });
+  }
+
+  /* ---------------- WEB AUDIO & SOUND WIDGET ENGINE ---------------- */
+  let audioCtx = null;
+  let isSoundEnabled = false;
+  let ambientOscillators = [];
+  let ambientGain = null;
+
+  function getAudioContext() {
+    if (!audioCtx) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioContextClass) {
+        audioCtx = new AudioContextClass();
+      }
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    return audioCtx;
+  }
+
+  function playTapSFX() {
+    if (!isSoundEnabled) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    try {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(320, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(140, ctx.currentTime + 0.08);
+
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.08);
+    } catch (e) {}
+  }
+
+  function playDropletSFX() {
+    if (!isSoundEnabled) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    try {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(600, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.06);
+
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.06);
+    } catch (e) {}
+  }
+
+  function playRustleSFX() {
+    if (!isSoundEnabled) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    try {
+      const bufferSize = ctx.sampleRate * 0.15;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const output = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      const whiteNoise = ctx.createBufferSource();
+      whiteNoise.buffer = buffer;
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(800, ctx.currentTime);
+      filter.Q.setValueAtTime(1.5, ctx.currentTime);
+
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.04, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+
+      whiteNoise.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+
+      whiteNoise.start(ctx.currentTime);
+      whiteNoise.stop(ctx.currentTime + 0.15);
+    } catch (e) {}
+  }
+
+  function playChimeSFX() {
+    if (!isSoundEnabled) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    try {
+      const notes = [523.25, 659.25, 783.99, 1046.50];
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.08);
+
+        gain.gain.setValueAtTime(0.12, ctx.currentTime + idx * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.08 + 0.8);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(ctx.currentTime + idx * 0.08);
+        osc.stop(ctx.currentTime + idx * 0.08 + 0.8);
+      });
+    } catch (e) {}
+  }
+
+  function startAmbientNature() {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    stopAmbientNature();
+
+    try {
+      ambientGain = ctx.createGain();
+      ambientGain.gain.setValueAtTime(0.03, ctx.currentTime);
+
+      const bufferSize = ctx.sampleRate * 2;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      let lastOut = 0.0;
+      for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
+        data[i] = (lastOut + (0.02 * white)) / 1.02;
+        lastOut = data[i];
+      }
+
+      const windSrc = ctx.createBufferSource();
+      windSrc.buffer = buffer;
+      windSrc.loop = true;
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(350, ctx.currentTime);
+
+      windSrc.connect(filter);
+      filter.connect(ambientGain);
+      ambientGain.connect(ctx.destination);
+
+      windSrc.start(ctx.currentTime);
+      ambientOscillators.push(windSrc);
+    } catch(e) {}
+  }
+
+  function stopAmbientNature() {
+    ambientOscillators.forEach(osc => {
+      try { osc.stop(); } catch(e) {}
+    });
+    ambientOscillators = [];
+  }
+
+  function initAudioEngine() {
+    isSoundEnabled = localStorage.getItem('mindfl_sound_enabled') === 'true';
+
+    if (!document.querySelector('.sound-widget-btn')) {
+      const widget = document.createElement('button');
+      widget.className = `sound-widget-btn ${isSoundEnabled ? 'playing' : ''}`;
+      widget.setAttribute('aria-label', 'Toggle Ambient Nature Audio');
+      widget.innerHTML = `
+        <div class="sound-bars">
+          <div class="sound-bar"></div>
+          <div class="sound-bar"></div>
+          <div class="sound-bar"></div>
+        </div>
+        <span class="sound-label">${isSoundEnabled ? 'Nature Audio: ON' : 'Nature Audio: OFF'}</span>
+      `;
+
+      widget.addEventListener('click', () => {
+        isSoundEnabled = !isSoundEnabled;
+        localStorage.setItem('mindfl_sound_enabled', isSoundEnabled);
+
+        const label = widget.querySelector('.sound-label');
+        if (isSoundEnabled) {
+          widget.classList.add('playing');
+          if (label) label.textContent = 'Nature Audio: ON';
+          startAmbientNature();
+          playChimeSFX();
+        } else {
+          widget.classList.remove('playing');
+          if (label) label.textContent = 'Nature Audio: OFF';
+          stopAmbientNature();
+        }
+      });
+
+      document.body.appendChild(widget);
+    }
+
+    if (isSoundEnabled) {
+      const unlockAudio = () => {
+        if (isSoundEnabled) startAmbientNature();
+        document.removeEventListener('click', unlockAudio);
+      };
+      document.addEventListener('click', unlockAudio);
+    }
+
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('button, .btn-primary, .btn-secondary, nav a, .footer-links a')) {
+        playTapSFX();
+      }
+    });
+
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('.pedagogy-card, .sense-card, .program-card, .founder-card')) {
+        playDropletSFX();
+      }
     });
   }
 
