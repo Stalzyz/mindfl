@@ -1012,20 +1012,61 @@ Submitted at: ${data.timestamp}
     } catch (e) {}
   }
 
+  let birdTimer = null;
+
+  function playBirdChirpSFX() {
+    if (!isSoundEnabled) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(2400 + Math.random() * 800, now);
+      osc.frequency.exponentialRampToValueAtTime(3200 + Math.random() * 600, now + 0.08);
+      osc.frequency.exponentialRampToValueAtTime(2200 + Math.random() * 400, now + 0.16);
+
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.08, now + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.18);
+    } catch(e) {}
+  }
+
   function startAmbientNature() {
     if (!bgmAudio) {
-      bgmAudio = new Audio('https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3');
+      bgmAudio = new Audio('https://cdn.pixabay.com/download/audio/2021/09/06/audio_40b2b8c5e6.mp3');
       bgmAudio.loop = true;
-      bgmAudio.volume = 0.20;
+      bgmAudio.volume = 0.35;
     }
     if (isSoundEnabled) {
       bgmAudio.play().catch(() => {});
+    }
+
+    if (!birdTimer) {
+      birdTimer = setInterval(() => {
+        if (isSoundEnabled && Math.random() > 0.4) {
+          playBirdChirpSFX();
+        }
+      }, 4000);
     }
   }
 
   function stopAmbientNature() {
     if (bgmAudio) {
       bgmAudio.pause();
+    }
+    if (birdTimer) {
+      clearInterval(birdTimer);
+      birdTimer = null;
     }
   }
 
