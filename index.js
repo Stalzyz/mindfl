@@ -1018,6 +1018,34 @@ Submitted at: ${data.timestamp}
     } catch (e) {}
   }
 
+  let natureTimer = null;
+
+  function playNatureMelody() {
+    if (!isSoundEnabled) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    try {
+      const pentatonic = [369.99, 440.00, 493.88, 554.37, 659.25, 739.99]; // F#4, A4, B4, C#5, E5, F#5
+      const note = pentatonic[Math.floor(Math.random() * pentatonic.length)];
+      
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(note, ctx.currentTime);
+
+      gain.gain.setValueAtTime(0.12, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.4);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 1.4);
+    } catch(e) {}
+  }
+
   function startAmbientNature() {
     const ctx = getAudioContext();
     if (!ctx) return;
@@ -1026,7 +1054,7 @@ Submitted at: ${data.timestamp}
 
     try {
       ambientGain = ctx.createGain();
-      ambientGain.gain.setValueAtTime(0.03, ctx.currentTime);
+      ambientGain.gain.setValueAtTime(0.08, ctx.currentTime);
 
       const bufferSize = ctx.sampleRate * 2;
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
@@ -1044,7 +1072,7 @@ Submitted at: ${data.timestamp}
 
       const filter = ctx.createBiquadFilter();
       filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(350, ctx.currentTime);
+      filter.frequency.setValueAtTime(400, ctx.currentTime);
 
       windSrc.connect(filter);
       filter.connect(ambientGain);
@@ -1052,10 +1080,23 @@ Submitted at: ${data.timestamp}
 
       windSrc.start(ctx.currentTime);
       ambientOscillators.push(windSrc);
+
+      // Play continuous kalimba nature melody every 3.2s
+      playNatureMelody();
+      natureTimer = setInterval(() => {
+        if (isSoundEnabled) {
+          playNatureMelody();
+        }
+      }, 3200);
+
     } catch(e) {}
   }
 
   function stopAmbientNature() {
+    if (natureTimer) {
+      clearInterval(natureTimer);
+      natureTimer = null;
+    }
     ambientOscillators.forEach(osc => {
       try { osc.stop(); } catch(e) {}
     });
@@ -1107,7 +1148,7 @@ Submitted at: ${data.timestamp}
     }
 
     document.addEventListener('click', (e) => {
-      if (e.target.closest('button, .btn-primary, .btn-secondary, nav a, .footer-links a')) {
+      if (e.target.closest('button, .btn-primary, .btn-secondary, nav a, .footer-links a, input[type="submit"]')) {
         playTapSFX();
       }
     });
