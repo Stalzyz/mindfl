@@ -1,17 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Caveat:wght@500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,500;6..12,600;6..12,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Caveat:wght@500;600;700&display=swap');
 
 :root {
-  /* Premium Earthy Palette */
-  --paper: #f6efe0;
-  --paper-deep: #efe4cd;
-  --forest: #33502f;
-  --forest-deep: #233b23;
-  --moss: #7c9463;
-  --moss-light: rgba(124, 148, 99, 0.15);
-  --clay: #b8552d;
-  --clay-deep: #963f1e;
-  --gold: #e0a83e;
-  --gold-soft: #f0c874;
+  /* Premium Earthy Palette (Updated from Logo) */
+  --paper: #f8f6e8;
+  --paper-deep: #eaddc4;
+  --forest: #5c6d53;
+  --forest-deep: #3f4d38;
+  --moss: #5cbf1a;
+  --moss-light: rgba(92, 191, 26, 0.15);
+  --clay: #db6d28;
+  --clay-deep: #b0551c;
+  --gold: #f7b733;
+  --gold-soft: #ffcf70;
   --rose: #c77b63;
   --ink: #2b2416;
   --ink-soft: #5a4f3c;
@@ -36,7 +36,7 @@ body {
   margin: 0;
   background-color: var(--paper);
   color: var(--ink);
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: 'Nunito', sans-serif;
   overflow-x: hidden;
   position: relative;
   min-height: 100vh;
@@ -64,7 +64,7 @@ body {
 
 /* Typography Mobile-First (Optimized to prevent overlap) */
 h1 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Poppins', sans-serif;
   color: var(--forest-deep);
   margin: 0;
   letter-spacing: -0.015em;
@@ -73,7 +73,7 @@ h1 {
 }
 
 h2 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Poppins', sans-serif;
   color: var(--forest-deep);
   margin: 0;
   letter-spacing: -0.01em;
@@ -82,7 +82,7 @@ h2 {
 }
 
 h3 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Poppins', sans-serif;
   color: var(--forest-deep);
   margin: 0;
   font-size: clamp(1.2rem, 4.5vw, 1.45rem);
@@ -90,7 +90,7 @@ h3 {
 }
 
 h4 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Poppins', sans-serif;
   color: var(--forest-deep);
   margin: 0;
   font-size: 1.15rem;
@@ -106,7 +106,8 @@ p {
 }
 
 .eyebrow {
-  font-family: 'Caveat', cursive;
+  font-family: 'The Seasons', 'Playfair Display', serif;
+  font-style: italic;
   font-size: 1.45rem;
   color: var(--clay);
   display: inline-block;
@@ -262,7 +263,7 @@ nav {
 }
 
 .brand {
-  font-family: 'Fraunces', serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
   font-size: 1.35rem;
   color: var(--forest-deep);
@@ -456,7 +457,7 @@ nav {
 }
 .grow-letter {
   font-size: 2.8rem;
-  font-family: 'Fraunces', serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
   color: var(--clay);
   line-height: 1;
@@ -495,7 +496,7 @@ nav {
 }
 .stat-number {
   font-size: clamp(2.8rem, 10vw, 4rem);
-  font-family: 'Fraunces', serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
   color: var(--gold-soft);
   line-height: 1;
@@ -574,7 +575,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Fraunces', serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 1.8rem;
   font-weight: 700;
   border: 3px solid var(--paper);
@@ -648,7 +649,7 @@ nav {
   border: 1px solid var(--cream-line);
   padding: 0.65rem 1.1rem;
   font-size: 0.9rem;
-  font-family: 'Fraunces', serif;
+  font-family: 'Poppins', sans-serif;
   color: var(--forest-deep);
   border-radius: 100px;
   cursor: pointer;
@@ -1578,7 +1579,7 @@ footer .fine {
 }
 
 .mini-form-card h3 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 1.3rem;
   color: var(--forest-deep, #1a201a);
   margin-bottom: 0.3rem;
@@ -1729,69 +1730,50 @@ footer .fine {
   .parallax-card:nth-child(5) { top: 18vh; }
 }
 
-/* GSAP Horizontal Scroll Section */
-.gsap-horizontal-container {
-  overflow: hidden;
+/* Simple Grid Pedagogy */
+.pedagogy-section {
+  padding: 6rem 5%;
   background: var(--forest-deep);
   color: var(--paper);
 }
 
-.gsap-horizontal-wrapper {
-  display: flex;
-  width: 500vw; /* 5 panels */
-  height: 100vh;
+.pedagogy-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 4rem;
 }
 
-.gsap-panel {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem;
+.grid-pedagogy {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: var(--max-width);
+  margin: 0 auto;
 }
 
-.intro-panel {
-  justify-content: flex-start;
-  padding-left: 10vw;
-}
-
-.pillar-panel {
-  justify-content: center;
-}
-
-.pillar-card {
-  max-width: 600px;
+.pedagogy-card {
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  padding: 4rem;
-  border-radius: 32px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  padding: 3rem 2rem;
+  border-radius: 24px;
+  transition: transform 0.3s ease, background 0.3s ease;
 }
 
-.pillar-title {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+.pedagogy-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.pedagogy-title {
+  font-size: 1.8rem;
   color: var(--gold-soft);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
-.pillar-desc {
-  font-size: 1.25rem;
-  line-height: 1.7;
-  color: var(--paper);
-}
-
-@media (max-width: 768px) {
-  .gsap-panel {
-    padding: 2rem;
-  }
-  .intro-panel {
-    padding-left: 2rem;
-  }
-  .pillar-card {
-    padding: 2.5rem;
-  }
+.pedagogy-desc {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--paper-deep);
 }
 
 /* Programs Split Scroll (Moon UltraLight Style) */

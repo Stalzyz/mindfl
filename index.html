@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="MINDFL School — A progressive learning village for the early years in Sivaram Nagar, Coimbatore. Inspired by nature, play, and mindful exploration.">
   <title>MINDFL — A Progressive Learning Village for the Early Years</title>
-  <link rel="stylesheet" href="index.css?v=2.2">
+  <link rel="stylesheet" href="index.css?v=2.3">
 </head>
 <body>
 
@@ -200,65 +200,35 @@
     <!-- Vine Divider -->
     <svg class="vine-divider" viewBox="0 0 1080 60"><path class="vine-path" d="M1080,30 C930,-10 830,70 680,30 C530,-10 430,70 280,30 C180,5 130,50 0,25"/></svg>
 
-    <section class="gsap-horizontal-container">
-      <div class="gsap-horizontal-wrapper">
-        
-        <!-- Panel 1: Intro -->
-        <div class="gsap-panel intro-panel">
-          <div class="intro-content">
-            <span class="eyebrow" style="color: var(--gold-soft);">rooted in nature, guided by research</span>
-            <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1.5rem; color: var(--paper);">How We TEACH<br>&amp; How we GROW</h2>
-            <p style="font-size: 1.2rem; line-height: 1.8; color: var(--paper-deep); margin-bottom: 2rem; max-width: 500px;">
-              Learning is a collective act. We see every child as innately curious and capable. Our role is to protect that curiosity by ensuring they are never rushed, but always ready.
-            </p>
-            <div style="display: flex; gap: 1.5rem; align-items: center;">
-              <!-- Rotating Pedagogy Emblem, adjusted for dark bg -->
-              <svg width="140" height="140" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <path id="textPathGsap" d="M 100, 100 m -70, 0 a 70,70 0 1,1 140,0 a 70,70 0 1,1 -140,0" fill="none"/>
-                <text fill="var(--paper)" font-size="12" font-family="'Nunito Sans', sans-serif" font-weight="700" letter-spacing="3px" style="animation: textSpin 20s linear infinite; transform-origin: 100px 100px;">
-                  <textPath href="#textPathGsap">MONTESSORI • WALDORF • REGGIO EMILIA • GESELL • </textPath>
-                </text>
-                <circle cx="100" cy="100" r="50" fill="var(--paper)" opacity="0.1"/>
-                <text x="100" y="98" text-anchor="middle" fill="var(--gold-soft)" font-family="'Fraunces', serif" font-weight="600" font-size="18">GROW</text>
-                <text x="100" y="118" text-anchor="middle" fill="var(--paper)" font-family="'Fraunces', serif" font-style="italic" font-size="14">Framework</text>
-              </svg>
-              <div style="color: var(--paper); font-family: 'Caveat', cursive; font-size: 1.6rem; opacity: 0.8;">Scroll to explore<br>our pillars →</div>
-            </div>
-          </div>
+    <section class="pedagogy-section" id="pedagogy">
+      <div class="pedagogy-header">
+        <span class="eyebrow" style="color: var(--gold-soft);">rooted in nature, guided by research</span>
+        <h2 style="font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 1.5rem; color: var(--paper);">How We TEACH<br>&amp; How we GROW</h2>
+        <p style="font-size: 1.2rem; line-height: 1.8; color: var(--paper-deep);">
+          Learning is a collective act. We see every child as innately curious and capable. Our role is to protect that curiosity by ensuring they are never rushed, but always ready.
+        </p>
+      </div>
+
+      <div class="grid-pedagogy">
+        <div class="pedagogy-card">
+          <h3 class="pedagogy-title">Montessori</h3>
+          <p class="pedagogy-desc">Emphasizing self-directed activity, hands-on learning, and collaborative play. Children make creative choices in their learning, while the classroom and teacher offer age-appropriate activities to guide the process.</p>
         </div>
 
-        <!-- Panel 2: Montessori -->
-        <div class="gsap-panel pillar-panel">
-          <div class="pillar-card">
-            <h3 class="pillar-title">Montessori</h3>
-            <p class="pillar-desc">Emphasizing self-directed activity, hands-on learning, and collaborative play. Children make creative choices in their learning, while the classroom and teacher offer age-appropriate activities to guide the process.</p>
-          </div>
+        <div class="pedagogy-card">
+          <h3 class="pedagogy-title">Waldorf</h3>
+          <p class="pedagogy-desc">Integrating the arts in all academic disciplines to enhance and enrich learning. We focus on holistic development—intellectual, artistic, and practical skills—nurturing the child's imagination and creativity.</p>
         </div>
 
-        <!-- Panel 3: Waldorf -->
-        <div class="gsap-panel pillar-panel">
-          <div class="pillar-card">
-            <h3 class="pillar-title">Waldorf</h3>
-            <p class="pillar-desc">Integrating the arts in all academic disciplines to enhance and enrich learning. We focus on holistic development—intellectual, artistic, and practical skills—nurturing the child's imagination and creativity.</p>
-          </div>
+        <div class="pedagogy-card">
+          <h3 class="pedagogy-title">Reggio Emilia</h3>
+          <p class="pedagogy-desc">Viewing the environment as the third teacher. Our classrooms are beautiful, inviting spaces filled with natural light and purposeful materials that provoke inquiry and project-based exploration.</p>
         </div>
 
-        <!-- Panel 4: Reggio Emilia -->
-        <div class="gsap-panel pillar-panel">
-          <div class="pillar-card">
-            <h3 class="pillar-title">Reggio Emilia</h3>
-            <p class="pillar-desc">Viewing the environment as the third teacher. Our classrooms are beautiful, inviting spaces filled with natural light and purposeful materials that provoke inquiry and project-based exploration.</p>
-          </div>
+        <div class="pedagogy-card">
+          <h3 class="pedagogy-title">Gesell</h3>
+          <p class="pedagogy-desc">Informed by the Yale Child Study Center, we deeply respect biological readiness. We honor each child's unique rhythm and natural pacing, ensuring they encounter challenges exactly when they are developmentally prepared.</p>
         </div>
-
-        <!-- Panel 5: Gesell -->
-        <div class="gsap-panel pillar-panel">
-          <div class="pillar-card">
-            <h3 class="pillar-title">Gesell</h3>
-            <p class="pillar-desc">Informed by the Yale Child Study Center, we deeply respect biological readiness. We honor each child's unique rhythm and natural pacing, ensuring they encounter challenges exactly when they are developmentally prepared.</p>
-          </div>
-        </div>
-
       </div>
     </section>
 
@@ -533,6 +503,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-  <script src="index.js?v=2.2"></script>
+  <script src="index.js?v=2.3"></script>
 </body>
 </html>
