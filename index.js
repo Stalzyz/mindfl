@@ -8,6 +8,7 @@
     initMobileMenu();
     initGardenLayer();
     initMouseParallax();
+    initScrollParallax();
     initScrollReveals();
     initStatsCounter();
     initTabs();
@@ -16,7 +17,6 @@
     initCardTilt();
     initMagneticButtons();
     initOrganicBlobBackdrops();
-    initBotanicalCursorTrail();
     initAllFeatures();
     initPageTransitions();
   });
@@ -143,100 +143,12 @@
       frag.appendChild(el);
     });
 
-    // Drifting Leaves
-    const leafColors = ['#7c9463', '#b8552d', '#e0a83e', '#33502f'];
-    const leafCount = isMobile ? 3 : 8;
-    for (let i = 0; i < leafCount; i++) {
-      const el = document.createElement('div');
-      el.className = 'drift-leaf parallax-el';
-      el.dataset.depth = (0.015 + Math.random() * 0.02).toFixed(3);
-      
-      const duration = 15 + Math.random() * 20;
-      const delay = -Math.random() * duration;
-      const scale = 0.5 + Math.random() * 0.8;
-      
-      el.style.top = `${Math.random() * 85}vh`;
-      el.style.left = '0';
-      el.style.animationDuration = `${duration}s`;
-      el.style.animationDelay = `${delay}s`;
-      el.style.transform = `scale(${scale})`;
-      el.innerHTML = leafSVG(leafColors[i % leafColors.length]);
-      frag.appendChild(el);
-    }
+    // Drifting Leaves — REMOVED (replaced by static hero floating leaves)
+    // Pollen — REMOVED
+    // Dandelion Seeds — REMOVED
+    // Butterflies — REMOVED
 
-    // Pollen
-    if (!reduceMotion) {
-      const pollenCount = isMobile ? 5 : 18;
-      for (let p = 0; p < pollenCount; p++) {
-        const el = document.createElement('div');
-        el.className = 'pollen';
-        
-        const size = 3 + Math.random() * 4;
-        const duration = 12 + Math.random() * 12;
-        const delay = -Math.random() * duration;
-        
-        el.style.width = `${size}px`;
-        el.style.height = `${size}px`;
-        el.style.left = `${Math.random() * 100}vw`;
-        el.style.top = `${100 + Math.random() * 15}vh`;
-        el.style.animationDuration = `${duration}s`;
-        el.style.animationDelay = `${delay}s`;
-        el.style.setProperty('--drift-x', `${Math.random() * 70 - 35}px`);
-        frag.appendChild(el);
-      }
-    }
-
-    function dandelionSVG(color) {
-      return `<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <line x1="12" y1="13" x2="12" y2="22" stroke="${color}" stroke-width="1.2" opacity="0.6"/>
-        <circle cx="12" cy="13" r="1.5" fill="${color}"/>
-        <line x1="12" y1="13" x2="6" y2="5" stroke="${color}" stroke-width="0.9" opacity="0.75"/>
-        <line x1="12" y1="13" x2="18" y2="5" stroke="${color}" stroke-width="0.9" opacity="0.75"/>
-        <line x1="12" y1="13" x2="12" y2="3" stroke="${color}" stroke-width="0.9" opacity="0.75"/>
-        <line x1="12" y1="13" x2="8" y2="7" stroke="${color}" stroke-width="0.9" opacity="0.75"/>
-        <line x1="12" y1="13" x2="16" y2="7" stroke="${color}" stroke-width="0.9" opacity="0.75"/>
-      </svg>`;
-    }
-
-    // Dandelion Floating Seeds (Feature 3)
-    if (!reduceMotion) {
-      const dandelionColors = ['#e0a83e', '#b8552d', '#7c9463', '#c77b63'];
-      const dandelionCount = isMobile ? 3 : 7;
-      for (let d = 0; d < dandelionCount; d++) {
-        const el = document.createElement('div');
-        el.className = 'dandelion-seed';
-        
-        const duration = 22 + Math.random() * 14;
-        const delay = -Math.random() * duration;
-        
-        el.style.top = `${10 + Math.random() * 75}vh`;
-        el.style.left = '0';
-        el.style.animationDuration = `${duration}s`;
-        el.style.animationDelay = `${delay}s`;
-        el.innerHTML = dandelionSVG(dandelionColors[d % dandelionColors.length]);
-        frag.appendChild(el);
-      }
-    }
-
-    // Butterflies
-    if (!isMobile) {
-      const bColors = ['#c77b63', '#e0a83e', '#33502f'];
-      const butterflyCount = 3;
-      for (let b = 0; b < butterflyCount; b++) {
-        const el = document.createElement('div');
-        el.className = 'butterfly';
-        
-        const duration = 20 + Math.random() * 12;
-        const delay = b * 10 + Math.random() * 8;
-        
-        el.style.animationDuration = `${duration}s`;
-        el.style.animationDelay = `${delay}s`;
-        el.innerHTML = butterflySVG(bColors[b % bColors.length]);
-        frag.appendChild(el);
-      }
-    }
-
-    // Boho Background Floral Art
+    // Boho Background Floral Art (kept)
     const bohoConfigs = [
       { svg: bohoBlossomSVG(), class: 'spin-1', top: '12vh', right: '-40px', scale: 0.8 },
       { svg: bohoTwigSVG(), class: 'float-1', top: '78vh', left: '-30px', scale: 0.95 },
@@ -258,6 +170,35 @@
     });
 
     gardenLayer.appendChild(frag);
+  }
+
+  /* ---------------- SCROLL-DRIVEN PARALLAX FOR IMAGES ---------------- */
+  function initScrollParallax() {
+    if (reduceMotion) return;
+
+    const heroBg = document.getElementById('hero-parallax-bg');
+    const midBg = document.getElementById('parallax-mid-bg');
+
+    function updateParallax() {
+      const scrollY = window.scrollY;
+
+      // Hero parallax: image moves up slower than scroll (creates depth)
+      if (heroBg) {
+        heroBg.style.transform = `translateY(${scrollY * 0.38}px)`;
+      }
+
+      // Mid-section parallax
+      if (midBg) {
+        const rect = midBg.closest('section')?.getBoundingClientRect();
+        if (rect) {
+          const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+          midBg.style.transform = `translateY(${center * 0.22}px)`;
+        }
+      }
+    }
+
+    window.addEventListener('scroll', updateParallax, { passive: true });
+    updateParallax();
   }
 
   /* ---------------- MOUSE PARALLAX EFFECT ---------------- */
@@ -675,6 +616,7 @@
         initHeaderScroll();
         initMobileMenu();
         initGardenLayer();
+        initScrollParallax();
         initScrollReveals();
         initStatsCounter();
         initTabs();
@@ -827,43 +769,9 @@ Submitted at: ${data.timestamp}
     });
   }
 
-  /* ---------------- BOTANICAL CURSOR TRAIL (Feature 7) ---------------- */
+  /* ---------------- BOTANICAL CURSOR TRAIL — REMOVED ---------------- */
   function initBotanicalCursorTrail() {
-    if (reduceMotion || isMobile) return;
-
-    let lastX = 0, lastY = 0;
-    const minDistance = 28;
-    const trailColors = ['#e0a83e', '#7c9463', '#b8552d', '#c77b63'];
-
-    window.addEventListener('mousemove', (e) => {
-      const dist = Math.hypot(e.clientX - lastX, e.clientY - lastY);
-      if (dist < minDistance) return;
-
-      lastX = e.clientX;
-      lastY = e.clientY;
-
-      const particle = document.createElement('div');
-      particle.className = 'cursor-trail-leaf';
-      particle.style.left = `${e.clientX}px`;
-      particle.style.top = `${e.clientY}px`;
-      
-      const driftX = (Math.random() * 50 - 25) + 'px';
-      const rot = (Math.random() * 160 - 80) + 'deg';
-      particle.style.setProperty('--drift-x', driftX);
-      particle.style.setProperty('--rot', rot);
-
-      const color = trailColors[Math.floor(Math.random() * trailColors.length)];
-      particle.innerHTML = `<svg width="14" height="14" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 1 C13 4 14 11 8 15 C2 11 3 4 8 1Z" fill="${color}" opacity="0.85"/>
-        <line x1="8" y1="2" x2="8" y2="14" stroke="rgba(0,0,0,0.2)" stroke-width="0.8"/>
-      </svg>`;
-
-      document.body.appendChild(particle);
-
-      particle.addEventListener('animationend', () => {
-        particle.remove();
-      });
-    });
+    // Cursor trail removed per user request
   }
 
   /* ---------------- WEB AUDIO & SOUND WIDGET ENGINE ---------------- */
