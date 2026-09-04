@@ -1,21 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Caveat:wght@500;600;700&display=swap');
 
 :root {
-  /* Premium Earthy Palette (Updated from Logo) */
-  --paper: #f8f6e8;
-  --paper-deep: #eaddc4;
-  --forest: #5c6d53;
-  --forest-deep: #3f4d38;
-  --moss: #5cbf1a;
-  --moss-light: rgba(92, 191, 26, 0.15);
-  --clay: #db6d28;
-  --clay-deep: #b0551c;
+  /* High-Contrast Dark Earthy Palette */
+  --paper: #283620; /* Dark forest green background */
+  --paper-deep: #1f2a18; /* Even darker for depth */
+  --forest: #f8f6e8; /* Cream for primary elements */
+  --forest-deep: #ffffff; /* Bright white/cream for max contrast headings */
+  --moss: #5cbf1a; /* Leaf green */
+  --moss-light: rgba(248, 246, 232, 0.1); /* Subtle cream wash */
+  --clay: #e07530; /* Brightened burnt orange */
+  --clay-deep: #ff8e45; /* Even brighter orange for hovers */
   --gold: #f7b733;
   --gold-soft: #ffcf70;
   --rose: #c77b63;
-  --ink: #2b2416;
-  --ink-soft: #5a4f3c;
-  --cream-line: rgba(43, 36, 22, 0.15);
+  --ink: #f8f6e8; /* Cream text */
+  --ink-soft: #c0cbb8; /* Muted light sage for secondary text */
+  --cream-line: rgba(248, 246, 232, 0.15); /* Light dividers */
   
   /* Decorative & UI Specs */
   --shadow: 0 18px 40px -20px rgba(43, 36, 22, 0.3);
