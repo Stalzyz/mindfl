@@ -1618,7 +1618,112 @@ footer .fine {
   }
 }
 
+/* Parallax Stack Programs */
+.parallax-stack-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding-bottom: 10vh;
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
 
+.parallax-card {
+  position: sticky;
+  height: 60vh;
+  min-height: 400px;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 -15px 40px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: flex-end;
+  padding: 3rem;
+  background-color: var(--forest-deep);
+  transform-origin: top center;
+  border: 1px solid rgba(255,255,255,0.1);
+}
 
+.parallax-card:nth-child(1) { top: 12vh; z-index: 1; }
+.parallax-card:nth-child(2) { top: 15vh; z-index: 2; }
+.parallax-card:nth-child(3) { top: 18vh; z-index: 3; }
+.parallax-card:nth-child(4) { top: 21vh; z-index: 4; }
+.parallax-card:nth-child(5) { top: 24vh; z-index: 5; }
 
+.parallax-card .card-bg {
+  position: absolute;
+  inset: -2%;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  transition: transform 0.6s ease;
+}
 
+.parallax-card:hover .card-bg {
+  transform: scale(1.03);
+}
+
+.parallax-card .card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26, 32, 26, 0.95) 0%, rgba(26, 32, 26, 0.4) 40%, transparent 100%);
+  z-index: 1;
+}
+
+.parallax-card .card-content {
+  position: relative;
+  z-index: 2;
+  color: var(--paper);
+  max-width: 600px;
+}
+
+.parallax-card .card-content h3 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--paper);
+  margin-bottom: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.parallax-card .card-content .age-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding: 0.4rem 1.2rem;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--paper);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.parallax-card .card-content .card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--gold-soft);
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  text-decoration: none;
+  transition: gap 0.3s ease;
+}
+
+.parallax-card .card-content .card-link:hover {
+  gap: 0.8rem;
+  color: var(--clay-light, #e49e8a);
+}
+
+@media (max-width: 768px) {
+  .parallax-card {
+    height: 55vh;
+    padding: 2rem;
+    border-radius: 24px;
+  }
+  .parallax-card:nth-child(1) { top: 10vh; }
+  .parallax-card:nth-child(2) { top: 12vh; }
+  .parallax-card:nth-child(3) { top: 14vh; }
+  .parallax-card:nth-child(4) { top: 16vh; }
+  .parallax-card:nth-child(5) { top: 18vh; }
+}
