@@ -1652,15 +1652,16 @@ footer .fine {
 
 .parallax-card .card-bg {
   position: absolute;
-  inset: -2%;
+  inset: -15%;
   background-size: cover;
   background-position: center;
   z-index: 0;
-  transition: transform 0.6s ease;
+  will-change: transform;
+  transition: scale 0.6s ease;
 }
 
 .parallax-card:hover .card-bg {
-  transform: scale(1.03);
+  scale: 1.04;
 }
 
 .parallax-card .card-overlay {

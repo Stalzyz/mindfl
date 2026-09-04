@@ -195,6 +195,19 @@
           midBg.style.transform = `translateY(${center * 0.22}px)`;
         }
       }
+
+      // Parallax Stack Cards
+      const stackCards = document.querySelectorAll('.parallax-card');
+      stackCards.forEach(card => {
+        const bg = card.querySelector('.card-bg');
+        if (bg) {
+          const rect = card.getBoundingClientRect();
+          // Calculate distance from center of viewport
+          const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+          // Apply a gentle parallax factor to the background image
+          bg.style.transform = `translateY(${center * 0.15}px)`;
+        }
+      });
     }
 
     window.addEventListener('scroll', updateParallax, { passive: true });
