@@ -1,21 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Caveat:wght@500;600;700&display=swap');
 
 :root {
-  /* High-Contrast Dark Earthy Palette */
-  --paper: #283620; /* Dark forest green background */
-  --paper-deep: #1f2a18; /* Even darker for depth */
-  --forest: #f8f6e8; /* Cream for primary elements */
-  --forest-deep: #ffffff; /* Bright white/cream for max contrast headings */
-  --moss: #5cbf1a; /* Leaf green */
-  --moss-light: rgba(248, 246, 232, 0.1); /* Subtle cream wash */
-  --clay: #e07530; /* Brightened burnt orange */
-  --clay-deep: #ff8e45; /* Even brighter orange for hovers */
+  /* Clean Corporate Palette */
+  --paper: #fcfbf8; /* Warm white background */
+  --paper-deep: #f2efe9; /* Slightly darker warm white */
+  --forest: #4a5c43; /* Green for cards */
+  --forest-deep: #111111; /* Black for primary headings */
+  --moss: #5cbf1a; /* Leaf green accent */
+  --moss-light: rgba(92, 191, 26, 0.1);
+  --clay: #e66a19; /* Orange for buttons */
+  --clay-deep: #cc5d16; /* Darker orange for button hover */
   --gold: #f7b733;
   --gold-soft: #ffcf70;
   --rose: #c77b63;
-  --ink: #f8f6e8; /* Cream text */
-  --ink-soft: #c0cbb8; /* Muted light sage for secondary text */
-  --cream-line: rgba(248, 246, 232, 0.15); /* Light dividers */
+  --ink: #222222; /* Clean black text */
+  --ink-soft: #555555; /* Dark grey for secondary text */
+  --cream-line: rgba(0, 0, 0, 0.1); /* Subtle dark dividers */
   
   /* Decorative & UI Specs */
   --shadow: 0 18px 40px -20px rgba(43, 36, 22, 0.3);
@@ -146,6 +146,17 @@ a {
 
 .flat-icon.forest {
   stroke: var(--forest);
+}
+
+/* Static Texture (Paper) */
+.texture-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.12;
+  mix-blend-mode: multiply;
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
 }
 
 /* Ambient Background Layers */
