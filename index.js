@@ -68,9 +68,24 @@
   function initProgramsVerticalScroll() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     
+    const container = document.querySelector('.programs-split-container');
+    const leftSide = document.querySelector('.split-left');
     const blocks = document.querySelectorAll('.split-content-block');
     const visuals = document.querySelectorAll('.split-visual');
-    if (blocks.length === 0 || visuals.length === 0) return;
+    if (!container || !leftSide || blocks.length === 0 || visuals.length === 0) return;
+
+    // Pin the left side using GSAP robustly
+    // Use matchMedia so it only pins on desktop
+    let mm = gsap.matchMedia();
+    mm.add("(min-width: 993px)", () => {
+      ScrollTrigger.create({
+        trigger: container,
+        pin: leftSide,
+        start: "top top",
+        end: "bottom bottom",
+        pinSpacing: false
+      });
+    });
 
     function activate(index) {
       visuals.forEach((v, i) => {
