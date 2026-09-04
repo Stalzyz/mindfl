@@ -10,6 +10,7 @@
     initMouseParallax();
     initScrollParallax();
     initGsapScroll();
+    initProgramsVerticalScroll();
     initScrollReveals();
     initStatsCounter();
     initTabs();
@@ -59,6 +60,38 @@
           scrub: 1,
           end: () => "+=" + wrapper.offsetWidth
         }
+      });
+    });
+  }
+
+  /* ---------------- PROGRAMS VERTICAL SCROLL ---------------- */
+  function initProgramsVerticalScroll() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    
+    const blocks = document.querySelectorAll('.split-content-block');
+    const visuals = document.querySelectorAll('.split-visual');
+    if (blocks.length === 0 || visuals.length === 0) return;
+
+    function activate(index) {
+      visuals.forEach((v, i) => {
+        if (i === index) v.classList.add('active');
+        else v.classList.remove('active');
+      });
+      blocks.forEach((b, i) => {
+        if (i === index) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+    }
+
+    activate(0);
+
+    blocks.forEach((block, index) => {
+      ScrollTrigger.create({
+        trigger: block,
+        start: "top center+=100", 
+        end: "bottom center+=100",
+        onEnter: () => activate(index),
+        onEnterBack: () => activate(index)
       });
     });
   }
@@ -659,6 +692,7 @@
         initGardenLayer();
         initScrollParallax();
         initGsapScroll();
+        initProgramsVerticalScroll();
         initScrollReveals();
         initStatsCounter();
         initTabs();

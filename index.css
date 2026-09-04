@@ -1793,3 +1793,96 @@ footer .fine {
     padding: 2.5rem;
   }
 }
+
+/* Programs Split Scroll (Moon UltraLight Style) */
+.programs-split-container {
+  display: flex;
+  position: relative;
+  width: 100%;
+  margin-top: 4rem;
+}
+
+.split-left {
+  width: 50%;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  border-radius: 0 32px 32px 0;
+  box-shadow: var(--shadow);
+}
+
+.split-visuals-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.split-visual {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 0.8s ease, transform 1s ease;
+  will-change: opacity, transform;
+}
+
+.split-visual.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.split-right {
+  width: 50%;
+  padding: 0 5vw;
+}
+
+.split-content-block {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  opacity: 0.2;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateY(20px);
+}
+
+.split-content-block.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.split-content-block h3 {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  margin-bottom: 1rem;
+}
+
+.split-content-block p {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-bottom: 2rem;
+  max-width: 450px;
+}
+
+@media (max-width: 992px) {
+  .programs-split-container {
+    flex-direction: column;
+  }
+  .split-left {
+    width: 100%;
+    height: 50vh;
+    border-radius: 0;
+    z-index: 10;
+  }
+  .split-right {
+    width: 100%;
+    padding: 0 2rem;
+  }
+  .split-content-block {
+    height: 60vh;
+  }
+}
