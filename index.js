@@ -9,6 +9,7 @@
     initGardenLayer();
     initMouseParallax();
     initScrollParallax();
+    initGsapScroll();
     initScrollReveals();
     initStatsCounter();
     initTabs();
@@ -32,6 +33,33 @@
       } else {
         nav.classList.remove('scrolled');
       }
+    });
+  }
+
+  /* ---------------- GSAP HORIZONTAL SCROLL ---------------- */
+  function initGsapScroll() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    
+    gsap.registerPlugin(ScrollTrigger);
+
+    const horizontalContainers = document.querySelectorAll('.gsap-horizontal-container');
+    
+    horizontalContainers.forEach((container) => {
+      const wrapper = container.querySelector('.gsap-horizontal-wrapper');
+      const panels = gsap.utils.toArray(container.querySelectorAll('.gsap-panel'));
+      
+      if (!wrapper || panels.length === 0) return;
+
+      gsap.to(panels, {
+        xPercent: -100 * (panels.length - 1),
+        ease: "none",
+        scrollTrigger: {
+          trigger: container,
+          pin: true,
+          scrub: 1,
+          end: () => "+=" + wrapper.offsetWidth
+        }
+      });
     });
   }
 
@@ -630,6 +658,7 @@
         initMobileMenu();
         initGardenLayer();
         initScrollParallax();
+        initGsapScroll();
         initScrollReveals();
         initStatsCounter();
         initTabs();

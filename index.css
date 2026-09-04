@@ -1728,3 +1728,68 @@ footer .fine {
   .parallax-card:nth-child(4) { top: 16vh; }
   .parallax-card:nth-child(5) { top: 18vh; }
 }
+
+/* GSAP Horizontal Scroll Section */
+.gsap-horizontal-container {
+  overflow: hidden;
+  background: var(--forest-deep);
+  color: var(--paper);
+}
+
+.gsap-horizontal-wrapper {
+  display: flex;
+  width: 500vw; /* 5 panels */
+  height: 100vh;
+}
+
+.gsap-panel {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+}
+
+.intro-panel {
+  justify-content: flex-start;
+  padding-left: 10vw;
+}
+
+.pillar-panel {
+  justify-content: center;
+}
+
+.pillar-card {
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  padding: 4rem;
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.pillar-title {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  color: var(--gold-soft);
+  margin-bottom: 1.5rem;
+}
+
+.pillar-desc {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  color: var(--paper);
+}
+
+@media (max-width: 768px) {
+  .gsap-panel {
+    padding: 2rem;
+  }
+  .intro-panel {
+    padding-left: 2rem;
+  }
+  .pillar-card {
+    padding: 2.5rem;
+  }
+}
