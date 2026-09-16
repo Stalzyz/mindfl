@@ -1874,6 +1874,196 @@ footer .fine {
     padding: 0 2rem;
   }
   .split-content-block {
-    height: 60vh;
+  height: 60vh;
+}
+}
+
+/* ==========================================================================
+   FULL SCREEN COLORFUL PARALLAX HERO STYLES
+   ========================================================================== */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 7rem;
+  padding-bottom: 4rem;
+  position: relative;
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+/* 1. Colorful Mesh Gradient Blob Container */
+#hero-colorful-mesh {
+  position: absolute;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(60px);
+  opacity: 0.85;
+  will-change: transform;
+}
+
+.mesh-blob {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+  will-change: transform;
+}
+
+.mesh-blob-1 {
+  width: 55vw;
+  height: 55vw;
+  max-width: 600px;
+  max-height: 600px;
+  top: 10%;
+  left: 5%;
+  background: radial-gradient(circle, rgba(231, 111, 81, 0.75) 0%, rgba(244, 162, 97, 0) 70%);
+  animation: blobFloat1 18s ease-in-out infinite alternate;
+}
+
+.mesh-blob-2 {
+  width: 50vw;
+  height: 50vw;
+  max-width: 550px;
+  max-height: 550px;
+  top: 15%;
+  right: 5%;
+  background: radial-gradient(circle, rgba(42, 157, 143, 0.65) 0%, rgba(138, 177, 125, 0) 70%);
+  animation: blobFloat2 22s ease-in-out infinite alternate;
+}
+
+.mesh-blob-3 {
+  width: 60vw;
+  height: 60vw;
+  max-width: 650px;
+  max-height: 650px;
+  bottom: 5%;
+  left: 20%;
+  background: radial-gradient(circle, rgba(233, 196, 106, 0.8) 0%, rgba(224, 168, 62, 0) 70%);
+  animation: blobFloat3 15s ease-in-out infinite alternate;
+}
+
+.mesh-blob-4 {
+  width: 40vw;
+  height: 40vw;
+  max-width: 450px;
+  max-height: 450px;
+  bottom: 15%;
+  right: 15%;
+  background: radial-gradient(circle, rgba(184, 85, 45, 0.6) 0%, rgba(246, 239, 224, 0) 70%);
+  animation: blobFloat1 25s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes blobFloat1 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(60px, -40px) scale(1.12) rotate(45deg); }
+  100% { transform: translate(-40px, 50px) scale(0.92) rotate(90deg); }
+}
+
+@keyframes blobFloat2 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(-70px, 50px) scale(1.18) rotate(-60deg); }
+  100% { transform: translate(50px, -30px) scale(0.88) rotate(120deg); }
+}
+
+@keyframes blobFloat3 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, 60px) scale(1.15); }
+  100% { transform: translate(-50px, -40px) scale(0.95); }
+}
+
+/* 2. Floating Glassmorphic Chips */
+.hero-chip-container {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-chip {
+  position: absolute;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.04);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: auto;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.hero-chip:hover {
+  transform: translateY(-4px) scale(1.05) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.chip-1 { top: 18%; left: 6%; animation: floatChip 6s ease-in-out infinite alternate; }
+.chip-2 { top: 26%; right: 7%; animation: floatChip 8s ease-in-out infinite alternate-reverse; }
+.chip-3 { bottom: 22%; left: 8%; animation: floatChip 7s ease-in-out infinite alternate; }
+.chip-4 { bottom: 28%; right: 9%; animation: floatChip 9s ease-in-out infinite alternate-reverse; }
+
+@keyframes floatChip {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-12px); }
+}
+
+@media (max-width: 768px) {
+  .hero-chip { display: none; }
+  .mesh-blob { opacity: 0.6; }
+}
+
+/* 3. Native CSS Scroll-Driven Parallax (with feature query fallback) */
+@supports ((animation-timeline: view()) and (animation-range: entry)) {
+  .hero-section {
+    view-timeline: --heroTimeline;
+  }
+  
+  #hero-colorful-mesh {
+    animation: meshParallax linear both;
+    animation-timeline: --heroTimeline;
+    animation-range: exit 0% exit 100%;
+  }
+
+  #hero-parallax-bg {
+    animation: bgParallax linear both;
+    animation-timeline: --heroTimeline;
+    animation-range: exit 0% exit 100%;
+  }
+
+  .hero-content-inner {
+    animation: contentParallax linear both;
+    animation-timeline: --heroTimeline;
+    animation-range: exit 0% exit 80%;
+  }
+
+  @keyframes meshParallax {
+    to { transform: translateY(180px) scale(1.1); opacity: 0.3; }
+  }
+
+  @keyframes bgParallax {
+    to { transform: translateY(220px) scale(1.05); }
+  }
+
+  @keyframes contentParallax {
+    to { transform: translateY(120px); opacity: 0.2; }
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .mesh-blob, .hero-chip, #hero-colorful-mesh, #hero-parallax-bg {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+

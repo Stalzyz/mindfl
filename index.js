@@ -220,19 +220,32 @@
     gardenLayer.appendChild(frag);
   }
 
-  /* ---------------- SCROLL-DRIVEN PARALLAX FOR IMAGES ---------------- */
+  /* ---------------- SCROLL-DRIVEN PARALLAX FOR IMAGES & COLORFUL MESH ---------------- */
   function initScrollParallax() {
     if (reduceMotion) return;
 
+    const hasNativeCSSParallax = window.CSS && CSS.supports && CSS.supports('(animation-timeline: view()) and (animation-range: entry)');
+
+    const heroMesh = document.getElementById('hero-colorful-mesh');
     const heroBg = document.getElementById('hero-parallax-bg');
+    const heroContent = document.querySelector('.hero-content-inner');
     const midBg = document.getElementById('parallax-mid-bg');
 
     function updateParallax() {
       const scrollY = window.scrollY;
 
-      // Hero parallax: image moves up slower than scroll (creates depth)
-      if (heroBg) {
-        heroBg.style.transform = `translateY(${scrollY * 0.38}px)`;
+      // JS Parallax Fallback for Hero (if native CSS scroll timeline is not available)
+      if (!hasNativeCSSParallax && scrollY <= window.innerHeight * 1.2) {
+        if (heroMesh) {
+          heroMesh.style.transform = `translateY(${scrollY * 0.45}px) scale(${1 + scrollY * 0.0003})`;
+        }
+        if (heroBg) {
+          heroBg.style.transform = `translateY(${scrollY * 0.38}px)`;
+        }
+        if (heroContent) {
+          heroContent.style.transform = `translateY(${scrollY * 0.22}px)`;
+          heroContent.style.opacity = Math.max(0.1, 1 - (scrollY / (window.innerHeight * 0.85)));
+        }
       }
 
       // Mid-section parallax
@@ -273,21 +286,24 @@
 
       requestAnimationFrame(() => {
         document.querySelectorAll('.parallax-el').forEach((el) => {
-          const depth = parseFloat(el.dataset.depth || 0.015);
-          const moveX = mx * depth * 350;
-          const moveY = my * depth * 350;
+          const depth = parseFloat(el.dataset.depth || 0.025);
+          const moveX = mx * depth * 400;
+          const moveY = my * depth * 400;
           
-          // Preserve any rotation or scaling in inline style
-          const currentTransform = el.style.transform || '';
-          const cleanTransform = currentTransform.replace(/translate\([^)]*\)\s*/g, '');
-          
-          el.style.transform = `translate(${moveX}px, ${moveY}px) ${cleanTransform}`;
+          el.style.transform = `translate3d(${moveX.toFixed(2)}px, ${moveY.toFixed(2)}px, 0px)`;
+        });
+
+        // Interactive mouse tilt for colorful gradient mesh blobs
+        const meshBlobs = document.querySelectorAll('.mesh-blob');
+        meshBlobs.forEach((blob, idx) => {
+          const factor = (idx + 1) * 15;
+          blob.style.transform = `translate3d(${(mx * factor).toFixed(2)}px, ${(my * factor).toFixed(2)}px, 0px)`;
         });
         
         // Parallax the hero sun if present
         const sun = document.querySelector('.sun-wrap');
         if (sun) {
-          sun.style.transform = `translate(${mx * 12}px, ${my * 12}px)`;
+          sun.style.transform = `translate3d(${(mx * 16).toFixed(2)}px, ${(my * 16).toFixed(2)}px, 0px)`;
         }
       });
     });
