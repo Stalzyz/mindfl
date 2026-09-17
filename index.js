@@ -202,10 +202,12 @@
     const heroContent = document.querySelector('.hero-content-inner');
     const midBg = document.getElementById('parallax-mid-bg');
 
+    let ticking = false;
+
     function updateParallax() {
       const scrollY = window.scrollY;
 
-      // JS Parallax Fallback for Hero (if native CSS scroll timeline is not available)
+      // JS Parallax Fallback for Hero (only when hero is near viewport)
       if (!hasNativeCSSParallax && scrollY <= window.innerHeight * 1.2) {
         if (heroMesh) {
           heroMesh.style.transform = `translateY(${scrollY * 0.45}px) scale(${1 + scrollY * 0.0003})`;
@@ -222,27 +224,22 @@
       // Mid-section parallax
       if (midBg) {
         const rect = midBg.closest('section')?.getBoundingClientRect();
-        if (rect) {
+        if (rect && rect.top < window.innerHeight && rect.bottom > 0) {
           const center = rect.top + rect.height / 2 - window.innerHeight / 2;
           midBg.style.transform = `translateY(${center * 0.22}px)`;
         }
       }
 
-      // Parallax Stack Cards
-      const stackCards = document.querySelectorAll('.parallax-card');
-      stackCards.forEach(card => {
-        const bg = card.querySelector('.card-bg');
-        if (bg) {
-          const rect = card.getBoundingClientRect();
-          // Calculate distance from center of viewport
-          const center = rect.top + rect.height / 2 - window.innerHeight / 2;
-          // Apply a gentle parallax factor to the background image
-          bg.style.transform = `translateY(${center * 0.15}px)`;
-        }
-      });
+      ticking = false;
     }
 
-    window.addEventListener('scroll', updateParallax, { passive: true });
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }, { passive: true });
+
     updateParallax();
   }
 

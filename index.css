@@ -1808,10 +1808,14 @@ footer .fine {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  box-shadow: 0 -25px 60px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.5);
   border-radius: 32px 32px 0 0;
   box-sizing: border-box;
   margin-top: -2px;
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* Stacking Order */
@@ -1836,10 +1840,12 @@ footer .fine {
   object-fit: cover;
   object-position: center;
   transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .prog-card:hover .prog-card-bg img {
-  transform: scale(1.03);
+  transform: scale(1.03) translateZ(0);
 }
 
 /* Dark Green Gradient Overlay for High Contrast & Brand Colors */
@@ -1848,10 +1854,10 @@ footer .fine {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(22, 44, 27, 0.4) 0%,
-    rgba(22, 44, 27, 0.72) 40%,
-    rgba(18, 36, 22, 0.94) 80%,
-    rgba(14, 28, 17, 0.98) 100%
+    rgba(18, 36, 22, 0.45) 0%,
+    rgba(18, 36, 22, 0.78) 40%,
+    rgba(14, 28, 17, 0.95) 80%,
+    rgba(10, 20, 12, 0.98) 100%
   );
   z-index: 2;
 }
@@ -1896,11 +1902,10 @@ footer .fine {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--gold-soft, #e5be83);
-  background: rgba(229, 190, 131, 0.15);
-  border: 1px solid rgba(229, 190, 131, 0.35);
+  background: rgba(18, 36, 22, 0.85);
+  border: 1px solid rgba(229, 190, 131, 0.4);
   padding: 0.4rem 0.9rem;
   border-radius: 100px;
-  backdrop-filter: blur(10px);
 }
 
 .prog-card-age {
@@ -1908,11 +1913,10 @@ footer .fine {
   font-size: 0.92rem;
   font-weight: 700;
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(18, 36, 22, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 0.35rem 0.85rem;
   border-radius: 100px;
-  backdrop-filter: blur(10px);
 }
 
 .prog-card-title {
@@ -1958,11 +1962,10 @@ footer .fine {
   font-size: 0.88rem;
   font-weight: 600;
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(18, 36, 22, 0.82);
   border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 0.45rem 0.95rem;
   border-radius: 100px;
-  backdrop-filter: blur(12px);
   transition: all 0.3s ease;
 }
 
@@ -1991,14 +1994,14 @@ footer .fine {
   border-radius: 100px;
   text-decoration: none;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.4);
   transition: var(--transition);
 }
 
 .prog-btn-primary:hover {
   background: #1b4332;
   transform: translateY(-3px);
-  box-shadow: 0 14px 30px -5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 25px -5px rgba(0, 0, 0, 0.5);
   color: #ffffff;
 }
 
@@ -2009,12 +2012,11 @@ footer .fine {
   font-weight: 600;
   font-size: 0.95rem;
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  background: rgba(18, 36, 22, 0.75);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
   padding: 0.85rem 1.6rem;
   border-radius: 100px;
   text-decoration: none;
-  backdrop-filter: blur(10px);
   transition: var(--transition);
 }
 
@@ -2035,11 +2037,10 @@ footer .fine {
   display: flex;
   align-items: baseline;
   gap: 0.2rem;
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(18, 36, 22, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 0.5rem 1rem;
   border-radius: 100px;
-  backdrop-filter: blur(12px);
 }
 
 @media (max-width: 768px) {
