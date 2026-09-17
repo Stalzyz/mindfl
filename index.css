@@ -1898,11 +1898,11 @@ footer .fine {
 /* 1. Colorful Mesh Gradient Blob Container */
 #hero-colorful-mesh {
   position: absolute;
-  inset: -20%;
+  inset: -25%;
   z-index: 0;
   pointer-events: none;
-  filter: blur(60px);
-  opacity: 0.85;
+  filter: blur(45px);
+  opacity: 0.95;
   will-change: transform;
 }
 
@@ -1914,47 +1914,47 @@ footer .fine {
 }
 
 .mesh-blob-1 {
-  width: 55vw;
-  height: 55vw;
-  max-width: 600px;
-  max-height: 600px;
-  top: 10%;
-  left: 5%;
-  background: radial-gradient(circle, rgba(231, 111, 81, 0.75) 0%, rgba(244, 162, 97, 0) 70%);
-  animation: blobFloat1 18s ease-in-out infinite alternate;
+  width: 60vw;
+  height: 60vw;
+  max-width: 680px;
+  max-height: 680px;
+  top: 5%;
+  left: 2%;
+  background: radial-gradient(circle, rgba(231, 111, 81, 0.85) 0%, rgba(244, 162, 97, 0.15) 60%, transparent 80%);
+  animation: blobFloat1 16s ease-in-out infinite alternate;
 }
 
 .mesh-blob-2 {
-  width: 50vw;
-  height: 50vw;
-  max-width: 550px;
-  max-height: 550px;
-  top: 15%;
-  right: 5%;
-  background: radial-gradient(circle, rgba(42, 157, 143, 0.65) 0%, rgba(138, 177, 125, 0) 70%);
-  animation: blobFloat2 22s ease-in-out infinite alternate;
+  width: 55vw;
+  height: 55vw;
+  max-width: 620px;
+  max-height: 620px;
+  top: 10%;
+  right: 2%;
+  background: radial-gradient(circle, rgba(42, 157, 143, 0.80) 0%, rgba(138, 177, 125, 0.15) 60%, transparent 80%);
+  animation: blobFloat2 20s ease-in-out infinite alternate;
 }
 
 .mesh-blob-3 {
-  width: 60vw;
-  height: 60vw;
-  max-width: 650px;
-  max-height: 650px;
-  bottom: 5%;
-  left: 20%;
-  background: radial-gradient(circle, rgba(233, 196, 106, 0.8) 0%, rgba(224, 168, 62, 0) 70%);
-  animation: blobFloat3 15s ease-in-out infinite alternate;
+  width: 65vw;
+  height: 65vw;
+  max-width: 720px;
+  max-height: 720px;
+  bottom: 2%;
+  left: 15%;
+  background: radial-gradient(circle, rgba(244, 162, 97, 0.90) 0%, rgba(233, 196, 106, 0.20) 60%, transparent 80%);
+  animation: blobFloat3 14s ease-in-out infinite alternate;
 }
 
 .mesh-blob-4 {
-  width: 40vw;
-  height: 40vw;
-  max-width: 450px;
-  max-height: 450px;
-  bottom: 15%;
-  right: 15%;
-  background: radial-gradient(circle, rgba(184, 85, 45, 0.6) 0%, rgba(246, 239, 224, 0) 70%);
-  animation: blobFloat1 25s ease-in-out infinite alternate-reverse;
+  width: 48vw;
+  height: 48vw;
+  max-width: 520px;
+  max-height: 520px;
+  bottom: 10%;
+  right: 10%;
+  background: radial-gradient(circle, rgba(224, 122, 95, 0.75) 0%, rgba(246, 239, 224, 0.10) 60%, transparent 80%);
+  animation: blobFloat1 22s ease-in-out infinite alternate-reverse;
 }
 
 @keyframes blobFloat1 {
