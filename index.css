@@ -1787,20 +1787,28 @@ footer .fine {
   color: var(--paper-deep);
 }
 
-/* Programs Split Scroll (Moon UltraLight Style) */
+/* Full-Screen Parallax Section: Our Age-Appropriate Programs */
+.programs-fullscreen-parallax-wrapper {
+  position: relative;
+  width: 100%;
+  margin: 2rem 0;
+}
+
 .programs-split-container {
   display: flex;
   position: relative;
   width: 100%;
-  margin-top: 4rem;
 }
 
 .split-left {
-  width: 50%;
+  width: 52%;
   height: 100vh;
+  position: sticky;
+  top: 0;
   overflow: hidden;
-  border-radius: 0 32px 32px 0;
-  box-shadow: var(--shadow);
+  border-radius: 0 36px 36px 0;
+  box-shadow: 0 24px 48px -12px rgba(43, 36, 22, 0.25);
+  z-index: 2;
 }
 
 .split-visuals-wrapper {
@@ -1815,54 +1823,102 @@ footer .fine {
   background-size: cover;
   background-position: center;
   opacity: 0;
-  transform: scale(1.05);
-  transition: opacity 0.8s ease, transform 1s ease;
+  transform: scale(1.1) translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
 .split-visual.active {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1) translateY(0);
+}
+
+.split-left-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(35, 59, 35, 0.25) 0%, rgba(43, 36, 22, 0.45) 100%);
+  pointer-events: none;
 }
 
 .split-right {
-  width: 50%;
-  padding: 0 5vw;
+  width: 48%;
+  padding: 0 4vw;
+  position: relative;
+  z-index: 3;
 }
 
 .split-content-block {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  opacity: 0.2;
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  transform: translateY(20px);
+  opacity: 0.15;
+  transform: translateY(40px) scale(0.96);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  padding: 2rem 0;
 }
 
 .split-content-block.active {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .split-content-block h3 {
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
-  margin-bottom: 1rem;
+  font-size: clamp(2.6rem, 4.5vw, 3.8rem);
+  margin: 0.8rem 0 1rem;
+  color: var(--forest-deep);
 }
 
 .split-content-block p {
   font-size: 1.25rem;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--ink-soft);
+  margin-bottom: 1.8rem;
+  max-width: 480px;
+}
+
+.program-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
   margin-bottom: 2rem;
-  max-width: 450px;
+}
+
+.program-tags span {
+  padding: 0.4rem 0.9rem;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(43, 36, 22, 0.12);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--forest-deep);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
 }
 
 @media (max-width: 992px) {
   .programs-split-container {
     flex-direction: column;
   }
+  .split-left {
+    width: 100%;
+    height: 55vh;
+    position: relative;
+    border-radius: 24px;
+    margin-bottom: 2rem;
+  }
+  .split-right {
+    width: 100%;
+    padding: 0 1.5rem;
+  }
+  .split-content-block {
+    min-height: auto;
+    padding: 3rem 0;
+    opacity: 1;
+    transform: none;
+  }
+}
   .split-left {
     width: 100%;
     height: 50vh;

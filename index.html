@@ -379,67 +379,74 @@
       </div>
     </section>
 
-    <!-- Programs Grid Overview -->
-    <section class="reveal-on-scroll">
-      <div class="inner">
-        <div style="text-align: center; margin-bottom: 3.5rem;">
-          <span class="eyebrow">tailored for development</span>
-          <h2 style="font-size: clamp(2rem, 4vw, 2.8rem);">Our Age-Appropriate Programs</h2>
-          <p style="max-width: 600px; margin: 0.8rem auto 0; color: var(--ink-soft);">
-            Nurturing classrooms designed around biological readiness, natural pacing, and play-centric milestones.
-          </p>
+    <!-- Full-Screen Parallax Section: Our Age-Appropriate Programs -->
+    <section id="programs-parallax-section" class="programs-fullscreen-parallax-wrapper">
+      <div class="programs-header-intro" style="text-align: center; padding: 4rem 1.5rem 2rem;">
+        <span class="eyebrow">tailored for development</span>
+        <h2 style="font-size: clamp(2.2rem, 4.5vw, 3.2rem);">Our Age-Appropriate Programs</h2>
+        <p style="max-width: 620px; margin: 0.8rem auto 0; color: var(--ink-soft); font-size: 1.15rem;">
+          Nurturing classrooms designed around biological readiness, natural pacing, and play-centric milestones.
+        </p>
+      </div>
+
+      <div class="programs-split-container">
+        
+        <!-- Full-Screen Parallax Left Side (Full-Bleed Viewport Visuals) -->
+        <div class="split-left">
+          <div class="split-visuals-wrapper">
+            <div class="split-visual active" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=1400');"></div>
+            <div class="split-visual" style="background-image: url('https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&q=80&w=1400');"></div>
+            <div class="split-visual" style="background-image: url('https://images.unsplash.com/photo-1472162072942-cd5147eb39bd?auto=format&fit=crop&q=80&w=1400');"></div>
+            <div class="split-visual" style="background-image: url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&q=80&w=1400');"></div>
+            <div class="split-visual" style="background-image: url('https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?auto=format&fit=crop&q=80&w=1400');"></div>
+          </div>
+          <!-- Dark glass gradient overlay for high contrast readability -->
+          <div class="split-left-overlay"></div>
         </div>
 
-        <div class="programs-split-container">
+        <!-- Full-Screen Parallax Right Side (Glass Cards Scrolling Viewport) -->
+        <div class="split-right">
+          <div class="split-content-block active" data-index="0">
+            <span class="age-badge">6 months – 24 months</span>
+            <h3>Parent-Toddler</h3>
+            <p>A gentle introduction to mindful learning. We nurture curiosity in a safe environment alongside parents, building early sensory awareness.</p>
+            <div class="program-tags"><span>🌱 Sensory Exploration</span><span>👶 Parent Bonding</span><span>🎨 Motor Skills</span></div>
+            <a href="programs.html?tab=toddler" class="btn-primary">Explore Program &rarr;</a>
+          </div>
           
-          <div class="split-left">
-            <div class="split-visuals-wrapper">
-              <div class="split-visual active" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=1200');"></div>
-              <div class="split-visual" style="background-image: url('https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&q=80&w=1200');"></div>
-              <div class="split-visual" style="background-image: url('https://images.unsplash.com/photo-1472162072942-cd5147eb39bd?auto=format&fit=crop&q=80&w=1200');"></div>
-              <div class="split-visual" style="background-image: url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&q=80&w=1200');"></div>
-              <div class="split-visual" style="background-image: url('https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?auto=format&fit=crop&q=80&w=1200');"></div>
-            </div>
+          <div class="split-content-block" data-index="1">
+            <span class="age-badge">2 – 3 years</span>
+            <h3>Sprouts</h3>
+            <p>Fostering independence and sensory exploration. Children develop early social skills and motor coordination through guided play in our nature-centric spaces.</p>
+            <div class="program-tags"><span>🪴 Nature Walks</span><span>🧩 Guided Play</span><span>🗣️ Language Roots</span></div>
+            <a href="programs.html?tab=sprouts" class="btn-primary">Explore Program &rarr;</a>
           </div>
 
-          <div class="split-right">
-            <div class="split-content-block">
-              <span class="age-badge">6 months – 24 months</span>
-              <h3>Parent-Toddler</h3>
-              <p>A gentle introduction to mindful learning. We nurture curiosity in a safe environment alongside parents, building early sensory awareness.</p>
-              <a href="programs.html?tab=toddler" class="btn-primary">Explore Program</a>
-            </div>
-            
-            <div class="split-content-block">
-              <span class="age-badge">2 – 3 years</span>
-              <h3>Sprouts</h3>
-              <p>Fostering independence and sensory exploration. Children develop early social skills and motor coordination through guided play in our nature-centric spaces.</p>
-              <a href="programs.html?tab=sprouts" class="btn-primary">Explore Program</a>
-            </div>
-
-            <div class="split-content-block">
-              <span class="age-badge">3 – 4 years</span>
-              <h3>Seedlings</h3>
-              <p>Building foundational cognitive and motor skills. Project-based learning begins to blossom here, encouraging collaborative problem-solving.</p>
-              <a href="programs.html?tab=seedlings" class="btn-primary">Explore Program</a>
-            </div>
-
-            <div class="split-content-block">
-              <span class="age-badge">4 – 5 years</span>
-              <h3>Buds</h3>
-              <p>Enhancing critical thinking and creative expression. We focus on preparing them for more structured learning without losing the wonder of free play.</p>
-              <a href="programs.html?tab=buds" class="btn-primary">Explore Program</a>
-            </div>
-
-            <div class="split-content-block">
-              <span class="age-badge">5 – 6 years</span>
-              <h3>Blossoms</h3>
-              <p>Preparing for formal education while preserving the joy of inquiry. The culmination of our early years village, where confident learners emerge.</p>
-              <a href="programs.html?tab=blossoms" class="btn-primary">Explore Program</a>
-            </div>
+          <div class="split-content-block" data-index="2">
+            <span class="age-badge">3 – 4 years</span>
+            <h3>Seedlings</h3>
+            <p>Building foundational cognitive and motor skills. Project-based learning begins to blossom here, encouraging collaborative problem-solving.</p>
+            <div class="program-tags"><span>🔬 Hands-on Projects</span><span>🤝 Team Play</span><span>🎨 Creative Expression</span></div>
+            <a href="programs.html?tab=seedlings" class="btn-primary">Explore Program &rarr;</a>
           </div>
 
+          <div class="split-content-block" data-index="3">
+            <span class="age-badge">4 – 5 years</span>
+            <h3>Buds</h3>
+            <p>Enhancing critical thinking and creative expression. We focus on preparing them for more structured learning without losing the wonder of free play.</p>
+            <div class="program-tags"><span>📚 Early Literacy</span><span>🔢 Math Concepts</span><span>🎭 Drama &amp; Music</span></div>
+            <a href="programs.html?tab=buds" class="btn-primary">Explore Program &rarr;</a>
+          </div>
+
+          <div class="split-content-block" data-index="4">
+            <span class="age-badge">5 – 6 years</span>
+            <h3>Blossoms</h3>
+            <p>Preparing for formal education while preserving the joy of inquiry. The culmination of our early years village, where confident learners emerge.</p>
+            <div class="program-tags"><span>🎓 School Readiness</span><span>🌍 Environmental Leadership</span><span>💡 Inquiry Projects</span></div>
+            <a href="programs.html?tab=blossoms" class="btn-primary">Explore Program &rarr;</a>
+          </div>
         </div>
+
       </div>
     </section>
 
