@@ -54,56 +54,80 @@
       { stage: 'STAGE 05 / 05', age: '5 – 6 yrs' }
     ];
 
-    function activateStage(index) {
-      if (index < 0 || index >= imageCards.length) return;
+    let currentActiveIdx = -1;
 
-      imageCards.forEach((card, i) => {
-        if (i === index) {
-          card.classList.add('active');
-        } else {
-          card.classList.remove('active');
+    function updateParallaxState() {
+      const viewportCenter = window.innerHeight / 2;
+      let closestIdx = 0;
+      let minDistance = Infinity;
+
+      stageBlocks.forEach((block, idx) => {
+        const rect = block.getBoundingClientRect();
+        const blockCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(blockCenter - viewportCenter);
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestIdx = idx;
         }
-      });
 
-      dots.forEach((dot, i) => {
-        if (i === index) {
-          dot.classList.add('active');
-        } else {
-          dot.classList.remove('active');
-        }
-      });
-
-      if (stageBadge && stagesMeta[index]) {
-        stageBadge.textContent = stagesMeta[index].stage;
-      }
-      if (ageBadge && stagesMeta[index]) {
-        ageBadge.textContent = stagesMeta[index].age;
-      }
-    }
-
-    // Intersection Observer to switch active image stack on scroll
-    const observerOptions = {
-      root: null,
-      rootMargin: '-30% 0px -30% 0px',
-      threshold: 0.2
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const idx = parseInt(entry.target.getAttribute('data-index'), 10);
-          if (!isNaN(idx)) {
-            activateStage(idx);
+        // Apply smooth scale & pan to card image based on scroll progress of the stage block
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const progress = Math.min(Math.max((viewportCenter - rect.top) / (rect.height || 1), 0), 1);
+          const cardImg = imageCards[idx]?.querySelector('img');
+          if (cardImg) {
+            const translateY = (progress - 0.5) * -30;
+            cardImg.style.transform = `scale(1.08) translateY(${translateY}px)`;
           }
         }
       });
-    }, observerOptions);
 
-    stageBlocks.forEach((block) => {
-      observer.observe(block);
-    });
+      if (closestIdx !== currentActiveIdx) {
+        currentActiveIdx = closestIdx;
 
-    // Clicking dots jumps to target stage
+        imageCards.forEach((card, i) => {
+          if (i === currentActiveIdx) {
+            card.classList.add('active');
+            card.classList.remove('prev');
+          } else if (i < currentActiveIdx) {
+            card.classList.remove('active');
+            card.classList.add('prev');
+          } else {
+            card.classList.remove('active', 'prev');
+          }
+        });
+
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === currentActiveIdx);
+        });
+
+        if (stageBadge && stagesMeta[currentActiveIdx]) {
+          stageBadge.textContent = stagesMeta[currentActiveIdx].stage;
+        }
+        if (ageBadge && stagesMeta[currentActiveIdx]) {
+          ageBadge.textContent = stagesMeta[currentActiveIdx].age;
+        }
+      }
+    }
+
+    let ticking = false;
+    function requestTick() {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateParallaxState();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', requestTick, { passive: true });
+    window.addEventListener('resize', requestTick, { passive: true });
+
+    // Initial trigger
+    updateParallaxState();
+
+    // Clicking dots jumps smoothly to target stage
     dots.forEach((dot, i) => {
       dot.addEventListener('click', () => {
         const targetBlock = document.getElementById(`program-stage-${i}`);
