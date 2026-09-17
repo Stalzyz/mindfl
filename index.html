@@ -379,101 +379,216 @@
       </div>
     </section>
 
-    <!-- Full-Screen Parallax Section: Our Age-Appropriate Programs -->
-    <section id="programs-section" style="padding: 5rem 0; position: relative;">
-      <div style="text-align: center; margin-bottom: 4rem; padding: 0 1.5rem;">
-        <span class="eyebrow">tailored for development</span>
-        <h2 style="font-size: clamp(2.3rem, 4.8vw, 3.4rem); margin-top: 0.5rem;">Our Age-Appropriate Programs</h2>
-        <p style="max-width: 640px; margin: 0.8rem auto 0; color: var(--ink-soft); font-size: 1.15rem;">
-          Nurturing classrooms designed around biological readiness, natural pacing, and play-centric milestones.
-        </p>
-      </div>
-
-      <div class="programs-parallax-stack">
+    <!-- XSHACK-INSPIRED SECTION: Our Age-Appropriate Programs -->
+    <section id="programs-section" class="xshack-programs-section">
+      <div class="xshack-programs-container">
         
-        <!-- Program Card 1: Parent-Toddler -->
-        <div class="program-parallax-card">
-          <div class="card-parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&q=80&w=1400');"></div>
-          <div class="card-glass-overlay"></div>
-          <div class="card-content-wrap">
-            <span class="program-age-pill">6 months – 24 months</span>
-            <h3 class="program-card-title">Parent-Toddler</h3>
-            <p class="program-card-desc">A gentle introduction to mindful learning. We nurture curiosity in a safe environment alongside parents, building early sensory awareness.</p>
-            <div class="program-pill-tags">
-              <span>🌱 Sensory Exploration</span>
-              <span>👶 Parent Bonding</span>
-              <span>🎨 Motor Skills</span>
-            </div>
-            <a href="programs.html?tab=toddler" class="btn-primary">Explore Program &rarr;</a>
+        <!-- Header & Category Switcher Pills -->
+        <div class="xshack-header">
+          <div class="xshack-eyebrow-wrapper">
+            <span class="xshack-eyebrow-pill">STAGE-BY-STAGE DISCOVERY</span>
+          </div>
+          <h2 class="xshack-title">Our Age-Appropriate Programs</h2>
+          <p class="xshack-subtitle">
+            Nurturing classrooms designed around biological readiness, natural pacing, and play-centric milestones.
+          </p>
+
+          <!-- Category Pills Navigation (XShack Style) -->
+          <div class="xshack-pills-nav" role="tablist" aria-label="Program Stages">
+            <button class="xshack-pill active" data-stage="0" role="tab" aria-selected="true">
+              <span class="xshack-pill-dot"></span>
+              Parent-Toddler
+            </button>
+            <button class="xshack-pill" data-stage="1" role="tab" aria-selected="false">
+              <span class="xshack-pill-dot"></span>
+              Sprouts
+            </button>
+            <button class="xshack-pill" data-stage="2" role="tab" aria-selected="false">
+              <span class="xshack-pill-dot"></span>
+              Seedlings
+            </button>
+            <button class="xshack-pill" data-stage="3" role="tab" aria-selected="false">
+              <span class="xshack-pill-dot"></span>
+              Buds
+            </button>
+            <button class="xshack-pill" data-stage="4" role="tab" aria-selected="false">
+              <span class="xshack-pill-dot"></span>
+              Blossoms
+            </button>
           </div>
         </div>
 
-        <!-- Program Card 2: Sprouts -->
-        <div class="program-parallax-card">
-          <div class="card-parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1472162072942-cd5147eb39bd?auto=format&fit=crop&q=80&w=1400');"></div>
-          <div class="card-glass-overlay"></div>
-          <div class="card-content-wrap">
-            <span class="program-age-pill">2 – 3 years</span>
-            <h3 class="program-card-title">Sprouts</h3>
-            <p class="program-card-desc">Fostering independence and sensory exploration. Children develop early social skills and motor coordination through guided play in our nature-centric spaces.</p>
-            <div class="program-pill-tags">
-              <span>🪴 Nature Walks</span>
-              <span>🧩 Guided Play</span>
-              <span>🗣️ Language Roots</span>
+        <!-- Interactive Stage Showcase (XShack How-It-Works Dual Layout) -->
+        <div class="xshack-showcase">
+          
+          <!-- Left Column: Visual Mockup Showcase Container -->
+          <div class="xshack-mockup-col">
+            <div class="xshack-device-frame">
+              
+              <!-- Floating Header Badge inside frame -->
+              <div class="xshack-frame-badge">
+                <span class="xshack-badge-stage" id="xshack-stage-tag">STAGE 01 / 05</span>
+                <span class="xshack-badge-age" id="xshack-age-tag">6m – 24m</span>
+              </div>
+
+              <!-- Main Dynamic Image Container -->
+              <div class="xshack-frame-media">
+                <img id="xshack-main-img" src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&q=80&w=1400" alt="Parent-Toddler Program" loading="lazy" />
+                <div class="xshack-media-gradient"></div>
+              </div>
+
+              <!-- Floating Attribute Badge inside frame bottom -->
+              <div class="xshack-frame-bottom-badge">
+                <div class="xshack-stars-line">
+                  <span class="xshack-star">★</span>
+                  <span class="xshack-star">★</span>
+                  <span class="xshack-star">★</span>
+                  <span class="xshack-star">★</span>
+                  <span class="xshack-star">★</span>
+                </div>
+                <div class="xshack-badge-text" id="xshack-rating-text">100% Biological Readiness</div>
+              </div>
+
             </div>
-            <a href="programs.html?tab=sprouts" class="btn-primary">Explore Program &rarr;</a>
           </div>
+
+          <!-- Right Column: Interactive Stage Details & Attribute Panel -->
+          <div class="xshack-content-col">
+            <div class="xshack-stage-card">
+              
+              <div class="xshack-card-header">
+                <span class="xshack-num-pill" id="xshack-num-pill">01</span>
+                <span class="xshack-age-chip" id="xshack-age-chip">6 months – 24 months</span>
+              </div>
+
+              <h3 class="xshack-stage-title" id="xshack-stage-title">Parent-Toddler</h3>
+              
+              <p class="xshack-stage-desc" id="xshack-stage-desc">
+                A gentle introduction to mindful learning. We nurture curiosity in a safe environment alongside parents, building early sensory awareness.
+              </p>
+
+              <!-- Focus Tags / Milestone Chips -->
+              <div class="xshack-tags-group">
+                <div class="xshack-tags-label">KEY FOCUS MILESTONES</div>
+                <div class="xshack-pill-tags" id="xshack-tags-container">
+                  <span class="xshack-tag-item">🌱 Sensory Exploration</span>
+                  <span class="xshack-tag-item">👶 Parent Bonding</span>
+                  <span class="xshack-tag-item">🎨 Motor Skills</span>
+                </div>
+              </div>
+
+              <!-- XShack Star Attribute Boxes -->
+              <div class="xshack-attributes-grid" id="xshack-attr-grid">
+                <div class="xshack-attr-box">
+                  <div class="xshack-attr-stars">
+                    <span>★</span><span>★</span><span>★</span>
+                  </div>
+                  <div class="xshack-attr-title" id="attr-1-title">Readiness: Biological</div>
+                </div>
+                <div class="xshack-attr-box">
+                  <div class="xshack-attr-stars">
+                    <span>★</span><span>★</span><span>★</span>
+                  </div>
+                  <div class="xshack-attr-title" id="attr-2-title">Space: Parent-Guided</div>
+                </div>
+                <div class="xshack-attr-box">
+                  <div class="xshack-attr-stars">
+                    <span>★</span><span>★</span><span>★</span>
+                  </div>
+                  <div class="xshack-attr-title" id="attr-3-title">Milestone: Sensory Roots</div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="xshack-actions">
+                <a id="xshack-cta-btn" href="programs.html?tab=toddler" class="xshack-btn-primary">
+                  <span>Explore Program</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12" 5 19 12 12 19"></polyline></svg>
+                </a>
+                <a href="about.html#visit" class="xshack-btn-secondary">
+                  <span>Schedule Visit</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                </a>
+              </div>
+
+            </div>
+          </div>
+
         </div>
 
-        <!-- Program Card 3: Seedlings -->
-        <div class="program-parallax-card">
-          <div class="card-parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&q=80&w=1400');"></div>
-          <div class="card-glass-overlay"></div>
-          <div class="card-content-wrap">
-            <span class="program-age-pill">3 – 4 years</span>
-            <h3 class="program-card-title">Seedlings</h3>
-            <p class="program-card-desc">Building foundational cognitive and motor skills. Project-based learning begins to blossom here, encouraging collaborative problem-solving.</p>
-            <div class="program-pill-tags">
-              <span>🔬 Hands-on Projects</span>
-              <span>🤝 Team Play</span>
-              <span>🎨 Creative Expression</span>
+        <!-- Horizontal Cards Slider Showcase (XShack Products Grid Layout) -->
+        <div class="xshack-cards-grid">
+          
+          <div class="xshack-grid-card active" data-stage="0">
+            <div class="xshack-card-bg" style="background-image: url('https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&q=80&w=800');"></div>
+            <div class="xshack-card-overlay"></div>
+            <div class="xshack-card-body">
+              <span class="xshack-card-age">6m – 24m</span>
+              <h4 class="xshack-card-h">Parent-Toddler</h4>
+              <p class="xshack-card-p">Gentle introduction to mindful sensory play alongside parents.</p>
+              <div class="xshack-card-footer">
+                <span>STAGE 01</span>
+                <span class="xshack-card-arrow">&rarr;</span>
+              </div>
             </div>
-            <a href="programs.html?tab=seedlings" class="btn-primary">Explore Program &rarr;</a>
           </div>
-        </div>
 
-        <!-- Program Card 4: Buds -->
-        <div class="program-parallax-card">
-          <div class="card-parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&q=80&w=1400');"></div>
-          <div class="card-glass-overlay"></div>
-          <div class="card-content-wrap">
-            <span class="program-age-pill">4 – 5 years</span>
-            <h3 class="program-card-title">Buds</h3>
-            <p class="program-card-desc">Enhancing critical thinking and creative expression. We focus on preparing them for more structured learning without losing the wonder of free play.</p>
-            <div class="program-pill-tags">
-              <span>📚 Early Literacy</span>
-              <span>🔢 Math Concepts</span>
-              <span>🎭 Drama &amp; Music</span>
+          <div class="xshack-grid-card" data-stage="1">
+            <div class="xshack-card-bg" style="background-image: url('https://images.unsplash.com/photo-1472162072942-cd5147eb39bd?auto=format&fit=crop&q=80&w=800');"></div>
+            <div class="xshack-card-overlay"></div>
+            <div class="xshack-card-body">
+              <span class="xshack-card-age">2 – 3 years</span>
+              <h4 class="xshack-card-h">Sprouts</h4>
+              <p class="xshack-card-p">Fostering early independence and nature exploration.</p>
+              <div class="xshack-card-footer">
+                <span>STAGE 02</span>
+                <span class="xshack-card-arrow">&rarr;</span>
+              </div>
             </div>
-            <a href="programs.html?tab=buds" class="btn-primary">Explore Program &rarr;</a>
           </div>
-        </div>
 
-        <!-- Program Card 5: Blossoms -->
-        <div class="program-parallax-card">
-          <div class="card-parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=80&w=1400');"></div>
-          <div class="card-glass-overlay"></div>
-          <div class="card-content-wrap">
-            <span class="program-age-pill">5 – 6 years</span>
-            <h3 class="program-card-title">Blossoms</h3>
-            <p class="program-card-desc">Preparing for formal education while preserving the joy of inquiry. The culmination of our early years village, where confident learners emerge.</p>
-            <div class="program-pill-tags">
-              <span>🎓 School Readiness</span>
-              <span>🌍 Environmental Leadership</span>
-              <span>💡 Inquiry Projects</span>
+          <div class="xshack-grid-card" data-stage="2">
+            <div class="xshack-card-bg" style="background-image: url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&q=80&w=800');"></div>
+            <div class="xshack-card-overlay"></div>
+            <div class="xshack-card-body">
+              <span class="xshack-card-age">3 – 4 years</span>
+              <h4 class="xshack-card-h">Seedlings</h4>
+              <p class="xshack-card-p">Hands-on project inquiry and collaborative play.</p>
+              <div class="xshack-card-footer">
+                <span>STAGE 03</span>
+                <span class="xshack-card-arrow">&rarr;</span>
+              </div>
             </div>
-            <a href="programs.html?tab=blossoms" class="btn-primary">Explore Program &rarr;</a>
           </div>
+
+          <div class="xshack-grid-card" data-stage="3">
+            <div class="xshack-card-bg" style="background-image: url('https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&q=80&w=800');"></div>
+            <div class="xshack-card-overlay"></div>
+            <div class="xshack-card-body">
+              <span class="xshack-card-age">4 – 5 years</span>
+              <h4 class="xshack-card-h">Buds</h4>
+              <p class="xshack-card-p">Early literacy, math concepts, and creative expression.</p>
+              <div class="xshack-card-footer">
+                <span>STAGE 04</span>
+                <span class="xshack-card-arrow">&rarr;</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="xshack-grid-card" data-stage="4">
+            <div class="xshack-card-bg" style="background-image: url('https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=80&w=800');"></div>
+            <div class="xshack-card-overlay"></div>
+            <div class="xshack-card-body">
+              <span class="xshack-card-age">5 – 6 years</span>
+              <h4 class="xshack-card-h">Blossoms</h4>
+              <p class="xshack-card-p">School readiness and confident environmental leadership.</p>
+              <div class="xshack-card-footer">
+                <span>STAGE 05</span>
+                <span class="xshack-card-arrow">&rarr;</span>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
