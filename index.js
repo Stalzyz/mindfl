@@ -299,6 +299,7 @@
       '.reveal-up',
       '.fade-up',
       '.reveal-on-scroll',
+      '.prog-compact-card',
       '.prog-clean-card',
       '.pedagogy-card',
       '.grid-pedagogy > div',
