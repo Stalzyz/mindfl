@@ -36,106 +36,113 @@
     });
   }
 
-  /* ---------------- FULL-SCREEN SPLIT PARALLAX PROGRAM SHOWCASE ---------------- */
+  /* ---------------- PINNED PROGRAMS SECTION (GSAP ScrollTrigger) ---------------- */
   function initProgramsVerticalScroll() {
-    const stageBlocks = document.querySelectorAll('.parallax-stage-block');
-    const imageCards = document.querySelectorAll('.parallax-stack-card');
-    const dots = document.querySelectorAll('.parallax-progress-dots .dot');
-    const stageBadge = document.getElementById('split-stage-badge');
-    const ageBadge = document.getElementById('split-age-badge');
+    const panel       = document.getElementById('programs-pin-panel');
+    const spacer      = document.getElementById('programs-scroll-spacer');
+    const imgSlides   = document.querySelectorAll('.prog-img-slide');
+    const contentSlides = document.querySelectorAll('.prog-content-slide');
+    const dots        = document.querySelectorAll('.prog-dot');
 
-    if (stageBlocks.length === 0 || imageCards.length === 0) return;
+    if (!panel || !spacer || imgSlides.length === 0) return;
 
-    const stagesMeta = [
-      { stage: 'STAGE 01 / 05', age: '6m – 24m' },
-      { stage: 'STAGE 02 / 05', age: '2 – 3 yrs' },
-      { stage: 'STAGE 03 / 05', age: '3 – 4 yrs' },
-      { stage: 'STAGE 04 / 05', age: '4 – 5 yrs' },
-      { stage: 'STAGE 05 / 05', age: '5 – 6 yrs' }
-    ];
+    const STAGES = imgSlides.length; // 5
 
-    let currentActiveIdx = -1;
+    // Set spacer height so ScrollTrigger has 5 × 100vh to scroll through
+    spacer.style.height = (STAGES * 100) + 'vh';
 
-    function updateParallaxState() {
-      const viewportCenter = window.innerHeight / 2;
-      let closestIdx = 0;
-      let minDistance = Infinity;
+    let currentStage = -1;
 
-      stageBlocks.forEach((block, idx) => {
-        const rect = block.getBoundingClientRect();
-        const blockCenter = rect.top + rect.height / 2;
-        const distance = Math.abs(blockCenter - viewportCenter);
+    // Position panel as fixed full-screen on top of the section
+    // GSAP ScrollTrigger pins it instead of position:fixed so it works with page flow
+    if (window.ScrollTrigger && window.gsap) {
+      window.gsap.registerPlugin(window.ScrollTrigger);
 
-        if (distance < minDistance) {
-          minDistance = distance;
-          closestIdx = idx;
-        }
-
-        // Apply smooth scale & pan to card image based on scroll progress of the stage block
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-          const progress = Math.min(Math.max((viewportCenter - rect.top) / (rect.height || 1), 0), 1);
-          const cardImg = imageCards[idx]?.querySelector('img');
-          if (cardImg) {
-            const translateY = (progress - 0.5) * -30;
-            cardImg.style.transform = `scale(1.08) translateY(${translateY}px)`;
+      window.ScrollTrigger.create({
+        trigger: '#programs-section',
+        start: 'top top',
+        end: () => '+=' + (STAGES * window.innerHeight),
+        pin: panel,
+        pinSpacing: false,
+        scrub: false,
+        onUpdate: (self) => {
+          // Map scroll progress 0–1 across 5 stages (0–4)
+          const rawStage = self.progress * STAGES;
+          const stage = Math.min(Math.floor(rawStage), STAGES - 1);
+          if (stage !== currentStage) {
+            goToStage(stage, stage > currentStage ? 'down' : 'up');
+            currentStage = stage;
           }
         }
       });
 
-      if (closestIdx !== currentActiveIdx) {
-        currentActiveIdx = closestIdx;
-
-        imageCards.forEach((card, i) => {
-          if (i === currentActiveIdx) {
-            card.classList.add('active');
-            card.classList.remove('prev');
-          } else if (i < currentActiveIdx) {
-            card.classList.remove('active');
-            card.classList.add('prev');
-          } else {
-            card.classList.remove('active', 'prev');
-          }
-        });
-
-        dots.forEach((dot, i) => {
-          dot.classList.toggle('active', i === currentActiveIdx);
-        });
-
-        if (stageBadge && stagesMeta[currentActiveIdx]) {
-          stageBadge.textContent = stagesMeta[currentActiveIdx].stage;
+    } else {
+      // Pure scroll fallback if GSAP unavailable
+      const section = document.getElementById('programs-section');
+      window.addEventListener('scroll', () => {
+        const rect = section.getBoundingClientRect();
+        const totalH = STAGES * window.innerHeight;
+        const scrolled = -rect.top;
+        if (scrolled < 0 || scrolled > totalH) return;
+        const progress = scrolled / totalH;
+        const rawStage = progress * STAGES;
+        const stage = Math.min(Math.floor(rawStage), STAGES - 1);
+        if (stage !== currentStage) {
+          goToStage(stage, stage > currentStage ? 'down' : 'up');
+          currentStage = stage;
         }
-        if (ageBadge && stagesMeta[currentActiveIdx]) {
-          ageBadge.textContent = stagesMeta[currentActiveIdx].age;
-        }
-      }
+      }, { passive: true });
     }
 
-    let ticking = false;
-    function requestTick() {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          updateParallaxState();
-          ticking = false;
-        });
-        ticking = true;
-      }
+    function goToStage(idx, direction) {
+      // --- Images: slide-stack effect ---
+      imgSlides.forEach((slide, i) => {
+        slide.classList.remove('active', 'exit-up', 'exit-down', 'enter-up', 'enter-down');
+        if (i === idx) {
+          // Entering from below (scrolling down) or from above (scrolling up)
+          slide.classList.add(direction === 'down' ? 'enter-down' : 'enter-up');
+          requestAnimationFrame(() => {
+            slide.classList.add('active');
+            slide.classList.remove('enter-down', 'enter-up');
+          });
+        } else if (i < idx) {
+          slide.classList.add('exit-up');
+        } else {
+          slide.classList.add('exit-down');
+        }
+      });
+
+      // --- Content: fade + slide ---
+      contentSlides.forEach((slide, i) => {
+        slide.classList.remove('active', 'exit-up', 'exit-down');
+        if (i === idx) {
+          slide.classList.add('active');
+        } else if (i < idx) {
+          slide.classList.add('exit-up');
+        } else {
+          slide.classList.add('exit-down');
+        }
+      });
+
+      // --- Dots ---
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === idx);
+      });
     }
 
-    window.addEventListener('scroll', requestTick, { passive: true });
-    window.addEventListener('resize', requestTick, { passive: true });
-
-    // Initial trigger
-    updateParallaxState();
-
-    // Clicking dots jumps smoothly to target stage
+    // Clicking dots scrolls to that stage
     dots.forEach((dot, i) => {
       dot.addEventListener('click', () => {
-        const targetBlock = document.getElementById(`program-stage-${i}`);
-        if (targetBlock) {
-          targetBlock.scrollIntoView({ behavior: 'smooth' });
-        }
+        const section = document.getElementById('programs-section');
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+        const targetScroll = sectionTop + i * window.innerHeight;
+        window.scrollTo({ top: targetScroll, behavior: 'smooth' });
       });
     });
+
+    // Init first stage
+    goToStage(0, 'down');
+    currentStage = 0;
   }
 
   /* ---------------- MOBILE MENU ---------------- */

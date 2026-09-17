@@ -1788,422 +1788,414 @@ footer .fine {
 }
 
 /* ==========================================================================
-   FULL-SCREEN SPLIT PARALLAX SECTION STYLES
+   PINNED PROGRAMS SECTION — Full-screen GSAP ScrollTrigger Layout
    ========================================================================== */
-.split-parallax-programs-section {
-  background: linear-gradient(160deg, #1a3320 0%, #2d5a3a 40%, #1e4029 100%) !important;
-  color: #f0f7f2 !important;
+.programs-pinned-section {
   position: relative;
-  overflow: visible;
-  padding: 0;
+  background: linear-gradient(160deg, #1a3320 0%, #2d5a3a 40%, #1e4029 100%);
   margin: 3rem 0;
 }
 
-.split-parallax-wrapper {
+/* The pinned panel fills the viewport */
+.programs-pin-panel {
   display: flex;
   width: 100%;
+  height: 100vh;
+  overflow: hidden;
   position: relative;
 }
 
-@media (max-width: 992px) {
-  .split-parallax-wrapper {
-    flex-direction: column;
-  }
+/* Scroll spacer — set by JS to STAGES * 100vh */
+.programs-scroll-spacer {
+  width: 100%;
+  pointer-events: none;
 }
 
-/* LEFT COLUMN: Sticky 100vh Viewport for Image Stack */
-.split-sticky-left {
-  width: 50%;
-  height: 100vh;
-  position: sticky;
-  top: 0;
+/* ─── LEFT: Image Stack ─── */
+.prog-left {
+  width: 48%;
+  height: 100%;
+  position: relative;
+  flex-shrink: 0;
+  padding: 2.5rem;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2.5rem;
-  z-index: 10;
-  box-sizing: border-box;
 }
 
-@media (max-width: 992px) {
-  .split-sticky-left {
-    width: 100%;
-    height: 55vh;
-    position: relative;
-    padding: 1.5rem;
-  }
+@media (max-width: 900px) {
+  .prog-left { width: 100%; height: 45vh; padding: 1.5rem; }
 }
 
-.parallax-device-container {
+.prog-image-stack {
   position: relative;
   width: 100%;
-  max-width: 500px;
-  height: 82vh;
-  max-height: 620px;
-  border-radius: 32px;
+  max-width: 480px;
+  height: 78vh;
+  max-height: 580px;
+  border-radius: 28px;
   overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.15);
-  background: #1a3320;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
 }
 
-/* Floating Top Badge */
-.parallax-top-badge {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  z-index: 20;
-  display: flex;
-  gap: 0.6rem;
-}
-
-.parallax-badge-stage {
-  background: #ffffff !important;
-  color: #1a3320 !important;
-  font-size: 0.8rem;
-  font-weight: 800;
-  padding: 0.4rem 1rem;
-  border-radius: 50px;
-  letter-spacing: 0.06em;
-}
-
-.parallax-badge-age {
-  background: rgba(255, 255, 255, 0.15) !important;
-  color: #ffffff !important;
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 0.4rem 1rem;
-  border-radius: 50px;
-  border: 1px solid rgba(255, 255, 255, 0.35) !important;
-  backdrop-filter: blur(12px);
-}
-
-/* Image Stack Container & Layers */
-.parallax-image-stack {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.parallax-stack-card {
+/* Each image slide */
+.prog-img-slide {
   position: absolute;
   inset: 0;
-  opacity: 0;
-  transform: translateY(40px) scale(0.92);
-  transition: transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.6s ease;
-  pointer-events: none;
   overflow: hidden;
-  border-radius: 32px;
-}
-
-.parallax-stack-card.active {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  pointer-events: auto;
-  z-index: 5;
-}
-
-.parallax-stack-card.prev {
+  border-radius: 28px;
+  /* Default: waiting below viewport */
+  transform: translateY(100%);
   opacity: 0;
-  transform: translateY(-40px) scale(1.04);
-  pointer-events: none;
+  transition: transform 0.75s cubic-bezier(0.77,0,0.175,1), opacity 0.55s ease;
   z-index: 1;
 }
 
-.parallax-stack-card img {
+/* Slide currently active — sits at normal position */
+.prog-img-slide.active {
+  transform: translateY(0);
+  opacity: 1;
+  z-index: 3;
+}
+
+/* Slide that was active, now exiting upward */
+.prog-img-slide.exit-up {
+  transform: translateY(-100%);
+  opacity: 0;
+  z-index: 2;
+}
+
+/* Slide waiting below (default / exit-down) */
+.prog-img-slide.exit-down {
+  transform: translateY(100%);
+  opacity: 0;
+  z-index: 1;
+}
+
+/* Entering from above (going backwards) */
+.prog-img-slide.enter-up {
+  transform: translateY(-100%);
+  opacity: 0;
+  z-index: 2;
+}
+
+/* Entering from below (going forward) */
+.prog-img-slide.enter-down {
+  transform: translateY(100%);
+  opacity: 0;
+  z-index: 2;
+}
+
+.prog-img-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.15s ease-out;
-  will-change: transform;
 }
 
-.parallax-stack-overlay {
+.prog-img-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, rgba(20, 50, 30, 0.88) 0%, rgba(20, 50, 30, 0.1) 50%, rgba(20, 50, 30, 0.25) 100%);
+  background: linear-gradient(0deg, rgba(15,40,20,0.9) 0%, rgba(15,40,20,0.1) 55%, rgba(15,40,20,0.2) 100%);
+  z-index: 2;
 }
 
-.parallax-card-info {
+.prog-img-caption {
   position: absolute;
-  bottom: 1.5rem;
-  left: 1.5rem;
-  right: 1.5rem;
-  z-index: 15;
-  background: rgba(26, 51, 32, 0.88) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  padding: 0.9rem 1.4rem;
-  border-radius: 20px;
+  bottom: 1.4rem;
+  left: 1.4rem;
+  right: 1.4rem;
+  z-index: 5;
+  background: rgba(20,50,28,0.85);
+  border: 1px solid rgba(255,255,255,0.18);
   backdrop-filter: blur(14px);
+  padding: 0.85rem 1.2rem;
+  border-radius: 18px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.9rem;
 }
 
-.parallax-stars {
-  color: #a8d8b0 !important;
-  font-size: 1rem;
-  letter-spacing: 2px;
+.prog-stars {
   display: flex;
   gap: 2px;
-  align-items: center;
+  color: #a8d8b0;
+  flex-shrink: 0;
 }
 
-.parallax-info-title {
-  font-size: 0.9rem;
+.prog-img-caption span {
+  font-size: 0.88rem;
   font-weight: 700;
-  color: #ffffff !important;
+  color: #ffffff;
 }
 
-/* Dots Indicator */
-.parallax-progress-dots {
+/* Dots */
+.prog-dots {
   position: absolute;
-  right: 1.2rem;
+  right: 2rem;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 25;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  z-index: 20;
 }
 
-.parallax-progress-dots .dot {
+.prog-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.25);
-  transition: all 0.3s ease;
+  background: rgba(255,255,255,0.25);
   cursor: pointer;
+  transition: all 0.35s ease;
 }
 
-.parallax-progress-dots .dot.active {
+.prog-dot.active {
   background: #ffffff;
   height: 22px;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
-/* RIGHT COLUMN: Scrolling Stage Blocks */
-.split-scroll-right {
-  width: 50%;
-  padding: 0 4rem 6rem 2rem;
+/* ─── RIGHT: Content Panel ─── */
+.prog-right {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 4rem 3rem 2rem;
   box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
 }
 
-@media (max-width: 992px) {
-  .split-scroll-right {
-    width: 100%;
-    padding: 2rem 1.5rem 4rem;
-  }
+@media (max-width: 900px) {
+  .prog-right { padding: 2rem 1.5rem; }
 }
 
-.split-header-block {
-  padding-top: 5rem;
-  margin-bottom: 4rem;
+.prog-section-header {
+  margin-bottom: 2.5rem;
 }
 
-.split-eyebrow-pill {
+.prog-eyebrow {
   display: inline-block;
-  padding: 0.45rem 1.4rem;
+  padding: 0.4rem 1.2rem;
   border-radius: 100px;
-  background: rgba(255, 255, 255, 0.15) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  color: #ffffff !important;
-  font-size: 0.82rem;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #ffffff;
+  font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
 }
 
-.split-main-title {
-  font-size: clamp(2.5rem, 4.5vw, 3.8rem) !important;
+.prog-main-title {
+  font-size: clamp(2rem, 3.8vw, 3.2rem) !important;
   color: #ffffff !important;
   font-family: 'Fraunces', serif;
-  margin-bottom: 1rem;
   line-height: 1.12;
+  margin-bottom: 0.75rem;
 }
 
-.split-main-desc {
-  font-size: 1.15rem;
+.prog-main-desc {
+  font-size: 1rem;
+  color: rgba(240,247,242,0.8) !important;
   line-height: 1.65;
-  color: rgba(246, 239, 224, 0.85) !important;
-  max-width: 540px;
+  max-width: 480px;
 }
 
-/* Parallax Stage Content Block */
-.parallax-stage-block {
-  min-height: 85vh;
+/* Content slides container */
+.prog-content-area {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Each content slide */
+.prog-content-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.55s ease, transform 0.6s cubic-bezier(0.23,1,0.32,1);
+  pointer-events: none;
+}
+
+.prog-content-slide.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.prog-content-slide.exit-up {
+  opacity: 0;
+  transform: translateY(-40px);
+  z-index: 1;
+}
+
+.prog-content-slide.exit-down {
+  opacity: 0;
+  transform: translateY(40px);
+  z-index: 1;
+}
+
+.prog-stage-meta {
   display: flex;
   align-items: center;
-  padding: 3rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 0.9rem;
+  margin-bottom: 1rem;
 }
 
-.parallax-stage-block:last-child {
-  border-bottom: none;
-}
-
-.stage-block-inner {
-  width: 100%;
-  max-width: 540px;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
-
-.stage-meta-line {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.2rem;
-}
-
-.stage-num-badge {
-  font-size: 1.15rem;
+.prog-num {
+  font-size: 1.05rem;
   font-weight: 800;
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.18) !important;
-  border: 1px solid rgba(255, 255, 255, 0.35) !important;
-  padding: 0.35rem 0.9rem;
+  color: #ffffff;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 0.3rem 0.85rem;
   border-radius: 50px;
 }
 
-.stage-age-chip {
-  font-size: 1rem;
-  color: rgba(240, 247, 242, 0.8) !important;
+.prog-age {
+  font-size: 0.95rem;
   font-weight: 700;
+  color: rgba(240,247,242,0.75);
 }
 
-.stage-title {
-  font-size: clamp(2.2rem, 3.8vw, 3.2rem) !important;
+.prog-stage-title {
+  font-size: clamp(2rem, 3.5vw, 3rem) !important;
   color: #ffffff !important;
   font-family: 'Fraunces', serif;
-  margin-bottom: 1.2rem;
   line-height: 1.15;
+  margin-bottom: 0.85rem;
 }
 
-.stage-description {
-  font-size: 1.15rem;
+.prog-stage-desc {
+  font-size: 1.05rem;
   line-height: 1.7;
-  color: rgba(246, 239, 224, 0.9) !important;
-  margin-bottom: 2rem;
+  color: rgba(240,247,242,0.88) !important;
+  max-width: 500px;
+  margin-bottom: 1.5rem;
 }
 
-.stage-milestones-group {
-  margin-bottom: 2rem;
+.prog-milestones {
+  margin-bottom: 1.8rem;
 }
 
-.milestones-label {
-  font-size: 0.78rem;
+.prog-milestone-label {
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.14em;
-  color: rgba(180, 220, 190, 0.9) !important;
-  margin-bottom: 0.9rem;
+  color: rgba(180,220,190,0.9);
   text-transform: uppercase;
+  margin-bottom: 0.75rem;
 }
 
-.milestones-pills {
+.prog-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.7rem;
+  gap: 0.55rem;
 }
 
-.milestones-pills span {
-  background: rgba(255, 255, 255, 0.12) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  color: #f0f7f2 !important;
-  padding: 0.45rem 1rem;
-  border-radius: 50px;
-  font-size: 0.88rem;
-  font-weight: 600;
+.prog-pills span {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.38rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #f0f7f2;
+  padding: 0.42rem 1rem;
+  border-radius: 50px;
+  font-size: 0.86rem;
+  font-weight: 600;
 }
 
-.stage-attributes-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.85rem;
-  margin-bottom: 2.2rem;
-}
-
-@media (max-width: 600px) {
-  .stage-attributes-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.attr-chip {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  padding: 0.85rem 1rem;
-  border-radius: 16px;
-}
-
-.attr-stars {
-  color: #a8d8b0 !important;
-  font-size: 0.82rem;
-  margin-bottom: 0.3rem;
-  letter-spacing: 2px;
-  display: flex;
-  gap: 2px;
-  align-items: center;
-}
-
-.attr-text {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: rgba(246, 239, 224, 0.95) !important;
-}
-
-.stage-actions {
+.prog-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.2rem;
+  gap: 1rem;
   align-items: center;
 }
 
-.stage-btn-primary {
+.prog-btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  background: #ffffff !important;
-  color: #1a3320 !important;
-  padding: 1rem 2rem;
+  background: #ffffff;
+  color: #1a3320;
+  padding: 0.9rem 1.8rem;
   border-radius: 100px;
   font-weight: 800;
-  font-size: 1.02rem;
+  font-size: 0.98rem;
   text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.165,0.84,0.44,1);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.2);
 }
 
-.stage-btn-primary:hover {
-  transform: translateY(-3px);
-  background: #e8f5ec !important;
-  color: #1a3320 !important;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+.prog-btn-primary:hover {
+  background: #e8f5ec;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.28);
 }
 
-.stage-btn-secondary {
+.prog-btn-secondary {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.1) !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  color: #ffffff !important;
-  padding: 1rem 1.8rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #ffffff;
+  padding: 0.9rem 1.6rem;
   border-radius: 100px;
   font-weight: 700;
-  font-size: 0.98rem;
+  font-size: 0.95rem;
   text-decoration: none;
   transition: all 0.3s ease;
 }
 
-.stage-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.2) !important;
-  border-color: rgba(255, 255, 255, 0.45) !important;
-  color: #ffffff !important;
+.prog-btn-secondary:hover {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.45);
 }
 
+/* Mobile stacked layout */
+@media (max-width: 900px) {
+  .programs-pin-panel {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+  .prog-left {
+    width: 100%;
+    height: 45vh;
+  }
+  .prog-image-stack {
+    height: 100%;
+    max-height: none;
+  }
+  .prog-right {
+    width: 100%;
+    padding: 2rem 1.5rem 3rem;
+  }
+  .prog-content-area {
+    position: relative;
+    height: auto;
+    min-height: 50vh;
+  }
+  .prog-content-slide {
+    position: relative;
+    display: none;
+  }
+  .prog-content-slide.active {
+    display: flex;
+  }
+}
 
 /* ==========================================================================
    FULL SCREEN COLORFUL PARALLAX HERO STYLES
