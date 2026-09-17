@@ -265,14 +265,23 @@ nav {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 5000;
+  z-index: 50000;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.9rem 1.2rem;
   background: rgba(246, 239, 224, 0.95);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--cream-line);
+  transition: background 0.3s ease;
+}
+
+nav.menu-open {
+  z-index: 99999 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: var(--paper-deep, #f4efe6) !important;
 }
 
 .brand {
@@ -283,6 +292,8 @@ nav {
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  z-index: 100000;
+  text-decoration: none;
 }
 
 .brand .dot {
@@ -298,18 +309,21 @@ nav {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--paper-deep, #f0e8d8);
+  height: calc(100vh - 60px);
+  height: calc(100dvh - 60px);
+  background: var(--paper-deep, #f4efe6) !important;
   display: flex;
   flex-direction: column;
-  padding: 2.5rem 1.5rem;
-  gap: 1.5rem;
+  padding: 2.2rem 1.8rem 3rem;
+  gap: 1.1rem;
   transform: translateX(100%);
-  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.3, 1);
-  z-index: 5001;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 99999;
   border-top: 1px solid var(--cream-line);
   overflow-y: auto;
   list-style: none;
   margin: 0;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
 }
 
 .nav-links.open {
@@ -317,17 +331,23 @@ nav {
 }
 
 .nav-links a {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--ink-soft);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--forest-deep, #162c1b);
   transition: var(--transition);
-  display: block;
-  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(22, 44, 27, 0.08);
+  text-decoration: none;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
-  color: var(--clay);
+  color: var(--forest, #2d5a3a);
+  padding-left: 0.4rem;
 }
 
 .nav-cta {
@@ -341,7 +361,7 @@ nav {
   border: none;
   cursor: pointer;
   padding: 0.4rem;
-  z-index: 5002;
+  z-index: 100000;
 }
 
 .menu-btn span {
@@ -351,6 +371,18 @@ nav {
   background: var(--forest-deep);
   margin: 5px 0;
   transition: var(--transition);
+}
+
+.menu-btn.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-btn.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-btn.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
 }
 
 .menu-btn.open span:nth-child(1) {
@@ -2210,4 +2242,37 @@ footer .fine {
     transform: none !important;
   }
 }
+
+/* ==========================================================================
+   SUBTLE SECTION SCROLL REVEALS & ANIMATIONS (Fade Up / Swipe Up)
+   ========================================================================== */
+.fade-up,
+.reveal-up,
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.fade-up.is-visible,
+.fade-up.in-view,
+.reveal-up.is-visible,
+.reveal-up.in-view,
+.reveal-on-scroll.is-visible,
+.reveal-on-scroll.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .reveal-up,
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 

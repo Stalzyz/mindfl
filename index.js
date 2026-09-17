@@ -58,15 +58,17 @@
   function initMobileMenu() {
     const menuBtn = document.querySelector('.menu-btn');
     const navLinks = document.querySelector('.nav-links');
+    const nav = document.querySelector('nav');
     
     if (!menuBtn || !navLinks) return;
     
     menuBtn.addEventListener('click', () => {
-      menuBtn.classList.toggle('open');
+      const isOpen = menuBtn.classList.toggle('open');
       navLinks.classList.toggle('open');
+      if (nav) nav.classList.toggle('menu-open', isOpen);
       
       // Prevent body scrolling when menu is open
-      if (navLinks.classList.contains('open')) {
+      if (isOpen) {
         document.body.style.overflow = 'hidden';
       } else {
         document.body.style.overflow = '';
@@ -78,6 +80,7 @@
       link.addEventListener('click', () => {
         menuBtn.classList.remove('open');
         navLinks.classList.remove('open');
+        if (nav) nav.classList.remove('menu-open');
         document.body.style.overflow = '';
       });
     });
@@ -277,20 +280,57 @@
     });
   }
 
-  /* ---------------- SCROLL REVEALS ---------------- */
+  /* ---------------- SCROLL REVEALS & SUBTLE SECTION ANIMATIONS ---------------- */
   function initScrollReveals() {
+    if (reduceMotion) return;
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
+          entry.target.classList.add('is-visible', 'in-view');
         }
       });
     }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -50px 0px'
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
     });
 
-    document.querySelectorAll('.reveal-on-scroll, .vine-divider, .journey-card, .pillar-row').forEach(el => {
+    const selectors = [
+      '.reveal-up',
+      '.fade-up',
+      '.reveal-on-scroll',
+      '.prog-clean-card',
+      '.pedagogy-card',
+      '.grid-pedagogy > div',
+      '.feature-card',
+      '.stat-card',
+      '.stat-item',
+      '.arch-card',
+      '.team-card',
+      '.quote-card',
+      '.journey-card',
+      '.pillar-row',
+      '.section-header',
+      '.prog-clean-header',
+      '.pedagogy-header',
+      '.philosophy-header',
+      '.vine-divider',
+      'section > .inner > h2',
+      'section > .inner > p',
+      '.cta-banner'
+    ].join(', ');
+
+    document.querySelectorAll(selectors).forEach((el, index) => {
+      if (!el.classList.contains('reveal-up') && !el.classList.contains('fade-up') && !el.classList.contains('reveal-on-scroll')) {
+        el.classList.add('fade-up');
+      }
+      // Add light staggered delay for sibling elements inside grids
+      if (el.parentElement && el.parentElement.children.length > 1) {
+        const siblingIdx = Array.from(el.parentElement.children).indexOf(el);
+        if (siblingIdx > 0 && siblingIdx <= 5) {
+          el.style.transitionDelay = `${(siblingIdx * 0.08).toFixed(2)}s`;
+        }
+      }
       observer.observe(el);
     });
   }
