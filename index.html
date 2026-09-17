@@ -5,7 +5,139 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="MINDFL School — A progressive learning village for the early years in Sivaram Nagar, Coimbatore. Inspired by nature, play, and mindful exploration.">
   <title>MINDFL — A Progressive Learning Village for the Early Years</title>
-  <link rel="stylesheet" href="index.css?v=4.0">
+  <link rel="stylesheet" href="index.css?v=5.0">
+  <style id="hero-parallax-inline-css">
+    .hero-section {
+      min-height: 100vh !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+      padding-top: 7rem !important;
+      padding-bottom: 4rem !important;
+      position: relative !important;
+      overflow: hidden !important;
+      perspective: 1000px !important;
+      background: #f6efe0 !important;
+    }
+
+    #hero-colorful-mesh {
+      position: absolute !important;
+      inset: -20% !important;
+      z-index: 0 !important;
+      pointer-events: none !important;
+      filter: blur(50px) !important;
+      opacity: 1 !important;
+      will-change: transform !important;
+    }
+
+    .mesh-blob {
+      position: absolute !important;
+      border-radius: 50% !important;
+      mix-blend-mode: normal !important;
+      will-change: transform !important;
+    }
+
+    .mesh-blob-1 {
+      width: 65vw !important; height: 65vw !important;
+      max-width: 750px !important; max-height: 750px !important;
+      top: -5% !important; left: -5% !important;
+      background: radial-gradient(circle, rgba(255, 107, 107, 0.75) 0%, rgba(255, 159, 67, 0.45) 45%, transparent 75%) !important;
+      animation: blobFloat1 14s ease-in-out infinite alternate !important;
+    }
+
+    .mesh-blob-2 {
+      width: 60vw !important; height: 60vw !important;
+      max-width: 700px !important; max-height: 700px !important;
+      top: 0% !important; right: -5% !important;
+      background: radial-gradient(circle, rgba(72, 219, 251, 0.70) 0%, rgba(29, 209, 161, 0.40) 50%, transparent 75%) !important;
+      animation: blobFloat2 18s ease-in-out infinite alternate !important;
+    }
+
+    .mesh-blob-3 {
+      width: 70vw !important; height: 70vw !important;
+      max-width: 800px !important; max-height: 800px !important;
+      bottom: -10% !important; left: 10% !important;
+      background: radial-gradient(circle, rgba(254, 202, 87, 0.80) 0%, rgba(255, 159, 67, 0.35) 50%, transparent 75%) !important;
+      animation: blobFloat3 12s ease-in-out infinite alternate !important;
+    }
+
+    .mesh-blob-4 {
+      width: 52vw !important; height: 52vw !important;
+      max-width: 600px !important; max-height: 600px !important;
+      bottom: 0% !important; right: 5% !important;
+      background: radial-gradient(circle, rgba(255, 159, 243, 0.65) 0%, rgba(84, 160, 255, 0.35) 50%, transparent 75%) !important;
+      animation: blobFloat1 20s ease-in-out infinite alternate-reverse !important;
+    }
+
+    .mesh-blob-5 {
+      width: 45vw !important; height: 45vw !important;
+      max-width: 500px !important; max-height: 500px !important;
+      top: 30% !important; left: 30% !important;
+      background: radial-gradient(circle, rgba(16, 172, 132, 0.60) 0%, rgba(254, 202, 87, 0.30) 50%, transparent 75%) !important;
+      animation: blobFloat2 16s ease-in-out infinite alternate-reverse !important;
+    }
+
+    @keyframes blobFloat1 {
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      50% { transform: translate(80px, -50px) scale(1.15) rotate(45deg); }
+      100% { transform: translate(-50px, 60px) scale(0.90) rotate(90deg); }
+    }
+
+    @keyframes blobFloat2 {
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      50% { transform: translate(-90px, 60px) scale(1.20) rotate(-60deg); }
+      100% { transform: translate(60px, -40px) scale(0.85) rotate(120deg); }
+    }
+
+    @keyframes blobFloat3 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(50px, 80px) scale(1.18); }
+      100% { transform: translate(-60px, -50px) scale(0.92); }
+    }
+
+    .hero-chip-container {
+      position: absolute !important;
+      inset: 0 !important;
+      z-index: 5 !important;
+      pointer-events: none !important;
+    }
+
+    .hero-chip {
+      position: absolute !important;
+      padding: 0.65rem 1.3rem !important;
+      border-radius: 50px !important;
+      background: rgba(255, 255, 255, 0.85) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.95) !important;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08), 0 3px 8px rgba(0, 0, 0, 0.05) !important;
+      font-size: 0.95rem !important;
+      font-weight: 700 !important;
+      color: #2b2416 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.5rem !important;
+      pointer-events: auto !important;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease !important;
+      will-change: transform !important;
+    }
+
+    .chip-1 { top: 18% !important; left: 5% !important; animation: floatChip 6s ease-in-out infinite alternate !important; }
+    .chip-2 { top: 25% !important; right: 6% !important; animation: floatChip 8s ease-in-out infinite alternate-reverse !important; }
+    .chip-3 { bottom: 20% !important; left: 7% !important; animation: floatChip 7s ease-in-out infinite alternate !important; }
+    .chip-4 { bottom: 26% !important; right: 8% !important; animation: floatChip 9s ease-in-out infinite alternate-reverse !important; }
+
+    @keyframes floatChip {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-14px); }
+    }
+
+    @media (max-width: 768px) {
+      .hero-chip { display: none !important; }
+    }
+  </style>
 </head>
 <body>
 
