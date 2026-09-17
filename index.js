@@ -38,60 +38,25 @@
 
   /* ---------------- PROGRAMS VERTICAL SCROLL ---------------- */
   function initProgramsVerticalScroll() {
-    const container = document.querySelector('.programs-split-container');
-    const leftSide = document.querySelector('.split-left');
-    const blocks = document.querySelectorAll('.split-content-block');
-    const visuals = document.querySelectorAll('.split-visual');
-    if (!container || !leftSide || blocks.length === 0 || visuals.length === 0) return;
+    if (reduceMotion) return;
 
-    function activate(index) {
-      visuals.forEach((v, i) => {
-        if (i === index) v.classList.add('active');
-        else v.classList.remove('active');
-      });
-      blocks.forEach((b, i) => {
-        if (i === index) b.classList.add('active');
-        else b.classList.remove('active');
+    const cards = document.querySelectorAll('.program-parallax-card');
+    if (cards.length === 0) return;
+
+    function updateProgramParallax() {
+      const windowHeight = window.innerHeight;
+      cards.forEach(card => {
+        const bg = card.querySelector('.card-parallax-bg');
+        if (!bg) return;
+        const rect = card.getBoundingClientRect();
+        // Calculate relative position from center of screen
+        const center = rect.top + rect.height / 2 - windowHeight / 2;
+        bg.style.transform = `translate3d(0px, ${(center * 0.18).toFixed(2)}px, 0px)`;
       });
     }
 
-    activate(0);
-
-    // GSAP ScrollTrigger if available
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      let mm = gsap.matchMedia();
-      mm.add("(min-width: 993px)", () => {
-        ScrollTrigger.create({
-          trigger: container,
-          pin: leftSide,
-          start: "top top",
-          end: "bottom bottom",
-          pinSpacing: false
-        });
-      });
-
-      blocks.forEach((block, index) => {
-        ScrollTrigger.create({
-          trigger: block,
-          start: "top center", 
-          end: "bottom center",
-          onEnter: () => activate(index),
-          onEnterBack: () => activate(index)
-        });
-      });
-    } else {
-      // IntersectionObserver fallback for non-GSAP environments
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const idx = parseInt(entry.target.getAttribute('data-index') || '0', 10);
-            activate(idx);
-          }
-        });
-      }, { threshold: 0.5 });
-
-      blocks.forEach(b => observer.observe(b));
-    }
+    window.addEventListener('scroll', updateProgramParallax, { passive: true });
+    updateProgramParallax();
   }
 
   /* ---------------- MOBILE MENU ---------------- */

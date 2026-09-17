@@ -1787,114 +1787,113 @@ footer .fine {
   color: var(--paper-deep);
 }
 
-/* Full-Screen Parallax Section: Our Age-Appropriate Programs */
-.programs-fullscreen-parallax-wrapper {
-  position: relative;
-  width: 100%;
-  margin: 2rem 0;
-}
-
-.programs-split-container {
-  display: flex;
-  position: relative;
-  width: 100%;
-}
-
-.split-left {
-  width: 52%;
-  height: 100vh;
-  position: sticky;
-  top: 0;
-  overflow: hidden;
-  border-radius: 0 36px 36px 0;
-  box-shadow: 0 24px 48px -12px rgba(43, 36, 22, 0.25);
-  z-index: 2;
-}
-
-.split-visuals-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.split-visual {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  transform: scale(1.1) translateY(20px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-
-.split-visual.active {
-  opacity: 1;
-  transform: scale(1) translateY(0);
-}
-
-.split-left-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(35, 59, 35, 0.25) 0%, rgba(43, 36, 22, 0.45) 100%);
-  pointer-events: none;
-}
-
-.split-right {
-  width: 48%;
-  padding: 0 4vw;
-  position: relative;
-  z-index: 3;
-}
-
-.split-content-block {
-  min-height: 100vh;
+/* ==========================================================================
+   PROGRAMS PARALLAX CARD STACK
+   ========================================================================== */
+.programs-parallax-stack {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  opacity: 0.15;
-  transform: translateY(40px) scale(0.96);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  padding: 2rem 0;
+  gap: 3.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
-.split-content-block.active {
-  opacity: 1;
-  transform: translateY(0) scale(1);
+.program-parallax-card {
+  position: relative;
+  min-height: 520px;
+  border-radius: 36px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(43, 36, 22, 0.16), 0 4px 16px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+  perspective: 1000px;
 }
 
-.split-content-block h3 {
-  font-size: clamp(2.6rem, 4.5vw, 3.8rem);
-  margin: 0.8rem 0 1rem;
+.program-parallax-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 60px rgba(43, 36, 22, 0.25), 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.card-parallax-bg {
+  position: absolute;
+  inset: -15%;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+  transition: transform 0.1s ease-out;
+}
+
+.card-glass-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(246, 239, 224, 0.95) 0%, rgba(246, 239, 224, 0.86) 52%, rgba(246, 239, 224, 0.35) 100%);
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .card-glass-overlay {
+    background: rgba(246, 239, 224, 0.94);
+  }
+}
+
+.card-content-wrap {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  padding: 4rem 3.5rem;
+}
+
+@media (max-width: 768px) {
+  .card-content-wrap {
+    padding: 2.5rem 1.8rem;
+  }
+}
+
+.program-age-pill {
+  display: inline-block;
+  padding: 0.45rem 1.1rem;
+  border-radius: 50px;
+  background: var(--forest-deep);
+  color: var(--paper);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 4px 12px rgba(35, 59, 35, 0.25);
+}
+
+.program-card-title {
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
   color: var(--forest-deep);
+  margin-bottom: 1rem;
+  line-height: 1.1;
 }
 
-.split-content-block p {
-  font-size: 1.25rem;
+.program-card-desc {
+  font-size: 1.2rem;
   line-height: 1.65;
   color: var(--ink-soft);
   margin-bottom: 1.8rem;
-  max-width: 480px;
 }
 
-.program-tags {
+.program-pill-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
-  margin-bottom: 2rem;
+  margin-bottom: 2.2rem;
 }
 
-.program-tags span {
-  padding: 0.4rem 0.9rem;
+.program-pill-tags span {
+  padding: 0.45rem 1rem;
   border-radius: 30px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(43, 36, 22, 0.12);
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: var(--forest-deep);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  color: var(--ink);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
 }
 
 @media (max-width: 992px) {
