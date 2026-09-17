@@ -1898,81 +1898,92 @@ footer .fine {
 /* 1. Colorful Mesh Gradient Blob Container */
 #hero-colorful-mesh {
   position: absolute;
-  inset: -25%;
+  inset: -20%;
   z-index: 0;
   pointer-events: none;
-  filter: blur(45px);
-  opacity: 0.95;
+  filter: blur(50px);
+  opacity: 1;
   will-change: transform;
 }
 
 .mesh-blob {
   position: absolute;
   border-radius: 50%;
-  mix-blend-mode: multiply;
+  mix-blend-mode: normal;
   will-change: transform;
 }
 
 .mesh-blob-1 {
-  width: 60vw;
-  height: 60vw;
-  max-width: 680px;
-  max-height: 680px;
-  top: 5%;
-  left: 2%;
-  background: radial-gradient(circle, rgba(231, 111, 81, 0.85) 0%, rgba(244, 162, 97, 0.15) 60%, transparent 80%);
-  animation: blobFloat1 16s ease-in-out infinite alternate;
+  width: 65vw;
+  height: 65vw;
+  max-width: 750px;
+  max-height: 750px;
+  top: -5%;
+  left: -5%;
+  background: radial-gradient(circle, rgba(255, 107, 107, 0.65) 0%, rgba(255, 159, 67, 0.40) 45%, transparent 75%);
+  animation: blobFloat1 14s ease-in-out infinite alternate;
 }
 
 .mesh-blob-2 {
-  width: 55vw;
-  height: 55vw;
-  max-width: 620px;
-  max-height: 620px;
-  top: 10%;
-  right: 2%;
-  background: radial-gradient(circle, rgba(42, 157, 143, 0.80) 0%, rgba(138, 177, 125, 0.15) 60%, transparent 80%);
-  animation: blobFloat2 20s ease-in-out infinite alternate;
+  width: 60vw;
+  height: 60vw;
+  max-width: 700px;
+  max-height: 700px;
+  top: 0%;
+  right: -5%;
+  background: radial-gradient(circle, rgba(72, 219, 251, 0.60) 0%, rgba(29, 209, 161, 0.35) 50%, transparent 75%);
+  animation: blobFloat2 18s ease-in-out infinite alternate;
 }
 
 .mesh-blob-3 {
-  width: 65vw;
-  height: 65vw;
-  max-width: 720px;
-  max-height: 720px;
-  bottom: 2%;
-  left: 15%;
-  background: radial-gradient(circle, rgba(244, 162, 97, 0.90) 0%, rgba(233, 196, 106, 0.20) 60%, transparent 80%);
-  animation: blobFloat3 14s ease-in-out infinite alternate;
+  width: 70vw;
+  height: 70vw;
+  max-width: 800px;
+  max-height: 800px;
+  bottom: -10%;
+  left: 10%;
+  background: radial-gradient(circle, rgba(254, 202, 87, 0.70) 0%, rgba(255, 159, 67, 0.30) 50%, transparent 75%);
+  animation: blobFloat3 12s ease-in-out infinite alternate;
 }
 
 .mesh-blob-4 {
-  width: 48vw;
-  height: 48vw;
-  max-width: 520px;
-  max-height: 520px;
-  bottom: 10%;
-  right: 10%;
-  background: radial-gradient(circle, rgba(224, 122, 95, 0.75) 0%, rgba(246, 239, 224, 0.10) 60%, transparent 80%);
-  animation: blobFloat1 22s ease-in-out infinite alternate-reverse;
+  width: 52vw;
+  height: 52vw;
+  max-width: 600px;
+  max-height: 600px;
+  bottom: 0%;
+  right: 5%;
+  background: radial-gradient(circle, rgba(255, 159, 243, 0.55) 0%, rgba(84, 160, 255, 0.30) 50%, transparent 75%);
+  animation: blobFloat1 20s ease-in-out infinite alternate-reverse;
+}
+
+.mesh-blob-5 {
+  width: 45vw;
+  height: 45vw;
+  max-width: 500px;
+  max-height: 500px;
+  top: 30%;
+  left: 30%;
+  background: radial-gradient(circle, rgba(16, 172, 132, 0.50) 0%, rgba(254, 202, 87, 0.25) 50%, transparent 75%);
+  animation: blobFloat2 16s ease-in-out infinite alternate-reverse;
 }
 
 @keyframes blobFloat1 {
   0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(60px, -40px) scale(1.12) rotate(45deg); }
-  100% { transform: translate(-40px, 50px) scale(0.92) rotate(90deg); }
+  50% { transform: translate(80px, -50px) scale(1.15) rotate(45deg); }
+  100% { transform: translate(-50px, 60px) scale(0.90) rotate(90deg); }
 }
 
 @keyframes blobFloat2 {
   0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(-70px, 50px) scale(1.18) rotate(-60deg); }
-  100% { transform: translate(50px, -30px) scale(0.88) rotate(120deg); }
+  50% { transform: translate(-90px, 60px) scale(1.20) rotate(-60deg); }
+  100% { transform: translate(60px, -40px) scale(0.85) rotate(120deg); }
 }
 
 @keyframes blobFloat3 {
   0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(40px, 60px) scale(1.15); }
-  100% { transform: translate(-50px, -40px) scale(0.95); }
+  50% { transform: translate(50px, 80px) scale(1.18); }
+  100% { transform: translate(-60px, -50px) scale(0.92); }
 }
 
 /* 2. Floating Glassmorphic Chips */
