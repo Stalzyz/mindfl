@@ -1791,8 +1791,8 @@ footer .fine {
    FULL-SCREEN SPLIT PARALLAX SECTION STYLES
    ========================================================================== */
 .split-parallax-programs-section {
-  background: #0d170d !important;
-  color: #f6efe0 !important;
+  background: linear-gradient(160deg, #1a3320 0%, #2d5a3a 40%, #1e4029 100%) !important;
+  color: #f0f7f2 !important;
   position: relative;
   overflow: visible;
   padding: 0;
@@ -1842,8 +1842,8 @@ footer .fine {
   max-height: 620px;
   border-radius: 32px;
   overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(212, 175, 55, 0.3);
-  background: #081008;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.15);
+  background: #1a3320;
 }
 
 /* Floating Top Badge */
@@ -1857,8 +1857,8 @@ footer .fine {
 }
 
 .parallax-badge-stage {
-  background: #d4af37 !important;
-  color: #0d170d !important;
+  background: #ffffff !important;
+  color: #1a3320 !important;
   font-size: 0.8rem;
   font-weight: 800;
   padding: 0.4rem 1rem;
@@ -1867,13 +1867,13 @@ footer .fine {
 }
 
 .parallax-badge-age {
-  background: rgba(10, 20, 10, 0.9) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
   color: #ffffff !important;
   font-size: 0.8rem;
   font-weight: 700;
   padding: 0.4rem 1rem;
   border-radius: 50px;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
   backdrop-filter: blur(12px);
 }
 
@@ -1920,7 +1920,7 @@ footer .fine {
 .parallax-stack-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, rgba(8, 16, 8, 0.95) 0%, rgba(8, 16, 8, 0.15) 50%, rgba(8, 16, 8, 0.35) 100%);
+  background: linear-gradient(0deg, rgba(20, 50, 30, 0.88) 0%, rgba(20, 50, 30, 0.1) 50%, rgba(20, 50, 30, 0.25) 100%);
 }
 
 .parallax-card-info {
@@ -1929,8 +1929,8 @@ footer .fine {
   left: 1.5rem;
   right: 1.5rem;
   z-index: 15;
-  background: rgba(15, 26, 15, 0.92) !important;
-  border: 1px solid rgba(212, 175, 55, 0.4) !important;
+  background: rgba(26, 51, 32, 0.88) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
   padding: 0.9rem 1.4rem;
   border-radius: 20px;
   backdrop-filter: blur(14px);
@@ -1940,9 +1940,12 @@ footer .fine {
 }
 
 .parallax-stars {
-  color: #d4af37 !important;
+  color: #a8d8b0 !important;
   font-size: 1rem;
   letter-spacing: 2px;
+  display: flex;
+  gap: 2px;
+  align-items: center;
 }
 
 .parallax-info-title {
@@ -1967,12 +1970,13 @@ footer .fine {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.25);
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .parallax-progress-dots .dot.active {
-  background: #d4af37;
+  background: #ffffff;
   height: 22px;
   border-radius: 10px;
 }
@@ -2000,9 +2004,9 @@ footer .fine {
   display: inline-block;
   padding: 0.45rem 1.4rem;
   border-radius: 100px;
-  background: rgba(212, 175, 55, 0.18) !important;
-  border: 1px solid rgba(212, 175, 55, 0.5) !important;
-  color: #d4af37 !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
   font-size: 0.82rem;
   font-weight: 800;
   letter-spacing: 0.15em;
@@ -2031,7 +2035,7 @@ footer .fine {
   display: flex;
   align-items: center;
   padding: 3rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .parallax-stage-block:last-child {
@@ -2054,16 +2058,16 @@ footer .fine {
 .stage-num-badge {
   font-size: 1.15rem;
   font-weight: 800;
-  color: #d4af37 !important;
-  background: rgba(212, 175, 55, 0.18) !important;
-  border: 1px solid rgba(212, 175, 55, 0.4) !important;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.18) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
   padding: 0.35rem 0.9rem;
   border-radius: 50px;
 }
 
 .stage-age-chip {
   font-size: 1rem;
-  color: #d4af37 !important;
+  color: rgba(240, 247, 242, 0.8) !important;
   font-weight: 700;
 }
 
@@ -2090,7 +2094,7 @@ footer .fine {
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.14em;
-  color: #d4af37 !important;
+  color: rgba(180, 220, 190, 0.9) !important;
   margin-bottom: 0.9rem;
   text-transform: uppercase;
 }
@@ -2102,13 +2106,16 @@ footer .fine {
 }
 
 .milestones-pills span {
-  background: rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  color: #ffffff !important;
-  padding: 0.55rem 1.2rem;
+  color: #f0f7f2 !important;
+  padding: 0.45rem 1rem;
   border-radius: 50px;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .stage-attributes-grid {
@@ -2125,17 +2132,20 @@ footer .fine {
 }
 
 .attr-chip {
-  background: rgba(0, 0, 0, 0.45) !important;
-  border: 1px solid rgba(212, 175, 55, 0.25) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
   padding: 0.85rem 1rem;
   border-radius: 16px;
 }
 
 .attr-stars {
-  color: #d4af37 !important;
+  color: #a8d8b0 !important;
   font-size: 0.82rem;
   margin-bottom: 0.3rem;
   letter-spacing: 2px;
+  display: flex;
+  gap: 2px;
+  align-items: center;
 }
 
 .attr-text {
@@ -2155,22 +2165,22 @@ footer .fine {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  background: #d4af37 !important;
-  color: #0d170d !important;
+  background: #ffffff !important;
+  color: #1a3320 !important;
   padding: 1rem 2rem;
   border-radius: 100px;
   font-weight: 800;
   font-size: 1.02rem;
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.35);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
 }
 
 .stage-btn-primary:hover {
   transform: translateY(-3px);
-  background: #f7e1a3 !important;
-  color: #0d170d !important;
-  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5);
+  background: #e8f5ec !important;
+  color: #1a3320 !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
 }
 
 .stage-btn-secondary {
