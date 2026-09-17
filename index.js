@@ -36,108 +36,28 @@
     });
   }
 
-  /* ---------------- XSHACK-INSPIRED PROGRAMS SHOWCASE ---------------- */
+  /* ---------------- FULL-SCREEN SPLIT PARALLAX PROGRAM SHOWCASE ---------------- */
   function initProgramsVerticalScroll() {
-    const pills = document.querySelectorAll('.xshack-pill');
-    const gridCards = document.querySelectorAll('.xshack-grid-card');
-    
-    if (pills.length === 0 && gridCards.length === 0) return;
+    const stageBlocks = document.querySelectorAll('.parallax-stage-block');
+    const imageCards = document.querySelectorAll('.parallax-stack-card');
+    const dots = document.querySelectorAll('.parallax-progress-dots .dot');
+    const stageBadge = document.getElementById('split-stage-badge');
+    const ageBadge = document.getElementById('split-age-badge');
 
-    const programsData = [
-      {
-        stageNum: '01',
-        stageTag: 'STAGE 01 / 05',
-        age: '6 months – 24 months',
-        ageTag: '6m – 24m',
-        title: 'Parent-Toddler',
-        desc: 'A gentle introduction to mindful learning. We nurture curiosity in a safe environment alongside parents, building early sensory awareness.',
-        img: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&q=80&w=1400',
-        tags: ['🌱 Sensory Exploration', '👶 Parent Bonding', '🎨 Motor Skills'],
-        attrText: '100% Biological Readiness',
-        attr1: 'Readiness: Biological',
-        attr2: 'Space: Parent-Guided',
-        attr3: 'Milestone: Sensory Roots',
-        link: 'programs.html?tab=toddler'
-      },
-      {
-        stageNum: '02',
-        stageTag: 'STAGE 02 / 05',
-        age: '2 – 3 years',
-        ageTag: '2 – 3 yrs',
-        title: 'Sprouts',
-        desc: 'Fostering independence and sensory exploration. Children develop early social skills and motor coordination through guided play in our nature-centric spaces.',
-        img: 'https://images.unsplash.com/photo-1472162072942-cd5147eb39bd?auto=format&fit=crop&q=80&w=1400',
-        tags: ['🪴 Nature Walks', '🧩 Guided Play', '🗣️ Language Roots'],
-        attrText: '100% Natural Pacing',
-        attr1: 'Readiness: Biological',
-        attr2: 'Space: Nature Play',
-        attr3: 'Milestone: Independence',
-        link: 'programs.html?tab=sprouts'
-      },
-      {
-        stageNum: '03',
-        stageTag: 'STAGE 03 / 05',
-        age: '3 – 4 years',
-        ageTag: '3 – 4 yrs',
-        title: 'Seedlings',
-        desc: 'Building foundational cognitive and motor skills. Project-based learning begins to blossom here, encouraging collaborative problem-solving.',
-        img: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&q=80&w=1400',
-        tags: ['🔬 Hands-on Projects', '🤝 Team Play', '🎨 Creative Expression'],
-        attrText: 'Hands-on Project Inquiry',
-        attr1: 'Readiness: Biological',
-        attr2: 'Space: Discovery Studio',
-        attr3: 'Milestone: Collaboration',
-        link: 'programs.html?tab=seedlings'
-      },
-      {
-        stageNum: '04',
-        stageTag: 'STAGE 04 / 05',
-        age: '4 – 5 years',
-        ageTag: '4 – 5 yrs',
-        title: 'Buds',
-        desc: 'Enhancing critical thinking and creative expression. We focus on preparing them for more structured learning without losing the wonder of free play.',
-        img: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&q=80&w=1400',
-        tags: ['📚 Early Literacy', '🔢 Math Concepts', '🎭 Drama & Music'],
-        attrText: 'Critical & Creative Focus',
-        attr1: 'Readiness: Biological',
-        attr2: 'Space: Learning Lab',
-        attr3: 'Milestone: Logic & Arts',
-        link: 'programs.html?tab=buds'
-      },
-      {
-        stageNum: '05',
-        stageTag: 'STAGE 05 / 05',
-        age: '5 – 6 years',
-        ageTag: '5 – 6 yrs',
-        title: 'Blossoms',
-        desc: 'Preparing for formal education while preserving the joy of inquiry. The culmination of our early years village, where confident learners emerge.',
-        img: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=80&w=1400',
-        tags: ['🎓 School Readiness', '🌍 Environmental Leadership', '💡 Inquiry Projects'],
-        attrText: 'Culmination & Leadership',
-        attr1: 'Readiness: Biological',
-        attr2: 'Space: Leadership Hub',
-        attr3: 'Milestone: School Prep',
-        link: 'programs.html?tab=blossoms'
-      }
+    if (stageBlocks.length === 0 || imageCards.length === 0) return;
+
+    const stagesMeta = [
+      { stage: 'STAGE 01 / 05', age: '6m – 24m' },
+      { stage: 'STAGE 02 / 05', age: '2 – 3 yrs' },
+      { stage: 'STAGE 03 / 05', age: '3 – 4 yrs' },
+      { stage: 'STAGE 04 / 05', age: '4 – 5 yrs' },
+      { stage: 'STAGE 05 / 05', age: '5 – 6 yrs' }
     ];
 
-    function setStage(index) {
-      if (index < 0 || index >= programsData.length) return;
-      const data = programsData[index];
+    function activateStage(index) {
+      if (index < 0 || index >= imageCards.length) return;
 
-      // Update pills
-      pills.forEach((p, i) => {
-        if (i === index) {
-          p.classList.add('active');
-          p.setAttribute('aria-selected', 'true');
-        } else {
-          p.classList.remove('active');
-          p.setAttribute('aria-selected', 'false');
-        }
-      });
-
-      // Update grid cards
-      gridCards.forEach((card, i) => {
+      imageCards.forEach((card, i) => {
         if (i === index) {
           card.classList.add('active');
         } else {
@@ -145,55 +65,52 @@
         }
       });
 
-      // Elements to update
-      const mainImg = document.getElementById('xshack-main-img');
-      const stageTag = document.getElementById('xshack-stage-tag');
-      const ageTag = document.getElementById('xshack-age-tag');
-      const ratingText = document.getElementById('xshack-rating-text');
-      const numPill = document.getElementById('xshack-num-pill');
-      const ageChip = document.getElementById('xshack-age-chip');
-      const stageTitle = document.getElementById('xshack-stage-title');
-      const stageDesc = document.getElementById('xshack-stage-desc');
-      const tagsContainer = document.getElementById('xshack-tags-container');
-      const attr1 = document.getElementById('attr-1-title');
-      const attr2 = document.getElementById('attr-2-title');
-      const attr3 = document.getElementById('attr-3-title');
-      const ctaBtn = document.getElementById('xshack-cta-btn');
+      dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
 
-      if (mainImg) {
-        mainImg.style.opacity = '0.2';
-        setTimeout(() => {
-          mainImg.src = data.img;
-          mainImg.alt = data.title;
-          mainImg.style.opacity = '1';
-        }, 150);
+      if (stageBadge && stagesMeta[index]) {
+        stageBadge.textContent = stagesMeta[index].stage;
       }
-
-      if (stageTag) stageTag.textContent = data.stageTag;
-      if (ageTag) ageTag.textContent = data.ageTag;
-      if (ratingText) ratingText.textContent = data.attrText;
-      if (numPill) numPill.textContent = data.stageNum;
-      if (ageChip) ageChip.textContent = data.age;
-      if (stageTitle) stageTitle.textContent = data.title;
-      if (stageDesc) stageDesc.textContent = data.desc;
-
-      if (attr1) attr1.textContent = data.attr1;
-      if (attr2) attr2.textContent = data.attr2;
-      if (attr3) attr3.textContent = data.attr3;
-
-      if (ctaBtn) ctaBtn.href = data.link;
-
-      if (tagsContainer) {
-        tagsContainer.innerHTML = data.tags.map(t => `<span class="xshack-tag-item">${t}</span>`).join('');
+      if (ageBadge && stagesMeta[index]) {
+        ageBadge.textContent = stagesMeta[index].age;
       }
     }
 
-    pills.forEach((pill, i) => {
-      pill.addEventListener('click', () => setStage(i));
+    // Intersection Observer to switch active image stack on scroll
+    const observerOptions = {
+      root: null,
+      rootMargin: '-30% 0px -30% 0px',
+      threshold: 0.2
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const idx = parseInt(entry.target.getAttribute('data-index'), 10);
+          if (!isNaN(idx)) {
+            activateStage(idx);
+          }
+        }
+      });
+    }, observerOptions);
+
+    stageBlocks.forEach((block) => {
+      observer.observe(block);
     });
 
-    gridCards.forEach((card, i) => {
-      card.addEventListener('click', () => setStage(i));
+    // Clicking dots jumps to target stage
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        const targetBlock = document.getElementById(`program-stage-${i}`);
+        if (targetBlock) {
+          targetBlock.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
     });
   }
 
