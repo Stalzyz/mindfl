@@ -36,113 +36,22 @@
     });
   }
 
-  /* ---------------- PINNED PROGRAMS SECTION (GSAP ScrollTrigger) ---------------- */
+  /* ---------------- CARD STACK PARALLAX SECTION ---------------- */
   function initProgramsVerticalScroll() {
-    const panel       = document.getElementById('programs-pin-panel');
-    const spacer      = document.getElementById('programs-scroll-spacer');
-    const imgSlides   = document.querySelectorAll('.prog-img-slide');
-    const contentSlides = document.querySelectorAll('.prog-content-slide');
-    const dots        = document.querySelectorAll('.prog-dot');
+    const cards = document.querySelectorAll('.prog-card');
+    if (!cards.length) return;
 
-    if (!panel || !spacer || imgSlides.length === 0) return;
-
-    const STAGES = imgSlides.length; // 5
-
-    // Set spacer height so ScrollTrigger has 5 × 100vh to scroll through
-    spacer.style.height = (STAGES * 100) + 'vh';
-
-    let currentStage = -1;
-
-    // Position panel as fixed full-screen on top of the section
-    // GSAP ScrollTrigger pins it instead of position:fixed so it works with page flow
-    if (window.ScrollTrigger && window.gsap) {
-      window.gsap.registerPlugin(window.ScrollTrigger);
-
-      window.ScrollTrigger.create({
-        trigger: '#programs-section',
-        start: 'top top',
-        end: () => '+=' + (STAGES * window.innerHeight),
-        pin: panel,
-        pinSpacing: false,
-        scrub: false,
-        onUpdate: (self) => {
-          // Map scroll progress 0–1 across 5 stages (0–4)
-          const rawStage = self.progress * STAGES;
-          const stage = Math.min(Math.floor(rawStage), STAGES - 1);
-          if (stage !== currentStage) {
-            goToStage(stage, stage > currentStage ? 'down' : 'up');
-            currentStage = stage;
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
           }
-        }
-      });
+        });
+      }, { threshold: 0.15 });
 
-    } else {
-      // Pure scroll fallback if GSAP unavailable
-      const section = document.getElementById('programs-section');
-      window.addEventListener('scroll', () => {
-        const rect = section.getBoundingClientRect();
-        const totalH = STAGES * window.innerHeight;
-        const scrolled = -rect.top;
-        if (scrolled < 0 || scrolled > totalH) return;
-        const progress = scrolled / totalH;
-        const rawStage = progress * STAGES;
-        const stage = Math.min(Math.floor(rawStage), STAGES - 1);
-        if (stage !== currentStage) {
-          goToStage(stage, stage > currentStage ? 'down' : 'up');
-          currentStage = stage;
-        }
-      }, { passive: true });
+      cards.forEach(card => observer.observe(card));
     }
-
-    function goToStage(idx, direction) {
-      // --- Images: slide-stack effect ---
-      imgSlides.forEach((slide, i) => {
-        slide.classList.remove('active', 'exit-up', 'exit-down', 'enter-up', 'enter-down');
-        if (i === idx) {
-          // Entering from below (scrolling down) or from above (scrolling up)
-          slide.classList.add(direction === 'down' ? 'enter-down' : 'enter-up');
-          requestAnimationFrame(() => {
-            slide.classList.add('active');
-            slide.classList.remove('enter-down', 'enter-up');
-          });
-        } else if (i < idx) {
-          slide.classList.add('exit-up');
-        } else {
-          slide.classList.add('exit-down');
-        }
-      });
-
-      // --- Content: fade + slide ---
-      contentSlides.forEach((slide, i) => {
-        slide.classList.remove('active', 'exit-up', 'exit-down');
-        if (i === idx) {
-          slide.classList.add('active');
-        } else if (i < idx) {
-          slide.classList.add('exit-up');
-        } else {
-          slide.classList.add('exit-down');
-        }
-      });
-
-      // --- Dots ---
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === idx);
-      });
-    }
-
-    // Clicking dots scrolls to that stage
-    dots.forEach((dot, i) => {
-      dot.addEventListener('click', () => {
-        const section = document.getElementById('programs-section');
-        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-        const targetScroll = sectionTop + i * window.innerHeight;
-        window.scrollTo({ top: targetScroll, behavior: 'smooth' });
-      });
-    });
-
-    // Init first stage
-    goToStage(0, 'down');
-    currentStage = 0;
   }
 
   /* ---------------- MOBILE MENU ---------------- */
