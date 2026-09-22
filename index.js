@@ -993,11 +993,111 @@ Submitted at: ${data.timestamp}
     }
   }
 
+  /* ---------------- VILLAGE GALLERY HORIZONTAL SCROLL ---------------- */
+  function initVillageGallery() {
+    const track = document.getElementById('village-gallery-track');
+    const prevBtn = document.getElementById('gallery-prev');
+    const nextBtn = document.getElementById('gallery-next');
+    if (!track || !prevBtn || !nextBtn) return;
+
+    prevBtn.addEventListener('click', () => {
+      track.scrollBy({ left: -360, behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', () => {
+      track.scrollBy({ left: 360, behavior: 'smooth' });
+    });
+  }
+
+  /* ---------------- ARCHITECTURE SLIDESHOW ---------------- */
+  function initArchitectureSlideshow() {
+    const container = document.getElementById('arch-slideshow');
+    if (!container) return;
+
+    const slides = container.querySelectorAll('.arch-slide');
+    const thumbs = container.querySelectorAll('.arch-thumb');
+    const prevBtn = container.querySelector('#arch-prev');
+    const nextBtn = container.querySelector('#arch-next');
+    
+    if (!slides.length) return;
+
+    let currentIndex = 0;
+    let autoSlideInterval = null;
+
+    function goToSlide(index) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+
+      currentIndex = index;
+
+      slides.forEach((slide, i) => {
+        if (i === currentIndex) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      thumbs.forEach((thumb, i) => {
+        if (i === currentIndex) {
+          thumb.classList.add('active');
+        } else {
+          thumb.classList.remove('active');
+        }
+      });
+    }
+
+    function startAutoSlide() {
+      stopAutoSlide();
+      autoSlideInterval = setInterval(() => {
+        goToSlide(currentIndex + 1);
+      }, 4500);
+    }
+
+    function stopAutoSlide() {
+      if (autoSlideInterval) {
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = null;
+      }
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        goToSlide(currentIndex - 1);
+        startAutoSlide();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        goToSlide(currentIndex + 1);
+        startAutoSlide();
+      });
+    }
+
+    thumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const idx = parseInt(thumb.getAttribute('data-index'), 10);
+        if (!isNaN(idx)) {
+          goToSlide(idx);
+          startAutoSlide();
+        }
+      });
+    });
+
+    container.addEventListener('mouseenter', stopAutoSlide);
+    container.addEventListener('mouseleave', startAutoSlide);
+
+    startAutoSlide();
+  }
+
   /* ---------------- INIT ALL FEATURES ON PAGE LOAD / NAV ---------------- */
   function initAllFeatures() {
     initAudioEngine();
     initFabButtons();
+    initVillageGallery();
+    initArchitectureSlideshow();
   }
 
 })();
+
 
