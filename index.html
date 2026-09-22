@@ -209,7 +209,6 @@
           <!-- Hand-drawn style Sun -->
           <svg id="sun-rays" width="100%" height="100%" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" style="animation: sunRotate 12s linear infinite; transform-origin: center;">
             <g stroke="#e0a83e" stroke-linecap="round" stroke-width="4.5" opacity="0.85">
-              <!-- 16 Rays -->
               <line x1="150" y1="40" x2="150" y2="70"/>
               <line x1="150" y1="230" x2="150" y2="260"/>
               <line x1="40" y1="150" x2="70" y2="150"/>
@@ -228,7 +227,6 @@
               <line x1="250" y1="105" x2="224" y2="115"/>
             </g>
             <circle cx="150" cy="150" r="76" fill="#f0c874" stroke="#e0a83e" stroke-width="3"/>
-            <!-- Hand-drawn face detail -->
             <circle cx="130" cy="142" r="4.5" fill="#2b2416" opacity="0.8"/>
             <circle cx="170" cy="142" r="4.5" fill="#2b2416" opacity="0.8"/>
             <path d="M126,164 Q150,182 174,164" stroke="#2b2416" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.8"/>
@@ -256,7 +254,6 @@
       <style>
         @keyframes sunRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
-        /* Hero parallax leaf float animations */
         .hero-float-leaf { will-change: transform; }
         .leaf-l1 { animation: floatLeaf1 7s ease-in-out infinite; }
         .leaf-l2 { animation: floatLeaf2 9s ease-in-out infinite; }
@@ -286,13 +283,13 @@
           "Learning is a collaborative adventure."
         </div>
 
-        <!-- Three Nurturing Pillars with Custom SVG Icons -->
+        <!-- Three Nurturing Pillars with Custom SVG Icons & Image Badges -->
         <div class="grid-fit-300" style="margin-top: 2rem; text-align: left;">
           
           <div class="journey-card" style="background: var(--paper-deep); padding: 2.5rem 2rem; border-radius: 24px; border: 1px solid var(--cream-line); position: relative;">
             <div style="margin-bottom: 1.2rem; display: flex; align-items: center; justify-content: space-between;">
               <div class="pillar-thumbnail-badge">
-                <img src="v1.png" alt="Pillar 1 thumbnail" class="pillar-thumb-img" />
+                <img src="downloads/v1.png" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='v1.png';}" alt="Pillar 1 thumbnail" class="pillar-thumb-img" />
               </div>
               <span style="font-family: 'Caveat', cursive; color: var(--moss); font-size: 1.2rem;">Pillar 1</span>
             </div>
@@ -305,7 +302,7 @@
           <div class="journey-card" style="background: var(--paper-deep); padding: 2.5rem 2rem; border-radius: 24px; border: 1px solid var(--cream-line); position: relative;">
             <div style="margin-bottom: 1.2rem; display: flex; align-items: center; justify-content: space-between;">
               <div class="pillar-thumbnail-badge">
-                <img src="v2.png" alt="Pillar 2 thumbnail" class="pillar-thumb-img" />
+                <img src="downloads/v2.png" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='v2.png';}" alt="Pillar 2 thumbnail" class="pillar-thumb-img" />
               </div>
               <span style="font-family: 'Caveat', cursive; color: var(--moss); font-size: 1.2rem;">Pillar 2</span>
             </div>
@@ -318,7 +315,7 @@
           <div class="journey-card" style="background: var(--paper-deep); padding: 2.5rem 2rem; border-radius: 24px; border: 1px solid var(--cream-line); position: relative;">
             <div style="margin-bottom: 1.2rem; display: flex; align-items: center; justify-content: space-between;">
               <div class="pillar-thumbnail-badge">
-                <img src="v3.png" alt="Pillar 3 thumbnail" class="pillar-thumb-img" />
+                <img src="downloads/v3.png" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='v3.png';}" alt="Pillar 3 thumbnail" class="pillar-thumb-img" />
               </div>
               <span style="font-family: 'Caveat', cursive; color: var(--moss); font-size: 1.2rem;">Pillar 3</span>
             </div>
@@ -346,21 +343,23 @@
 
       <div class="grid-pedagogy">
         <div class="pedagogy-card">
-          <div class="pedagogy-badge">01</div>
-          <h3>The Prepared Environment</h3>
-          <p>Carefully curated indoor and outdoor spaces using authentic, open-ended materials that invite investigation and concentration.</p>
+          <h3 class="pedagogy-title">Montessori</h3>
+          <p class="pedagogy-desc">Emphasizing self-directed activity, hands-on learning, and collaborative play. Children make creative choices in their learning, while the classroom and teacher offer age-appropriate activities to guide the process.</p>
         </div>
 
         <div class="pedagogy-card">
-          <div class="pedagogy-badge">02</div>
-          <h3>Observation-Led Guidance</h3>
-          <p>Nature Crafters closely observe each child’s emerging readiness, stepping in to extend thinking without interrupting deep focus.</p>
+          <h3 class="pedagogy-title">Waldorf</h3>
+          <p class="pedagogy-desc">Integrating the arts in all academic disciplines to enhance and enrich learning. We focus on holistic development—intellectual, artistic, and practical skills—nurturing the child's imagination and creativity.</p>
         </div>
 
         <div class="pedagogy-card">
-          <div class="pedagogy-badge">03</div>
-          <h3>The Daily Rhythm</h3>
-          <p>Unhurried transitions between quiet reflection, active group play, storytelling, and hands-on discovery in our outdoor landscape.</p>
+          <h3 class="pedagogy-title">Reggio Emilia</h3>
+          <p class="pedagogy-desc">Viewing the environment as the third teacher. Our classrooms are beautiful, inviting spaces filled with natural light and purposeful materials that provoke inquiry and project-based exploration.</p>
+        </div>
+
+        <div class="pedagogy-card">
+          <h3 class="pedagogy-title">Gesell</h3>
+          <p class="pedagogy-desc">Informed by the Yale Child Study Center, we deeply respect biological readiness. We honor each child's unique rhythm and natural pacing, ensuring they encounter challenges exactly when they are developmentally prepared.</p>
         </div>
       </div>
     </section>
@@ -503,14 +502,14 @@
 
         <!-- Scrollable container track -->
         <div class="gallery-scroll-container" id="village-gallery-track">
-          <div class="gallery-card"><img src="d1.jpg" alt="MINDFL Village Moment 1" loading="lazy"></div>
-          <div class="gallery-card"><img src="d2.jpg" alt="MINDFL Village Moment 2" loading="lazy"></div>
-          <div class="gallery-card"><img src="d3.jpg" alt="MINDFL Village Moment 3" loading="lazy"></div>
-          <div class="gallery-card"><img src="d4.jpg" alt="MINDFL Village Moment 4" loading="lazy"></div>
-          <div class="gallery-card"><img src="d5.jpg" alt="MINDFL Village Moment 5" loading="lazy"></div>
-          <div class="gallery-card"><img src="d6.jpg" alt="MINDFL Village Moment 6" loading="lazy"></div>
-          <div class="gallery-card"><img src="k1.jpg" alt="MINDFL Village Moment 7" loading="lazy"></div>
-          <div class="gallery-card"><img src="k2.jpg" alt="MINDFL Village Moment 8" loading="lazy"></div>
+          <div class="gallery-card"><img src="downloads/d1.jpg" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='d1.jpg';}" alt="MINDFL Village Moment 1" loading="lazy"></div>
+          <div class="gallery-card"><img src="downloads/d2.jpg" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='d2.jpg';}" alt="MINDFL Village Moment 2" loading="lazy"></div>
+          <div class="gallery-card"><img src="downloads/d3.jpg" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='d3.jpg';}" alt="MINDFL Village Moment 3" loading="lazy"></div>
+          <div class="gallery-card"><img src="downloads/d4.jpg" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='d4.jpg';}" alt="MINDFL Village Moment 4" loading="lazy"></div>
+          <div class="gallery-card"><img src="downloads/d5.jpg" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='d5.jpg';}" alt="MINDFL Village Moment 5" loading="lazy"></div>
+          <div class="gallery-card"><img src="downloads/d6.jpg" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='d6.jpg';}" alt="MINDFL Village Moment 6" loading="lazy"></div>
+          <div class="gallery-card"><img src="downloads/k1.jpg" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='k1.jpg';}" alt="MINDFL Village Moment 7" loading="lazy"></div>
+          <div class="gallery-card"><img src="downloads/k2.jpg" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='k2.jpg';}" alt="MINDFL Village Moment 8" loading="lazy"></div>
         </div>
 
         <!-- Gallery Navigation Controls at Bottom -->
@@ -595,8 +594,8 @@
         </div>
         
         <div style="margin-top: 5rem; text-align: center; border-top: 1px solid rgba(246, 239, 224, 0.15); padding-top: 4rem;">
-          <div style="width: 110px; height: 110px; margin: 0 auto 1.5rem; border-radius: 50%; overflow: hidden; border: 3px solid var(--gold-soft); box-shadow: 0 8px 25px rgba(0,0,0,0.3);">
-            <img src="founder.png" alt="Vaikunth Sivashenthan Govindarajan" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
+          <div style="width: 120px; height: 120px; margin: 0 auto 1.5rem; border-radius: 50%; overflow: hidden; border: 3px solid var(--gold-soft); box-shadow: 0 8px 25px rgba(0,0,0,0.3);">
+            <img src="downloads/founder.png" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='founder.png';}" alt="Vaikunth Sivashenthan Govindarajan" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
           </div>
           <p style="font-family: 'Fraunces', serif; font-style: italic; font-size: clamp(1.35rem, 2.5vw, 1.8rem); line-height: 1.5; max-width: 800px; margin: 0 auto; color: var(--paper);">
             "Before classrooms and curricula and screens — there was a child and the world. MINDFL is a return to that original childhood."
@@ -621,7 +620,6 @@
           
           <div style="background: var(--paper-deep); border-radius: 28px; padding: 3rem 2rem; border: 1px solid var(--cream-line); text-align: center; transition: var(--transition);">
             <div style="width: 140px; height: 140px; margin: 0 auto 1.8rem; background: var(--moss); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 4px solid var(--paper);">
-              <!-- Hand Drawn Style SVG Icon -->
               <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="20" cy="30" r="8" stroke="var(--paper)" stroke-width="2.5"/>
                 <circle cx="40" cy="30" r="8" stroke="var(--paper)" stroke-width="2.5"/>
@@ -694,7 +692,7 @@
         <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01"/></svg>
       </a>
       <a href="#" aria-label="YouTube">
-        <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.95 1.96C5.12 19.5 12 19.5 12 19.5s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.95 1.96C5.12 19.5 12 19.5 12 19.5s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96 29 29 0 0 0 .46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
       </a>
     </div>
     <div style="margin-top: 1.5rem; margin-bottom: 2rem; border-top: 1px solid rgba(246, 239, 224, 0.1); padding-top: 1.8rem; max-width: 450px; margin-left: auto; margin-right: auto;">
